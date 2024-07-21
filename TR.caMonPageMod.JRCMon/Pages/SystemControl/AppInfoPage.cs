@@ -17,7 +17,7 @@ public partial class AppInfoPage : Canvas, IHoldRootGridInstance
 		baseImage.Width = Constants.DISPLAY_WIDTH;
 		Children.Add(baseImage);
 
-		AppVersionLabel.Height = 40;
+		AppVersionLabel.Height = 28;
 		AppVersionLabel.Width = 180;
 		AppVersionLabel.Margin = new(162, 104, 0, 0);
 		AppVersionLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
