@@ -3,15 +3,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+using TR.caMonPageMod.JRCMon.Header;
+using TR.caMonPageMod.JRCMon.PageTypes;
+
 namespace TR.caMonPageMod.JRCMon;
 
-class RootGrid : Grid
+public class RootGrid : Grid
 {
-	private readonly ContentControl FullScreenContent = new();
-	private readonly Header Header = new();
-	private readonly ContentControl BodyContent = new();
-	public Type CurrentPageType { get; private set; }
+	public event EventHandler? BackToHome;
+	public event EventHandler? CloseApp;
 
+	private readonly HeaderArea HeaderArea = new();
 	public RootGrid()
 	{
 		Height = Constants.DISPLAY_HEIGHT;
@@ -21,40 +23,42 @@ class RootGrid : Grid
 		RowDefinitions.Add(new RowDefinition { Height = new GridLength(Constants.HEADER_HEIGHT) });
 		RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
-		SetRow(FullScreenContent, 0);
-		SetRow(Header, 0);
-		SetRow(BodyContent, 1);
-
-		SetRowSpan(FullScreenContent, 2);
-
-		Children.Add(Header);
-		Children.Add(BodyContent);
-		Children.Add(FullScreenContent);
-
-		CurrentPageType = typeof(Pages.System.AppInfoPage);
-		SetPageType<Pages.System.AppInfoPage>();
+		SetPageType<Pages.SystemControl.MenuPage>();
 	}
 
 	public void SetPageType<T>() where T: FrameworkElement, new()
 	{
-		FullScreenContent.Content = null;
-		BodyContent.Content = null;
-
+		Children.Clear();
 		FrameworkElement cc = new T
 		{
 			Width = Constants.DISPLAY_WIDTH,
 		};
-		if (typeof(T).GetCustomAttribute<PageTypes.FullScreenPageAttribute>() is not null)
+		if (typeof(T).GetCustomAttribute<FullScreenPageAttribute>() is not null)
 		{
-			FullScreenContent.Content = cc;
+			SetRowSpan(cc, 2);
 			cc.Height = Constants.DISPLAY_HEIGHT;
+			Children.Add(cc);
+		}
+		else if (typeof(T).GetCustomAttribute<NormalPageAttribute>() is NormalPageAttribute pageAttribute)
+		{
+			SetRow(HeaderArea, 0);
+			SetRow(cc, 1);
+			cc.Height = Constants.BODY_HEIGHT;
+			Children.Add(HeaderArea);
+			Children.Add(cc);
+			HeaderArea.OnChangePage(pageAttribute);
 		}
 		else
 		{
-			BodyContent.Content = cc;
-			cc.Height = Constants.BODY_HEIGHT;
+			throw new InvalidOperationException("Invalid Page Type");
 		}
 
-		CurrentPageType = typeof(T);
+		if (cc is IHoldRootGridInstance page)
+		{
+			page.RootGrid = this;
+		}
 	}
+
+	public void BackToHomeInvoke() => BackToHome?.Invoke(this, EventArgs.Empty);
+	public void CloseAppInvoke() => CloseApp?.Invoke(this, EventArgs.Empty);
 }

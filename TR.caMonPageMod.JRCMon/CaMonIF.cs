@@ -10,12 +10,10 @@ public class CaMonIF : Page, IPages
 
 	public Page FrontPage => this;
 
-#pragma warning disable CS0067
-	public event EventHandler? BackToHome;
-	public event EventHandler? CloseApp;
-#pragma warning restore CS0067
+	public event EventHandler? BackToHome { add => RootGrid.BackToHome += value; remove => RootGrid.BackToHome -= value; }
+	public event EventHandler? CloseApp { add => RootGrid.CloseApp += value; remove => RootGrid.CloseApp -= value; }
 
-	private readonly Grid RootGrid = new RootGrid();
+	private readonly RootGrid RootGrid = new RootGrid();
 
 	public CaMonIF()
 	{
