@@ -37,7 +37,6 @@ class HeaderArea : Grid
 		PageName.Height = Constants.HEADER_HEIGHT;
 		PageName.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 		PageName.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-		PageName.Background = new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0, 0));
 		Children.Add(PageIcon);
 		Children.Add(PageName);
 
@@ -48,7 +47,6 @@ class HeaderArea : Grid
 		TimeHH.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 		TimeHH.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 		TimeHH.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-		TimeHH.Background = new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0, 0));
 		Children.Add(TimeHH);
 
 		TimeMM.Margin = new(728, 0, 0, 0);
@@ -58,7 +56,6 @@ class HeaderArea : Grid
 		TimeMM.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 		TimeMM.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 		TimeMM.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-		TimeMM.Background = new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0, 0));
 		Children.Add(TimeMM);
 
 		SMemLib.SMC_BSMDChanged += (s, e) =>
