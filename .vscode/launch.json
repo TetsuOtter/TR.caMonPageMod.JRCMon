@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+		{
+			"name": "Launch caMon",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "build",
+			"program": "${workspaceFolder}/caMon/caMon.exe",
+			"args": ["${workspaceFolder}/TR.caMonPageMod.JRCMon/bin/Debug/net8.0-windows/TR.caMonPageMod.JRCMon.dll"],
+			"cwd": "${workspaceFolder}",
+			"stopAtEntry": false,
+			"console": "internalConsole",
+			"internalConsoleOptions": "openOnSessionStart"
+		}
+	]
+}

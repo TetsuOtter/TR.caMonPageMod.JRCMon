@@ -1,5 +1,4 @@
 using System.Windows.Controls;
-using System.Windows.Media;
 
 using caMon;
 
@@ -11,17 +10,20 @@ public class CaMonIF : Page, IPages
 
 	public Page FrontPage => this;
 
+#pragma warning disable CS0067
 	public event EventHandler? BackToHome;
 	public event EventHandler? CloseApp;
+#pragma warning restore CS0067
+
+	private readonly Grid RootGrid = new RootGrid();
 
 	public CaMonIF()
 	{
-		Content = new TextBlock
+		Viewbox viewbox = new()
 		{
-			Text = "JRCMon",
-			Background = Brushes.LightGreen,
-			FontFamily = new FontFamily("JF Dot jiskan16s")
+			Child = RootGrid
 		};
+		Content = viewbox;
 	}
 
 	protected virtual void Dispose(bool disposing)

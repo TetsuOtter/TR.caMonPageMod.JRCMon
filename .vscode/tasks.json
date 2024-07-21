@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"-c",
+				"Debug",
+				"${workspaceFolder}/TR.caMonPageMod.JRCMon"
+			],
+			"group": {
+					"kind": "build",
+					"isDefault": true
+			},
+			"problemMatcher": "$msCompile"
+		}
+	]
+}
