@@ -13,6 +13,9 @@ public class ComponentFactory
 		Foreground = foreground ?? Brushes.White,
 		HorizontalAlignment = HorizontalAlignment.Left,
 		VerticalAlignment = VerticalAlignment.Top,
+#if DEBUG
+		Background = new SolidColorBrush(Color.FromArgb(0x50, 0, 0xFF, 0)),
+#endif
 	};
 	public static Label Get1XLabel(Brush? foreground = null) => GetBasicLabel(foreground);
 	public static Label Get2XLabel(Brush? foreground = null)
