@@ -10,9 +10,9 @@ static internal class Constants
 	public const int HEADER_HEIGHT = 54;
 	public const int BODY_HEIGHT = DISPLAY_HEIGHT - HEADER_HEIGHT;
 
-	public static readonly FontFamily FONT_FAMILY = new("JF Dot jiskan16s");
-	public const int FONT_SIZE_1X = 16;
-	public const int FONT_SIZE_2X = 32;
+	public static readonly FontFamily FONT_FAMILY = new("JF Dot Ayu Mincho 18");
+	public const int FONT_SIZE_1X = 18;
+	public const int FONT_SIZE_2X = 36;
 
 	public const int FOOTER_MENU_BUTTON_HEIGHT = 36;
 	public const int FOOTER_MENU_BUTTON_WIDTH = 82;
