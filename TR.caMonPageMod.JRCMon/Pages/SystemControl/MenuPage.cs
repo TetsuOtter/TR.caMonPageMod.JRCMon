@@ -8,9 +8,9 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 	public RootGrid? RootGrid { get; set; }
 
 	private readonly Button GoToEmbeddedManualButton = ComponentFactory.GetEmptyButton(
-		new(568, 176, 0, 0),
+		new(568, 178, 0, 0),
 		113,
-		67
+		66
 	);
 
 	public MenuPage()

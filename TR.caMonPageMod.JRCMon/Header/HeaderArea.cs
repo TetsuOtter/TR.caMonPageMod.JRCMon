@@ -32,15 +32,15 @@ class HeaderArea : Grid
 		Image baseImage = ResourceManager.GetResourceAsImage(ResourceManager.ResourceFiles.HeaderBase);
 		Children.Add(baseImage);
 
-		PageIcon.Margin = new(14, 2, 0, 0);
-		PageName.Margin = new(60, 0, 0, 0);
+		PageIcon.Margin = new(6, 2, 0, 0);
+		PageName.Margin = new(52, 0, 0, 0);
 		PageName.Height = Constants.HEADER_HEIGHT;
 		PageName.VerticalAlignment = System.Windows.VerticalAlignment.Center;
 		PageName.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 		Children.Add(PageIcon);
 		Children.Add(PageName);
 
-		TimeHH.Margin = new(672, 0, 0, 0);
+		TimeHH.Margin = new(682, 0, 0, 0);
 		TimeHH.Width = 56;
 		TimeHH.Height = Constants.HEADER_HEIGHT;
 		TimeHH.Content = "00";
@@ -49,7 +49,7 @@ class HeaderArea : Grid
 		TimeHH.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		Children.Add(TimeHH);
 
-		TimeMM.Margin = new(728, 0, 0, 0);
+		TimeMM.Margin = new(738, 0, 0, 0);
 		TimeMM.Width = 56;
 		TimeMM.Height = Constants.HEADER_HEIGHT;
 		TimeMM.Content = "00";
