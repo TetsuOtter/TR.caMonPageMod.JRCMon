@@ -12,6 +12,11 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		113,
 		66
 	);
+	private readonly Button GoToSleepStateButton = ComponentFactory.GetEmptyButton(
+		new(642, 458, 0, 0),
+		98,
+		42
+	);
 
 	public MenuPage()
 	{
@@ -22,5 +27,8 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 
 		GoToEmbeddedManualButton.Click += (s, e) => RootGrid?.SetPageType<EmbeddedManual>();
 		Children.Add(GoToEmbeddedManualButton);
+
+		GoToSleepStateButton.Click += (s, e) => RootGrid?.SetPageType<SleepState>();
+		Children.Add(GoToSleepStateButton);
 	}
 }
