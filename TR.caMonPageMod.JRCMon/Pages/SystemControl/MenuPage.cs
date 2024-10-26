@@ -13,9 +13,9 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		66
 	);
 	private readonly Button GoToSleepStateButton = ComponentFactory.GetEmptyButton(
-		new(642, 458, 0, 0),
-		98,
-		42
+		new(633, 460, 0, 0),
+		104,
+		38
 	);
 
 	public MenuPage()

@@ -8,15 +8,15 @@ public partial class EmbeddedManual : Canvas, IHoldRootGridInstance
   public RootGrid? RootGrid { get; set; }
 
 	private readonly Button GoToAppInfoButton = ComponentFactory.GetEmptyButton(
-		new(166, 228, 0, 0),
-		113,
-		67
+		new(82, 139, 0, 0),
+		132,
+		68
 	);
 
 	private readonly Button GoToMenuButton = ComponentFactory.GetEmptyButton(
-		new(166, 502, 0, 0),
-		188,
-		48
+		new(195, 493, 0, 0),
+		132,
+		68
 	);
 
 	private readonly Button CloseAppButton = ComponentFactory.GetEmptyButton(
