@@ -12,10 +12,23 @@ public static class ResourceManager
 		HeaderBase,
 
 		AppInfo,
+		AppSetting,
+		CarDetect,
+		CarDetect_1,
+		CarDetect_2,
 		EmbeddedManual,
 		MenuPage,
+		OccupancyRatePage,
+		OtherSeriesAnnounceAC,
+		OtherSeriesDirection,
+		OtherSeriesReduceSpeed,
+		OtherSeriesSubSetting,
+		OtherSeriesTrouble,
+		OtherSeriesWorkSetting,
 
 		MenuIcon,
+		OccupancyRateIcon,
+		OtherSeriesIcon,
 	}
 
 	public static readonly Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
@@ -27,10 +40,23 @@ public static class ResourceManager
 		[ResourceFiles.HeaderBase] = ["Header", "Base.png"],
 
 		[ResourceFiles.AppInfo] = ["Body", "AppInfo.png"],
+		[ResourceFiles.AppSetting] = ["Body", "AppSetting.png"],
+		[ResourceFiles.CarDetect] = ["Body", "CarDetect.png"],
+		[ResourceFiles.CarDetect_1] = ["Body", "CarDetect_1.png"],
+		[ResourceFiles.CarDetect_2] = ["Body", "CarDetect_2.png"],
 		[ResourceFiles.EmbeddedManual] = ["Body", "EmbeddedManual.png"],
 		[ResourceFiles.MenuPage] = ["Body", "MenuPage.png"],
+		[ResourceFiles.OccupancyRatePage] = ["Body", "OccupancyRate.png"],
+		[ResourceFiles.OtherSeriesAnnounceAC] = ["Body", "OtherSeriesAnnounceAC.png"],
+		[ResourceFiles.OtherSeriesDirection] = ["Body", "OtherSeriesDirection.png"],
+		[ResourceFiles.OtherSeriesReduceSpeed] = ["Body", "OtherSeriesReduceSpeed.png"],
+		[ResourceFiles.OtherSeriesSubSetting] = ["Body", "OtherSeriesSubSetting.png"],
+		[ResourceFiles.OtherSeriesTrouble] = ["Body", "OtherSeriesTrouble.png"],
+		[ResourceFiles.OtherSeriesWorkSetting] = ["Body", "OtherSeriesWorkSetting.png"],
 
 		[ResourceFiles.MenuIcon] = ["Header", "PageIcon", "Menu.png"],
+		[ResourceFiles.OccupancyRateIcon] = ["Header", "PageIcon", "OccupancyRate.png"],
+		[ResourceFiles.OtherSeriesIcon] = ["Header", "PageIcon", "OtherSeries.png"],
 	};
 
 	public static string GetResourcePath(ResourceFiles resourceFile)
