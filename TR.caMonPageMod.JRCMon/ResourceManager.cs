@@ -16,6 +16,12 @@ public static class ResourceManager
 		CarDetect,
 		CarDetect_1,
 		CarDetect_2,
+		ClockCorrection,
+		CorrectionMenu,
+		DirectionMenu,
+		DirectionSetting_1,
+		DirectionSetting_2,
+		DirectionSetting_3,
 		EmbeddedManual,
 		LocationCorrection_1,
 		LocationCorrection_2,
@@ -29,12 +35,15 @@ public static class ResourceManager
 		OtherSeriesSubSetting,
 		OtherSeriesTrouble,
 		OtherSeriesWorkSetting,
+		PerformanceRecord,
+		TrainTypeSetting,
 
 		CorrectionIcon,
 		MaintenanceIcon,
 		MenuIcon,
 		OccupancyRateIcon,
 		OtherSeriesIcon,
+		WorkSettingIcon,
 	}
 
 	public static readonly Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
@@ -50,6 +59,12 @@ public static class ResourceManager
 		[ResourceFiles.CarDetect] = ["Body", "CarDetect.png"],
 		[ResourceFiles.CarDetect_1] = ["Body", "CarDetect_1.png"],
 		[ResourceFiles.CarDetect_2] = ["Body", "CarDetect_2.png"],
+		[ResourceFiles.ClockCorrection] = ["Body", "ClockCorrection.png"],
+		[ResourceFiles.CorrectionMenu] = ["Body", "CorrectionMenu.png"],
+		[ResourceFiles.DirectionMenu] = ["Body", "DirectionMenu.png"],
+		[ResourceFiles.DirectionSetting_1] = ["Body", "DirectionSetting_1.png"],
+		[ResourceFiles.DirectionSetting_2] = ["Body", "DirectionSetting_2.png"],
+		[ResourceFiles.DirectionSetting_3] = ["Body", "DirectionSetting_3.png"],
 		[ResourceFiles.EmbeddedManual] = ["Body", "EmbeddedManual.png"],
 		[ResourceFiles.LocationCorrection_1] = ["Body", "LocationCorrection_1.png"],
 		[ResourceFiles.LocationCorrection_2] = ["Body", "LocationCorrection_2.png"],
@@ -63,12 +78,15 @@ public static class ResourceManager
 		[ResourceFiles.OtherSeriesSubSetting] = ["Body", "OtherSeriesSubSetting.png"],
 		[ResourceFiles.OtherSeriesTrouble] = ["Body", "OtherSeriesTrouble.png"],
 		[ResourceFiles.OtherSeriesWorkSetting] = ["Body", "OtherSeriesWorkSetting.png"],
+		[ResourceFiles.PerformanceRecord] = ["Body", "PerformanceRecord.png"],
+		[ResourceFiles.TrainTypeSetting] = ["Body", "TrainTypeSetting.png"],
 
 		[ResourceFiles.CorrectionIcon] = ["Header", "PageIcon", "Correction.png"],
 		[ResourceFiles.MaintenanceIcon] = ["Header", "PageIcon", "Maintenance.png"],
 		[ResourceFiles.MenuIcon] = ["Header", "PageIcon", "Menu.png"],
 		[ResourceFiles.OccupancyRateIcon] = ["Header", "PageIcon", "OccupancyRate.png"],
 		[ResourceFiles.OtherSeriesIcon] = ["Header", "PageIcon", "OtherSeries.png"],
+		[ResourceFiles.WorkSettingIcon] = ["Header", "PageIcon", "WorkSetting.png"],
 	};
 
 	public static string GetResourcePath(ResourceFiles resourceFile)
