@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace TR.caMonPageMod.JRCMon;
 
-static internal class ResourceManager
+public static class ResourceManager
 {
 	public enum ResourceFiles
 	{

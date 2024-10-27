@@ -3,7 +3,7 @@ using System.Windows.Controls;
 namespace TR.caMonPageMod.JRCMon.Pages.SystemControl;
 
 [PageTypes.FullScreenPage]
-public partial class EmbeddedManual : Canvas, IHoldRootGridInstance
+public partial class EmbeddedManual : FullScreenPageBase, IHoldRootGridInstance
 {
   public RootGrid? RootGrid { get; set; }
 
@@ -25,13 +25,8 @@ public partial class EmbeddedManual : Canvas, IHoldRootGridInstance
 		42
 	);
 
-	public EmbeddedManual()
+	public EmbeddedManual() : base(ResourceManager.ResourceFiles.EmbeddedManual)
 	{
-		Image baseImage = ResourceManager.GetResourceAsImage(ResourceManager.ResourceFiles.EmbeddedManual);
-		baseImage.Height = Constants.DISPLAY_HEIGHT;
-		baseImage.Width = Constants.DISPLAY_WIDTH;
-		Children.Add(baseImage);
-
 		GoToAppInfoButton.Click += (s, e) => RootGrid?.SetPageType<AppInfoPage>();
 		Children.Add(GoToAppInfoButton);
 
