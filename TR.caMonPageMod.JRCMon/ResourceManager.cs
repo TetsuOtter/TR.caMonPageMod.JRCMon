@@ -36,6 +36,10 @@ public static class ResourceManager
 		OtherSeriesTrouble,
 		OtherSeriesWorkSetting,
 		PerformanceRecord,
+		SelectAnnounce,
+		SelectCarUnit,
+		SelectMyCar,
+		SelectOtherCar,
 		TrainTypeSetting,
 
 		CorrectionIcon,
@@ -79,6 +83,10 @@ public static class ResourceManager
 		[ResourceFiles.OtherSeriesTrouble] = ["Body", "OtherSeriesTrouble.png"],
 		[ResourceFiles.OtherSeriesWorkSetting] = ["Body", "OtherSeriesWorkSetting.png"],
 		[ResourceFiles.PerformanceRecord] = ["Body", "PerformanceRecord.png"],
+		[ResourceFiles.SelectAnnounce] = ["Body", "SelectAnnounce.png"],
+		[ResourceFiles.SelectCarUnit] = ["Body", "SelectCarUnit.png"],
+		[ResourceFiles.SelectMyCar] = ["Body", "SelectMyCar.png"],
+		[ResourceFiles.SelectOtherCar] = ["Body", "SelectOtherCar.png"],
 		[ResourceFiles.TrainTypeSetting] = ["Body", "TrainTypeSetting.png"],
 
 		[ResourceFiles.CorrectionIcon] = ["Header", "PageIcon", "Correction.png"],
