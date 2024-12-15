@@ -48,6 +48,9 @@ public static class ResourceManager
 		OccupancyRateIcon,
 		OtherSeriesIcon,
 		WorkSettingIcon,
+
+		FooterSW_OFF,
+		FooterSW_ON,
 	}
 
 	public static readonly Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
@@ -95,6 +98,9 @@ public static class ResourceManager
 		[ResourceFiles.OccupancyRateIcon] = ["Header", "PageIcon", "OccupancyRate.png"],
 		[ResourceFiles.OtherSeriesIcon] = ["Header", "PageIcon", "OtherSeries.png"],
 		[ResourceFiles.WorkSettingIcon] = ["Header", "PageIcon", "WorkSetting.png"],
+
+		[ResourceFiles.FooterSW_OFF] = ["Parts", "FooterSW_OFF.png"],
+		[ResourceFiles.FooterSW_ON] = ["Parts", "FooterSW_ON.png"],
 	};
 
 	public static string GetResourcePath(ResourceFiles resourceFile)

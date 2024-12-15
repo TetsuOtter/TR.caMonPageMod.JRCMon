@@ -62,6 +62,12 @@ public class ComponentFactory
 #endif
 			border.SetValue(Border.BorderBrushProperty, Brushes.Transparent);
 
+			FrameworkElementFactory contentPresenter = new(typeof(ContentPresenter));
+			contentPresenter.SetValue(ContentPresenter.ContentProperty, new TemplateBindingExtension(Button.ContentProperty));
+			contentPresenter.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+			contentPresenter.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Center);
+			border.AppendChild(contentPresenter);
+
 			ControlTemplate template = new(typeof(Button))
 			{
 				VisualTree = border

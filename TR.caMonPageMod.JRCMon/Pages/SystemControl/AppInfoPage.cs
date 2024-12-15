@@ -1,14 +1,17 @@
 using System.Windows.Controls;
 
+using TR.caMonPageMod.JRCMon.Footer;
+
 namespace TR.caMonPageMod.JRCMon.Pages.SystemControl;
 
 [PageTypes.FullScreenPage]
-public partial class AppInfoPage : FullScreenPageBase, IHoldRootGridInstance
+public partial class AppInfoPage : FullScreenPageBase, IHoldRootGridInstance, IFooterInfo
 {
 	public RootGrid? RootGrid { get; set; }
 
-	readonly Label AppVersionLabel = ComponentFactory.Get1XLongLabel();
-	readonly Button GoToEmbeddedManualButton = ComponentFactory.GetFooterMenuButton(2, true);
+  public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.APP_INFO;
+
+  readonly Label AppVersionLabel = ComponentFactory.Get1XLongLabel();
 
 	public AppInfoPage() : base(ResourceManager.ResourceFiles.AppInfo)
 	{
@@ -18,8 +21,5 @@ public partial class AppInfoPage : FullScreenPageBase, IHoldRootGridInstance
 		AppVersionLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
 		AppVersionLabel.Content = ResourceManager.CurrentAssembly.GetName().Version?.ToString() ?? "Unknown";
 		Children.Add(AppVersionLabel);
-
-		GoToEmbeddedManualButton.Click += (s, e) => RootGrid?.SetPageType<EmbeddedManual>();
-		Children.Add(GoToEmbeddedManualButton);
 	}
 }

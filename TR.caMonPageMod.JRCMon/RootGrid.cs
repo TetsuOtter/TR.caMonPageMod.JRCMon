@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+using TR.caMonPageMod.JRCMon.Footer;
 using TR.caMonPageMod.JRCMon.Header;
 using TR.caMonPageMod.JRCMon.PageTypes;
 
@@ -22,6 +23,7 @@ public class RootGrid : Grid
 
 		RowDefinitions.Add(new RowDefinition { Height = new GridLength(Constants.HEADER_HEIGHT) });
 		RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+		RowDefinitions.Add(new RowDefinition { Height = new GridLength(Constants.FOOTER_HEIGHT) });
 
 		SetPageType<Pages.SystemControl.MenuPage>();
 	}
@@ -33,17 +35,51 @@ public class RootGrid : Grid
 		{
 			Width = Constants.DISPLAY_WIDTH,
 		};
+		bool hasFooter = false;
+		if (cc is IFooterInfo footerInfo)
+		{
+			hasFooter = true;
+			FooterArea footerArea;
+			if (cc is IMultiPageFooterInfo multiPageFooterInfo)
+			{
+				footerArea = new(
+					this,
+					footerInfo.FooterInfoList,
+					typeof(T),
+					multiPageFooterInfo.MaxIndex
+				);
+				footerArea.SetPageIndex(multiPageFooterInfo.SelectedIndex);
+				footerArea.PageChanged += (sender, e) =>
+				{
+					multiPageFooterInfo.SelectedIndex = e;
+				};
+			}
+			else
+			{
+				footerArea = new(
+					this,
+					footerInfo.FooterInfoList,
+					typeof(T)
+				);
+			}
+			SetRow(footerArea, 2);
+			Children.Add(footerArea);
+		}
 		if (typeof(T).GetCustomAttribute<FullScreenPageAttribute>() is not null)
 		{
-			SetRowSpan(cc, 2);
-			cc.Height = Constants.DISPLAY_HEIGHT;
+			SetRowSpan(cc, hasFooter ? 2 : 3);
+			cc.Height = Constants.DISPLAY_HEIGHT - (hasFooter ? Constants.FOOTER_HEIGHT : 0);
 			Children.Add(cc);
 		}
 		else if (typeof(T).GetCustomAttribute<NormalPageAttribute>() is NormalPageAttribute pageAttribute)
 		{
 			SetRow(HeaderArea, 0);
 			SetRow(cc, 1);
-			cc.Height = Constants.BODY_HEIGHT;
+			if (!hasFooter)
+			{
+				SetRowSpan(cc, 2);
+			}
+			cc.Height = Constants.BODY_HEIGHT - (hasFooter ? Constants.FOOTER_HEIGHT : 0);
 			Children.Add(HeaderArea);
 			Children.Add(cc);
 			HeaderArea.OnChangePage(pageAttribute);
@@ -57,6 +93,16 @@ public class RootGrid : Grid
 		{
 			page.RootGrid = this;
 		}
+		if (hasFooter && cc is IBaseImage baseImagePage)
+		{
+			baseImagePage.BaseImage.Height -= Constants.FOOTER_HEIGHT;
+		}
+	}
+
+	internal void SetPageType(Type pageType)
+	{
+		MethodInfo method = typeof(RootGrid).GetMethod(nameof(SetPageType))!;
+		method.MakeGenericMethod(pageType).Invoke(this, null);
 	}
 
 	public void BackToHomeInvoke() => BackToHome?.Invoke(this, EventArgs.Empty);
