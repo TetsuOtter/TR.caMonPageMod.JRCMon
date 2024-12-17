@@ -40,7 +40,7 @@ class HeaderArea : Grid
 		Children.Add(PageIcon);
 		Children.Add(PageName);
 
-		TimeHH.Margin = new(682, 0, 0, 0);
+		TimeHH.Margin = new(682, 4, 0, 0);
 		TimeHH.Width = 56;
 		TimeHH.Height = Constants.HEADER_HEIGHT;
 		TimeHH.Content = "00";
@@ -49,7 +49,7 @@ class HeaderArea : Grid
 		TimeHH.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		Children.Add(TimeHH);
 
-		TimeMM.Margin = new(738, 0, 0, 0);
+		TimeMM.Margin = new(738, 4, 0, 0);
 		TimeMM.Width = 56;
 		TimeMM.Height = Constants.HEADER_HEIGHT;
 		TimeMM.Content = "00";

@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using System.Windows.Media;
 
 using caMon;
 
@@ -19,9 +20,12 @@ public class CaMonIF : Page, IPages
 	{
 		Viewbox viewbox = new()
 		{
-			Child = RootGrid
+			Child = RootGrid,
 		};
 		Content = viewbox;
+#if DEBUG
+		Background = new SolidColorBrush(Color.FromRgb(0x20, 0x20, 0x20));
+#endif
 	}
 
 	protected virtual void Dispose(bool disposing)
