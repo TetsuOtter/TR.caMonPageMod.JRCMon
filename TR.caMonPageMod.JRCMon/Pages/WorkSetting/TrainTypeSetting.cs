@@ -7,7 +7,7 @@ public partial class TrainTypeSetting : NormalPageBase, IMultiPageFooterInfo
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.SELECT_ANNOUNCE;
 	public int SelectedIndex { get; set; }
-	public int MaxIndex { get; } = 3;
+	public int MaxIndex { get; } = 2;
 
 	public TrainTypeSetting() : base(ResourceManager.ResourceFiles.TrainTypeSetting)
 	{

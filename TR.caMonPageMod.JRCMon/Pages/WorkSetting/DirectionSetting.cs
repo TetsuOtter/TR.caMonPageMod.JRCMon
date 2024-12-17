@@ -7,7 +7,7 @@ public partial class DirectionSetting : NormalPageBase, IMultiPageFooterInfo
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.DIRECTION_SETTING;
 	public int SelectedIndex { get; set; }
-	public int MaxIndex { get; } = 3;
+	public int MaxIndex { get; } = 2;
 
 	public DirectionSetting() : base(ResourceManager.ResourceFiles.DirectionSetting_1)
 	{

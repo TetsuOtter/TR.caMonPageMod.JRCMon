@@ -7,7 +7,7 @@ public partial class LocationCorrectionPage : NormalPageBase, IMultiPageFooterIn
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.LOCATION_CORRECTION;
 	public int SelectedIndex { get; set; }
-	public int MaxIndex { get; } = 3;
+	public int MaxIndex { get; } = 2;
 
 	public LocationCorrectionPage() : base(ResourceManager.ResourceFiles.LocationCorrection_1)
 	{

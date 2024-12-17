@@ -49,17 +49,6 @@ public class FooterArea : Canvas
 			(_, Button btn) = AddButton(false, info.Label, isSelected, index, isEnabled: info.IsEnabled);
 			btn.Click += (s, e) => rootGrid.SetPageType(info.PageClass);
 		}
-
-		if (maxPageIndex > 0)
-		{
-			goNextPageButton = AddButton(true, "次画面", false, 0);
-			goNextPageButton.Value.Item2.Click += (s, e) => SetPageIndex(currentPageIndex + 1);
-
-			goPrevPageButton0 = AddButton(true, "前画面", false, 0, false);
-			goPrevPageButton0.Value.Item2.Click += (s, e) => SetPageIndex(currentPageIndex - 1);
-			goPrevPageButton1 = AddButton(true, "前画面", false, 1, false);
-			goPrevPageButton1.Value.Item2.Click += (s, e) => SetPageIndex(currentPageIndex - 1);
-		}
 	}
 
 	public FooterArea(
@@ -70,6 +59,17 @@ public class FooterArea : Canvas
 	) : this(rootGrid, footerInfoList, pageType)
 	{
 		this.maxPageIndex = maxPageIndex;
+
+		if (0 < maxPageIndex)
+		{
+			goNextPageButton = AddButton(true, "次画面", false, 0);
+			goNextPageButton.Value.Item2.Click += (s, e) => SetPageIndex(currentPageIndex + 1);
+
+			goPrevPageButton0 = AddButton(true, "前画面", false, 0, false);
+			goPrevPageButton0.Value.Item2.Click += (s, e) => SetPageIndex(currentPageIndex - 1);
+			goPrevPageButton1 = AddButton(true, "前画面", false, 1, false);
+			goPrevPageButton1.Value.Item2.Click += (s, e) => SetPageIndex(currentPageIndex - 1);
+		}
 	}
 
 	private (Image, Button) AddButton(
