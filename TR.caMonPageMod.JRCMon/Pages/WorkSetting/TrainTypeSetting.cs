@@ -1,9 +1,13 @@
-namespace TR.caMonPageMod.JRCMon.Pages.Other;
+using TR.caMonPageMod.JRCMon.Footer;
+
+namespace TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 
 [PageTypes.NormalPage("種別", ResourceManager.ResourceFiles.WorkSettingIcon)]
-public partial class TrainTypeSetting : NormalPageBase, IHoldRootGridInstance
+public partial class TrainTypeSetting : NormalPageBase, IMultiPageFooterInfo
 {
-	public RootGrid? RootGrid { get; set; }
+	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.SELECT_ANNOUNCE;
+	public int SelectedIndex { get; set; }
+	public int MaxIndex { get; } = 3;
 
 	public TrainTypeSetting() : base(ResourceManager.ResourceFiles.TrainTypeSetting)
 	{

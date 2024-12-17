@@ -1,7 +1,9 @@
 using TR.caMonPageMod.JRCMon.Pages.Correction;
 using TR.caMonPageMod.JRCMon.Pages.Maintenance;
 using TR.caMonPageMod.JRCMon.Pages.Other;
+using TR.caMonPageMod.JRCMon.Pages.OtherSeries;
 using TR.caMonPageMod.JRCMon.Pages.SystemControl;
+using TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 
 namespace TR.caMonPageMod.JRCMon.Footer;
 
@@ -18,6 +20,22 @@ public static class FooterType
 	[
 		new("表示設定", typeof(AppSettingPage)),
 		new("戻る", typeof(EmbeddedManual)),
+	];
+
+	public static IReadOnlyList<FooterInfo> SELECT_CAR_UNIT { get; } =
+	[
+		new("ﾕﾆｯﾄ設定", typeof(SelectCarUnit)),
+		new("応急ﾏﾆｭｱ", typeof(EmbeddedManual)),
+	];
+	public static IReadOnlyList<FooterInfo> SELECT_MY_CAR { get; } =
+	[
+		new("自車設定", typeof(SelectMyCar)),
+		new("ﾕﾆｯﾄ設定", typeof(SelectCarUnit)),
+	];
+	public static IReadOnlyList<FooterInfo> SELECT_OTHER_CAR { get; } =
+	[
+		new("車両選択", typeof(SelectOtherCar)),
+		new("ﾕﾆｯﾄ設定", typeof(SelectCarUnit)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CLOCK_CORRECTION { get; } =
@@ -46,6 +64,11 @@ public static class FooterType
 		new("行先設定", typeof(DirectionSetting)),
 		new("戻る", typeof(DirectionMenu)),
 	];
+	public static IReadOnlyList<FooterInfo> TRAIN_TYPE_SETTING { get; } =
+	[
+		new("行先設定", typeof(TrainTypeSetting)),
+		new("戻る", typeof(DirectionMenu)),
+	];
 	public static IReadOnlyList<FooterInfo> WORK_SETTING { get; } =
 	[
 		new("号車", typeof(MenuPage)),
@@ -61,21 +84,38 @@ public static class FooterType
 
 	public static IReadOnlyList<FooterInfo> OTHER_SERIES_BASE { get; } =
 	[
-		new("徐行情報", typeof(MenuPage)),
+		new("徐行情報", typeof(OtherSeriesReduceSpeedPage)),
 		new("形式変更", typeof(MenuPage)),
 		new("地点補正", typeof(LocationCorrectionPage)),
-		new("列番設定", typeof(MenuPage)),
-		new("行先設定", typeof(MenuPage)),
-		new("放送空調", typeof(MenuPage)),
-		new("故障状態", typeof(MenuPage)),
+		new("列番設定", typeof(OtherSeriesWorkSetting)),
+		new("行先設定", typeof(OtherSeriesDirection)),
+		new("放送空調", typeof(OtherSeriesAnnounceACPage)),
+		new("故障状態", typeof(OtherSeriesTrouble)),
+	];
+	public static IReadOnlyList<FooterInfo> OTHER_SERIES_ANNOUNCE_AC { get; } =
+	[
+		new("形式変更", typeof(MenuPage)),
+		new("地点補正", typeof(LocationCorrectionPage)),
+		new("副設定", typeof(OtherSeriesSubSettingPage)),
+		new("列番設定", typeof(OtherSeriesWorkSetting)),
+		new("行先設定", typeof(OtherSeriesDirection)),
+		new("放送空調", typeof(OtherSeriesAnnounceACPage)),
+		new("故障状態", typeof(OtherSeriesTrouble)),
+	];
+	public static IReadOnlyList<FooterInfo> OTHER_SERIES_ANNOUNCE_AC_SUB { get; } =
+	[
+		new("副設定", typeof(OtherSeriesSubSettingPage)),
+		new("列番設定", typeof(OtherSeriesWorkSetting)),
+		new("行先設定", typeof(OtherSeriesDirection)),
+		new("放送空調", typeof(OtherSeriesAnnounceACPage), IsForceSelected: true),
+		new("故障状態", typeof(OtherSeriesTrouble)),
 	];
 	public static IReadOnlyList<FooterInfo> OTHER_SERIES_WORK_SETTING { get; } =
 	[
-		// 列番設定ページでのみ表示
-		// new("列番設定", typeof(MenuPage)),
-		new("行先設定", typeof(MenuPage)),
-		new("放送空調", typeof(MenuPage)),
-		new("故障状態", typeof(MenuPage)),
+		new("列番設定", typeof(OtherSeriesWorkSetting)),
+		new("行先設定", typeof(OtherSeriesDirection)),
+		new("放送空調", typeof(OtherSeriesAnnounceACPage)),
+		new("故障状態", typeof(OtherSeriesTrouble)),
 	];
 
 	public static IReadOnlyList<FooterInfo> MAINTENANCE_MENU { get; } =
@@ -113,6 +153,11 @@ public static class FooterType
 		new("車両状態", typeof(MenuPage)),
 		new("運転情報", typeof(MenuPage)),
 		new("メニュー", typeof(MenuPage)),
+	];
+	public static IReadOnlyList<FooterInfo> SELECT_ANNOUNCE { get; } =
+	[
+		new("自動放送", typeof(SelectAnnounce)),
+		new("戻る", typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE { get; } =

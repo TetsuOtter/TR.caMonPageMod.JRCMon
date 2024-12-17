@@ -5,13 +5,11 @@ using TR.caMonPageMod.JRCMon.Footer;
 namespace TR.caMonPageMod.JRCMon.Pages.SystemControl;
 
 [PageTypes.FullScreenPage]
-public partial class AppInfoPage : FullScreenPageBase, IHoldRootGridInstance, IFooterInfo
+public partial class AppInfoPage : FullScreenPageBase, IFooterInfo
 {
-	public RootGrid? RootGrid { get; set; }
+	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.APP_INFO;
 
-  public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.APP_INFO;
-
-  readonly Label AppVersionLabel = ComponentFactory.Get1XLongLabel();
+	readonly Label AppVersionLabel = ComponentFactory.Get1XLongLabel();
 
 	public AppInfoPage() : base(ResourceManager.ResourceFiles.AppInfo)
 	{

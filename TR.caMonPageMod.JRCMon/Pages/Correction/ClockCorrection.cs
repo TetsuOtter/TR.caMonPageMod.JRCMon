@@ -1,9 +1,11 @@
+using TR.caMonPageMod.JRCMon.Footer;
+
 namespace TR.caMonPageMod.JRCMon.Pages.Correction;
 
 [PageTypes.NormalPage("時刻", ResourceManager.ResourceFiles.CorrectionIcon)]
-public partial class ClockCorrection : NormalPageBase, IHoldRootGridInstance
+public partial class ClockCorrection : NormalPageBase, IFooterInfo
 {
-	public RootGrid? RootGrid { get; set; }
+	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.CLOCK_CORRECTION;
 
 	public ClockCorrection() : base(ResourceManager.ResourceFiles.ClockCorrection)
 	{
