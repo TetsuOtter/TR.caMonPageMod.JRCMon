@@ -121,7 +121,7 @@ public static class FooterType
 	public static IReadOnlyList<FooterInfo> MAINTENANCE_MENU { get; } =
 	[
 		new("検修ﾒﾆｭｰ", typeof(MaintenanceMenuPage)),
-		new("ﾒﾆｭｰ", typeof(MenuPage)),
+		new("メニュー", typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> PERFORMANCE_RECORD { get; } =
 	[
