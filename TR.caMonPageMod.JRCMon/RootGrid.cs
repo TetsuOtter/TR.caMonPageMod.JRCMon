@@ -79,7 +79,7 @@ public class RootGrid : Grid
 			{
 				SetRowSpan(cc, 2);
 			}
-			cc.Height = Constants.BODY_HEIGHT - (hasFooter ? Constants.FOOTER_HEIGHT : 0);
+			cc.Height = Constants.BODY_HEIGHT + (hasFooter ? 0 : Constants.FOOTER_HEIGHT);
 			Children.Add(HeaderArea);
 			Children.Add(cc);
 			HeaderArea.OnChangePage(pageAttribute);
