@@ -8,7 +8,7 @@ namespace TR.caMonPageMod.JRCMon.Footer;
 public class FooterArea : Canvas
 {
 	private int currentPageIndex = 0;
-	private int maxPageIndex = 0;
+	private readonly int maxPageIndex = 0;
 	public event EventHandler<int>? PageChanged;
 
 	private const int FOOTER_AREA_TOP = 1;
@@ -40,13 +40,13 @@ public class FooterArea : Canvas
 		foreach (var (info, index) in footerInfoList.Where(v => v.IsLeftAligned).Select((f, i) => (f, i)))
 		{
 			bool isSelected = info.IsForceSelected || pageType.Equals(info.PageClass) || pageType.IsSubclassOf(info.PageClass);
-			(_, Button btn) = AddButton(true, info.Label, isSelected, index);
+			(_, Button btn) = AddButton(true, info.Label, isSelected, index, isEnabled: info.IsEnabled);
 			btn.Click += (s, e) => rootGrid.SetPageType(info.PageClass);
 		}
 		foreach (var (info, index) in footerInfoList.Where(v => !v.IsLeftAligned).Reverse().Select((f, i) => (f, i)))
 		{
 			bool isSelected = info.IsForceSelected || pageType.Equals(info.PageClass) || pageType.IsSubclassOf(info.PageClass);
-			(_, Button btn) = AddButton(false, info.Label, isSelected, index);
+			(_, Button btn) = AddButton(false, info.Label, isSelected, index, isEnabled: info.IsEnabled);
 			btn.Click += (s, e) => rootGrid.SetPageType(info.PageClass);
 		}
 
@@ -77,7 +77,8 @@ public class FooterArea : Canvas
 		string labelStr,
 		bool isSelected,
 		int index,
-		bool addToChildren = true
+		bool addToChildren = true,
+		bool isEnabled = true
 	) {
 		double imgX = (Constants.FOOTER_MENU_BUTTON_IMG_WIDTH + Constants.FOOTER_MENU_BUTTON_IMG_SPACING) * index;
 		double imgXR = Constants.DISPLAY_WIDTH - Constants.FOOTER_MENU_BUTTON_IMG_WIDTH - imgX;
@@ -118,6 +119,11 @@ public class FooterArea : Canvas
 		label.FontSize = Constants.FONT_SIZE_FOOTER;
 		label.Content = labelStr;
 		btn.Content = label;
+		btn.IsEnabled = isEnabled;
+		if (!isEnabled)
+		{
+			label.Foreground = Brushes.Gray;
+		}
 
 		if (addToChildren)
 		{

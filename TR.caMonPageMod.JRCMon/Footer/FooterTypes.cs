@@ -7,7 +7,7 @@ using TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 
 namespace TR.caMonPageMod.JRCMon.Footer;
 
-public record FooterInfo(string Label, Type PageClass, bool IsForceSelected = false, bool IsLeftAligned = false);
+public record FooterInfo(string Label, Type PageClass, bool IsForceSelected = false, bool IsLeftAligned = false, bool IsEnabled = true);
 
 public static class FooterType
 {
@@ -71,21 +71,21 @@ public static class FooterType
 	];
 	public static IReadOnlyList<FooterInfo> WORK_SETTING { get; } =
 	[
-		new("号車", typeof(MenuPage)),
-		new("行先設定", typeof(MenuPage)),
-		new("列番設定", typeof(MenuPage)),
+		new("号車", typeof(MenuPage), IsEnabled: false),
+		new("行先設定", typeof(MenuPage), IsEnabled: false),
+		new("列番設定", typeof(MenuPage), IsEnabled: false),
 		new("メニュー", typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> DRIVER_WORK_SETTING { get; } =
 	[
-		new("列番設定", typeof(MenuPage)),
+		new("列番設定", typeof(MenuPage), IsEnabled: false),
 		new("メニュー", typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> OTHER_SERIES_BASE { get; } =
 	[
 		new("徐行情報", typeof(OtherSeriesReduceSpeedPage)),
-		new("形式変更", typeof(MenuPage)),
+		new("形式変更", typeof(MenuPage), IsEnabled: false),
 		new("地点補正", typeof(LocationCorrectionPage)),
 		new("列番設定", typeof(OtherSeriesWorkSetting)),
 		new("行先設定", typeof(OtherSeriesDirection)),
@@ -94,7 +94,7 @@ public static class FooterType
 	];
 	public static IReadOnlyList<FooterInfo> OTHER_SERIES_ANNOUNCE_AC { get; } =
 	[
-		new("形式変更", typeof(MenuPage)),
+		new("形式変更", typeof(MenuPage), IsEnabled: false),
 		new("地点補正", typeof(LocationCorrectionPage)),
 		new("副設定", typeof(OtherSeriesSubSettingPage)),
 		new("列番設定", typeof(OtherSeriesWorkSetting)),
@@ -137,60 +137,59 @@ public static class FooterType
 
 	public static IReadOnlyList<FooterInfo> CAR_INFO { get; } =
 	[
-		new("起動制動", typeof(MenuPage)),
-		new("三相給電", typeof(MenuPage)),
-		new("制動確認", typeof(MenuPage)),
-		new("起動確認", typeof(MenuPage)),
-		new("ｽｲｯﾁ状態", typeof(MenuPage)),
-		new("戻る", typeof(MenuPage)),
+		new("起動制動", typeof(MenuPage), IsEnabled: false),
+		new("三相給電", typeof(MenuPage), IsEnabled: false),
+		new("制動確認", typeof(MenuPage), IsEnabled: false),
+		new("起動確認", typeof(MenuPage), IsEnabled: false),
+		new("ｽｲｯﾁ状態", typeof(MenuPage), IsEnabled: false),
+		new("戻る", typeof(MenuPage), IsEnabled: false),
 	];
 	public static IReadOnlyList<FooterInfo> DRIVER_BASE { get; } =
 	[
-		new("徐行情報", typeof(MenuPage)),
+		new("徐行情報", typeof(MenuPage), IsEnabled: false),
 		new("地点補正", typeof(LocationCorrectionPage)),
-		// TODO: どのページに飛ぶのか確認して修正
 		new("運行設定", typeof(DirectionMenu)),
-		new("車両状態", typeof(MenuPage)),
-		new("運転情報", typeof(MenuPage)),
+		new("車両状態", typeof(MenuPage), IsEnabled: false),
+		new("運転情報", typeof(MenuPage), IsEnabled: false),
 		new("メニュー", typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> SELECT_ANNOUNCE { get; } =
 	[
 		new("自動放送", typeof(SelectAnnounce)),
-		new("戻る", typeof(MenuPage)),
+		new("戻る", typeof(EmbeddedManual)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE { get; } =
 	[
-		new("車両状態", typeof(MenuPage)),
+		new("車両状態", typeof(MenuPage), IsEnabled: false),
 		new("地点補正", typeof(LocationCorrectionPage)),
-		new("空調制御", typeof(MenuPage)),
-		new("サービス", typeof(MenuPage)),
-		new("車掌情報", typeof(MenuPage)),
+		new("空調制御", typeof(MenuPage), IsEnabled: false),
+		new("サービス", typeof(MenuPage), IsEnabled: false),
+		new("車掌情報", typeof(MenuPage), IsEnabled: false),
 		new("メニュー", typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_INFO { get; } =
 	[
-		new("運行設定", typeof(MenuPage)),
+		new("運行設定", typeof(MenuPage), IsEnabled: false),
 
-		new("車両状態", typeof(MenuPage)),
+		new("車両状態", typeof(MenuPage), IsEnabled: false),
 		new("地点補正", typeof(LocationCorrectionPage)),
-		new("空調制御", typeof(MenuPage)),
-		new("サービス", typeof(MenuPage)),
-		new("車掌情報", typeof(MenuPage)),
+		new("空調制御", typeof(MenuPage), IsEnabled: false),
+		new("サービス", typeof(MenuPage), IsEnabled: false),
+		new("車掌情報", typeof(MenuPage), IsEnabled: false),
 		new("メニュー", typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_AIR_COND { get; } =
 	[
-		new("空調ﾓｰﾄﾞ", typeof(MenuPage), IsLeftAligned: true),
-		new("換気", typeof(MenuPage)),
-		new("副設定", typeof(MenuPage)),
-		new("横流ﾌｧﾝ", typeof(MenuPage)),
+		new("空調ﾓｰﾄﾞ", typeof(MenuPage), IsLeftAligned: true, IsEnabled: false),
+		new("換気", typeof(MenuPage), IsEnabled: false),
+		new("副設定", typeof(MenuPage), IsEnabled: false),
+		new("横流ﾌｧﾝ", typeof(MenuPage), IsEnabled: false),
 
-		new("空調制御", typeof(MenuPage), IsForceSelected: true),
-		new("サービス", typeof(MenuPage)),
-		new("車掌情報", typeof(MenuPage)),
+		new("空調制御", typeof(MenuPage), IsForceSelected: true, IsEnabled: false),
+		new("サービス", typeof(MenuPage), IsEnabled: false),
+		new("車掌情報", typeof(MenuPage), IsEnabled: false),
 		new("メニュー", typeof(MenuPage)),
 	];
 }
