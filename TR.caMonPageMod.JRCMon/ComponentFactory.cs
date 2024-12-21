@@ -1,6 +1,9 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
+
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon;
 
@@ -58,12 +61,8 @@ public class ComponentFactory
 		get
 		{
 			FrameworkElementFactory border = new(typeof(Border));
-#if DEBUG
-			border.SetValue(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0, 0)));
-#else
-			border.SetValue(Border.BackgroundProperty, Brushes.Transparent);
-#endif
 			border.SetValue(Border.BorderBrushProperty, Brushes.Transparent);
+			border.SetBinding(Border.BackgroundProperty, new Binding("Background") { RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent) });
 
 			FrameworkElementFactory contentPresenter = new(typeof(ContentPresenter));
 			contentPresenter.SetValue(ContentPresenter.ContentProperty, new TemplateBindingExtension(Button.ContentProperty));
@@ -78,11 +77,16 @@ public class ComponentFactory
 			return template;
 		}
 	}
-	private static readonly Style EmptyButtonStyle = new(typeof(Button))
+	public static readonly Style EmptyButtonStyle = new(typeof(Button))
 	{
 		Setters =
 		{
 			new Setter(Control.TemplateProperty, template),
+			#if DEBUG
+			new Setter(Control.BackgroundProperty, new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0, 0))),
+			#else
+			new Setter(Control.BackgroundProperty, Brushes.Transparent),
+			#endif
 		},
 	};
 
@@ -95,16 +99,23 @@ public class ComponentFactory
 		VerticalAlignment = VerticalAlignment.Top,
 		HorizontalAlignment = HorizontalAlignment.Left,
 	};
-	public static Button GetFooterMenuButton(int right, bool isFullPage = false) => new()
+
+	public static Button GetBasicButton(Thickness margin, int Width, int Height, bool isSmall = false, Color? color = null)
 	{
-		Style = EmptyButtonStyle,
-		Margin = new(
-			Constants.DISPLAY_WIDTH - Constants.FOOTER_MENU_BUTTON_WIDTH - right,
-			(isFullPage ? Constants.DISPLAY_HEIGHT : Constants.BODY_HEIGHT) - Constants.FOOTER_MENU_BUTTON_HEIGHT - 5,
-			right,
-			5
-		),
-		Width = Constants.FOOTER_MENU_BUTTON_WIDTH,
-		Height = Constants.FOOTER_MENU_BUTTON_HEIGHT,
-	};
+		Button button = GetEmptyButton(margin, Width, Height);
+		button.Background = new ImageBrush(ButtonBaseImage.GetButtonImage(Width, Height, isSmall, WpfColorToDrawingColor(color ?? BASIC_BUTTON_COLOR)))
+		{
+			Stretch = Stretch.Fill,
+		};
+		RenderOptions.SetEdgeMode(button, EdgeMode.Aliased);
+		RenderOptions.SetBitmapScalingMode(button, BitmapScalingMode.NearestNeighbor);
+
+		return button;
+	}
+	public static Button GetBasicButton(Thickness margin, int Width, int Height, ContentControl label, bool isSmall = false, Color? color = null)
+	{
+		Button button = GetBasicButton(margin, Width, Height, isSmall, color);
+		button.Content = label;
+		return button;
+	}
 }

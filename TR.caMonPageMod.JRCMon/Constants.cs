@@ -14,6 +14,7 @@ static internal class Constants
 	public static readonly FontFamily FONT_FAMILY = new("JF Dot Ayu Mincho 18");
 	public const int FONT_SIZE_FOOTER = 16;
 	public const int FONT_SIZE_1X = 18;
+	public const int FONT_SIZE_1_HALF_X = 24;
 	public const int FONT_SIZE_2X = 36;
 
 	public const int FOOTER_LINE_HEIGHT = 2;
