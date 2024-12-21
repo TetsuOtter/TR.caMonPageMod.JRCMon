@@ -42,11 +42,16 @@ public static class ResourceManager
 		SelectOtherCar,
 		TrainTypeSetting,
 
+		CarInfoIcon,
+		ConductorIcon,
 		CorrectionIcon,
+		DriverIcon,
+		EmbeddedManualIcon,
 		MaintenanceIcon,
 		MenuIcon,
 		OccupancyRateIcon,
 		OtherSeriesIcon,
+		ToCIcon,
 		WorkSettingIcon,
 
 		FooterSW_OFF,
@@ -92,11 +97,16 @@ public static class ResourceManager
 		[ResourceFiles.SelectOtherCar] = ["Body", "SelectOtherCar.png"],
 		[ResourceFiles.TrainTypeSetting] = ["Body", "TrainTypeSetting.png"],
 
+		[ResourceFiles.CarInfoIcon] = ["Header", "PageIcon", "CarInfo.png"],
+		[ResourceFiles.ConductorIcon] = ["Header", "PageIcon", "Conductor.png"],
 		[ResourceFiles.CorrectionIcon] = ["Header", "PageIcon", "Correction.png"],
+		[ResourceFiles.DriverIcon] = ["Header", "PageIcon", "Driver.png"],
+		[ResourceFiles.EmbeddedManualIcon] = ["Header", "PageIcon", "EmbeddedManual.png"],
 		[ResourceFiles.MaintenanceIcon] = ["Header", "PageIcon", "Maintenance.png"],
 		[ResourceFiles.MenuIcon] = ["Header", "PageIcon", "Menu.png"],
 		[ResourceFiles.OccupancyRateIcon] = ["Header", "PageIcon", "OccupancyRate.png"],
 		[ResourceFiles.OtherSeriesIcon] = ["Header", "PageIcon", "OtherSeries.png"],
+		[ResourceFiles.ToCIcon] = ["Header", "PageIcon", "ToC.png"],
 		[ResourceFiles.WorkSettingIcon] = ["Header", "PageIcon", "WorkSetting.png"],
 
 		[ResourceFiles.FooterSW_OFF] = ["Parts", "FooterSW_OFF.png"],
