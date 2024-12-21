@@ -21,6 +21,12 @@ public class ComponentFactory
 #endif
 	};
 	public static Label Get1XLabel(Brush? foreground = null) => GetBasicLabel(foreground);
+	public static Label Get1HalfXLabel(Brush? foreground = null)
+	{
+		Label label = GetBasicLabel(foreground);
+		label.FontSize = Constants.FONT_SIZE_1_HALF_X;
+		return label;
+	}
 	public static Label Get2XLabel(Brush? foreground = null)
 	{
 		Label label = GetBasicLabel(foreground);

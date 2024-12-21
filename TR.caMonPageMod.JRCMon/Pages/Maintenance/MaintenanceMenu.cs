@@ -13,17 +13,22 @@ public partial class MaintenanceMenuPage : NormalPageBase, IHoldRootGridInstance
 
 	public MaintenanceMenuPage() : base(ResourceManager.ResourceFiles.MaintenanceMenu)
 	{
-		AddButtonWithXY<PerformanceRecordPage>(191, 230);
-		AddButtonWithXY<FrameworkElement>(508, 230, true);
+		AddButtonWithXY<PerformanceRecordPage>(191, 230, "性能記録");
+		AddButtonWithXY<FrameworkElement>(508, 230, "検修情報", true);
 	}
 
-	void AddButtonWithXY<T>(int x, int y, bool isNotImplemented = false) where T: FrameworkElement, new()
+	void AddButtonWithXY<T>(int x, int y, string labelStr, bool isNotImplemented = false) where T: FrameworkElement, new()
 	{
-		Button btn = ComponentFactory.GetEmptyButton(new(x, y, 0, 0), 113, 67);
+		Label label = ComponentFactory.Get1HalfXLabel();
+		Button btn = ComponentFactory.GetBasicButton(new(x, y, 0, 0), 113, 67);
 		if (isNotImplemented)
-			btn.Content = "未実装";
+			label.Content = $"未実装\n{labelStr}";
 		else
+		{
+			label.Content = labelStr;
 			btn.Click += (s, e) => RootGrid?.SetPageType<T>();
+		}
+		btn.Content = label;
 		Children.Add(btn);
 	}
 }

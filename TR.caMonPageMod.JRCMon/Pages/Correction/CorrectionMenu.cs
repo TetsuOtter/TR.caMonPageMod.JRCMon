@@ -13,17 +13,22 @@ public partial class CorrectionMenu : NormalPageBase, IHoldRootGridInstance, IFo
 
 	public CorrectionMenu() : base(ResourceManager.ResourceFiles.CorrectionMenu)
 	{
-		AddButtonWithXY<ClockCorrection>(157, 230);
-		AddButtonWithXY<FrameworkElement>(532, 230, true);
+		AddButtonWithXY<ClockCorrection>(157, 230, "時刻設定");
+		AddButtonWithXY<FrameworkElement>(532, 230, "乗車率体重", true);
 	}
 
-	void AddButtonWithXY<T>(int x, int y, bool isNotImplemented = false) where T: FrameworkElement, new()
+	void AddButtonWithXY<T>(int x, int y, string labelStr, bool isNotImplemented = false) where T: FrameworkElement, new()
 	{
-		Button btn = ComponentFactory.GetEmptyButton(new(x, y, 0, 0), 132, 68);
+		Label label = ComponentFactory.Get1HalfXLabel();
+		Button btn = ComponentFactory.GetBasicButton(new(x, y, 0, 0), 132, 68);
 		if (isNotImplemented)
-			btn.Content = "未実装";
+			label.Content = $"未実装\n{labelStr}";
 		else
+		{
+			label.Content = labelStr;
 			btn.Click += (s, e) => RootGrid?.SetPageType<T>();
+		}
+		btn.Content = label;
 		Children.Add(btn);
 	}
 }
