@@ -50,6 +50,9 @@ public class ComponentFactory
 		return label;
 	}
 
+	public static readonly Color BASIC_BUTTON_COLOR = Color.FromArgb(0xFF, 0x0B, 0x62, 0xED);
+	public static System.Drawing.Color WpfColorToDrawingColor(Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+
 	private static ControlTemplate template
 	{
 		get
