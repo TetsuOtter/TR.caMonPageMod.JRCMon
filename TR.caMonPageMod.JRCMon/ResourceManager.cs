@@ -56,6 +56,10 @@ public static class ResourceManager
 
 		FooterSW_OFF,
 		FooterSW_ON,
+		CircleSW,
+		RoundSW_S,
+		RoundSW_M,
+		RoundSW_L,
 	}
 
 	public static readonly Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
@@ -111,6 +115,10 @@ public static class ResourceManager
 
 		[ResourceFiles.FooterSW_OFF] = ["Parts", "FooterSW_OFF.png"],
 		[ResourceFiles.FooterSW_ON] = ["Parts", "FooterSW_ON.png"],
+		[ResourceFiles.CircleSW] = ["Parts", "CircleSW.png"],
+		[ResourceFiles.RoundSW_S] = ["Parts", "RoundSW_S.png"],
+		[ResourceFiles.RoundSW_M] = ["Parts", "RoundSW_M.png"],
+		[ResourceFiles.RoundSW_L] = ["Parts", "RoundSW_L.png"],
 	};
 
 	public static string GetResourcePath(ResourceFiles resourceFile)
