@@ -1,3 +1,4 @@
+using System.IO;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -124,10 +125,16 @@ public static class ResourceManager
 	public static string GetResourcePath(ResourceFiles resourceFile)
 		=> RESOURCE_PATH_PREFIX + string.Join('.', ResourceFileNames[resourceFile]);
 
+	public static Stream GetResourceAsStream(ResourceFiles resourceFile)
+	{
+		string path = GetResourcePath(resourceFile);
+		Stream? stream = CurrentAssembly.GetManifestResourceStream(path) ?? throw new($"Resource {resourceFile} not found.");
+		return stream;
+	}
 	public static BitmapImage GetResourceAsBitmapImage(ResourceFiles resourceFile)
 	{
 		BitmapImage bitmapImage = new();
-		using (var stream = CurrentAssembly.GetManifestResourceStream(GetResourcePath(resourceFile)))
+		using (var stream = GetResourceAsStream(resourceFile))
 		{
 			bitmapImage.BeginInit();
 			bitmapImage.StreamSource = stream;
