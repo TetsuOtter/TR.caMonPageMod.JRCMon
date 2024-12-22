@@ -107,8 +107,6 @@ public class ComponentFactory
 		{
 			Stretch = Stretch.Fill,
 		};
-		RenderOptions.SetEdgeMode(button, EdgeMode.Aliased);
-		RenderOptions.SetBitmapScalingMode(button, BitmapScalingMode.NearestNeighbor);
 
 		return button;
 	}
