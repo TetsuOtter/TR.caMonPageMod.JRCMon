@@ -46,6 +46,12 @@ public class ComponentFactory
 		label.LayoutTransform = new ScaleTransform(1, 2);
 		return label;
 	}
+	public static Label Get1HalfXLongLabel(Brush? foreground = null)
+	{
+		Label label = Get1HalfXLabel(foreground);
+		label.LayoutTransform = new ScaleTransform(1, 1.5);
+		return label;
+	}
 	public static Label Get2XLongLabel(Brush? foreground = null)
 	{
 		Label label = GetBasicLabel(foreground);

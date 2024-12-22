@@ -12,7 +12,6 @@ public static class ResourceManager
 	{
 		HeaderBase,
 
-		AppInfo,
 		AppSetting,
 		CarDetect,
 		CarDetect_1,
@@ -71,7 +70,6 @@ public static class ResourceManager
 	{
 		[ResourceFiles.HeaderBase] = ["Header", "Base.png"],
 
-		[ResourceFiles.AppInfo] = ["Body", "AppInfo.png"],
 		[ResourceFiles.AppSetting] = ["Body", "AppSetting.png"],
 		[ResourceFiles.CarDetect] = ["Body", "CarDetect.png"],
 		[ResourceFiles.CarDetect_1] = ["Body", "CarDetect_1.png"],
