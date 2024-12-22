@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 using TR.caMonPageMod.JRCMon.Parts;
 
@@ -113,6 +114,23 @@ public class ComponentFactory
 	public static Button GetBasicButton(Thickness margin, int Width, int Height, ContentControl label, bool isSmall = false, Color? color = null)
 	{
 		Button button = GetBasicButton(margin, Width, Height, isSmall, color);
+		button.Content = label;
+		return button;
+	}
+
+	public static Button GetRedReplacedImgButton(ResourceManager.ResourceFiles resource, Thickness margin, Color? color = null)
+	{
+		BitmapImage img = RedReplacer.GetImage(resource, WpfColorToDrawingColor(color ?? Colors.Black));
+		Button button = GetEmptyButton(margin, img.PixelWidth, img.PixelHeight);
+		button.Background = new ImageBrush(img)
+		{
+			Stretch = Stretch.Fill,
+		};
+		return button;
+	}
+	public static Button GetRedReplacedImgButton(ResourceManager.ResourceFiles resource, Thickness margin, ContentControl label, Color? color = null)
+	{
+		Button button = GetRedReplacedImgButton(resource, margin, color);
 		button.Content = label;
 		return button;
 	}
