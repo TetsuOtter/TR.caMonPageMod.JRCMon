@@ -32,6 +32,7 @@ public static class ButtonBaseImage
 		img.StreamSource = memory;
 		img.CacheOption = BitmapCacheOption.OnLoad;
 		img.EndInit();
+		img.Freeze();
 		cache[info] = img;
 		return img;
 	}
