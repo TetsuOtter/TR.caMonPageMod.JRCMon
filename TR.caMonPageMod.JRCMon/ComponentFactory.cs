@@ -12,6 +12,8 @@ public class ComponentFactory
 {
 	public static Label GetBasicLabel(Brush? foreground = null) => new()
 	{
+		Margin = new(0),
+		Padding = new(0),
 		FontFamily = Constants.FONT_FAMILY,
 		FontSize = Constants.FONT_SIZE_1X,
 		Foreground = foreground ?? Brushes.White,

@@ -17,6 +17,7 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 	const int APP_VERSION_BORDER_WIDTH = 4;
 
 	static readonly Thickness AppVersionLabelMargin = new(162, 104, 0, 0);
+	static readonly Thickness AppVersionLabelPadding = new(8, 0, 8, 0);
 	static readonly Thickness AppVersionBorderMargin = new(AppVersionLabelMargin.Left - APP_VERSION_BORDER_WIDTH, AppVersionLabelMargin.Top - APP_VERSION_BORDER_WIDTH, 0, 0);
 	static readonly Thickness AppVersionTitleLabelMargin = new(TITLE_LABEL_LEFT_MARGIN, AppVersionLabelMargin.Top + 2, 0, 0);
 	static readonly Thickness AppVersionUpdateButtonMargin = new(157, 168, 0, 0);
@@ -60,6 +61,8 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 		AppVersionLabel.Height = APP_VERSION_LABEL_HEIGHT / 1.5;
 		AppVersionLabel.Width = APP_VERSION_LABEL_WIDTH;
 		AppVersionLabel.Margin = AppVersionLabelMargin;
+		AppVersionLabel.Padding = AppVersionLabelPadding;
+		AppVersionLabel.VerticalContentAlignment = VerticalAlignment.Center;
 		AppVersionLabel.HorizontalContentAlignment = HorizontalAlignment.Right;
 		AppVersionLabel.Content = ResourceManager.CurrentAssembly.GetName().Version?.ToString() ?? "Unknown";
 		Children.Add(AppVersionLabel);
