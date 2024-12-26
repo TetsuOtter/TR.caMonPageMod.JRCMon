@@ -14,9 +14,14 @@ public class RootGrid : Grid
 	public event EventHandler? BackToHome;
 	public event EventHandler? CloseApp;
 
-	private readonly HeaderArea HeaderArea = new();
+	private readonly AppState State;
+
+	private readonly HeaderArea HeaderArea;
 	public RootGrid()
 	{
+		State = new();
+		HeaderArea = new(State);
+
 		Height = Constants.DISPLAY_HEIGHT;
 		Width = Constants.DISPLAY_WIDTH;
 		Background = Brushes.Black;
@@ -28,7 +33,7 @@ public class RootGrid : Grid
 		SetPageType<Pages.SystemControl.MenuPage>();
 	}
 
-	public void SetPageType<T>() where T: FrameworkElement, new()
+	public void SetPageType<T>() where T : FrameworkElement, new()
 	{
 		Children.Clear();
 		FrameworkElement cc = new T
