@@ -15,7 +15,8 @@ class HeaderArea : Grid
 	const int TEXT_AREA_HEIGHT = 42;
 	const int TRAIN_NUMBER_LR_PADDING = 8;
 	const int TRAIN_INFO_TB_PADDING = 1;
-	const int TRAIN_INFO_LEFT_PADDING = 16;
+	const int TRAIN_TYPE_LEFT_PADDING = Constants.FONT_SIZE_1X;
+	const int TRAIN_DEST_LEFT_PADDING = Constants.FONT_SIZE_1X * 2;
 
 	readonly Dictionary<ResourceManager.ResourceFiles, BitmapImage> IconImageCache = [];
 	readonly Image PageIcon = new()
@@ -62,7 +63,7 @@ class HeaderArea : Grid
 		Children.Add(TrainNumber);
 
 		TrainType.Margin = new(316, TEXT_AREA_TOP, 0, 0);
-		TrainType.Padding = new(TRAIN_INFO_LEFT_PADDING, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
+		TrainType.Padding = new(TRAIN_TYPE_LEFT_PADDING, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
 		TrainType.Height = TEXT_AREA_HEIGHT / 2;
 		TrainType.Width = 165;
 		TrainType.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
@@ -70,7 +71,7 @@ class HeaderArea : Grid
 		Children.Add(TrainType);
 
 		TrainDirection.Margin = new(524, TEXT_AREA_TOP, 0, 0);
-		TrainDirection.Padding = new(TRAIN_INFO_LEFT_PADDING, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
+		TrainDirection.Padding = new(TRAIN_DEST_LEFT_PADDING, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
 		TrainDirection.Height = TEXT_AREA_HEIGHT / 2;
 		TrainDirection.Width = 155;
 		TrainDirection.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
