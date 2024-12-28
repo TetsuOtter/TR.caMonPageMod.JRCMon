@@ -185,10 +185,12 @@ public class FooterArea : Canvas
 		label.Content = labelStr;
 		btn.Content = label;
 		btn.IsEnabled = isEnabled;
+#if DEBUG
 		if (!isEnabled)
 		{
 			label.Foreground = Brushes.Gray;
 		}
+#endif
 
 		if (addToChildren)
 		{
