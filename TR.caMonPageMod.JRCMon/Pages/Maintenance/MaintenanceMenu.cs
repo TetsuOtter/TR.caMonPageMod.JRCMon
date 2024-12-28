@@ -24,14 +24,14 @@ public partial class MaintenanceMenuPage : Canvas, IHoldRootGridInstance, IFoote
 	public MaintenanceMenuPage()
 	{
 		AddButton<PerformanceRecordPage>(0, 0, "性能記録");
-		AddButton(1, 0, "試運転");
+		AddButton<MaintenanceTestRun>(1, 0, "試運転");
 		AddButton(2, 0, "DI/DO".ToWide());
-		AddButton(3, 0, "伝送情報");
+		AddButton<MaintenanceCommState>(3, 0, "伝送情報");
 		AddButton<EmbeddedManual>(4, 0, ResourceManager.ResourceFiles.EmbeddedManualIcon, "応急ﾏﾆｭｱﾙ");
 
-		AddButton(0, 1, "空調状態");
+		AddButton<MaintenanceAC>(0, 1, "空調状態");
 		AddButton(1, 1, "機器状態");
-		AddButton(2, 1, "記録内容");
+		AddButton<MaintenanceRecordList>(2, 1, "記録内容");
 		AddButton(3, 1, "設定状態");
 	}
 

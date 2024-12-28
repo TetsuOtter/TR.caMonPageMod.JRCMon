@@ -92,6 +92,14 @@ public static class FooterType
 		new FooterInfoPage(typeof(MaintenanceMenuPage)),
 	];
 
+	public static IReadOnlyList<FooterInfo> MAINTENANCE_AC { get; } =
+	[
+		new FooterInfoDummy("ﾛｰﾙﾌｨﾙﾀ"),
+		new FooterInfoDummy("内蔵ﾋｰﾀ"),
+		new FooterInfoPage(typeof(MaintenanceAC)),
+		new FooterInfoPage(typeof(MaintenanceMenuPage)),
+	];
+
 	public static IReadOnlyList<FooterInfo> CAR_INFO { get; } =
 	[
 		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
