@@ -109,19 +109,19 @@ public class ComponentFactory
 		HorizontalAlignment = HorizontalAlignment.Left,
 	};
 
-	public static Button GetBasicButton(Thickness margin, int Width, int Height, bool isSmall = false, Color? color = null)
+	public static Button GetBasicButton(Thickness margin, int Width, int Height, bool isSmall = false, Color? color = null, bool isShadowColored = false)
 	{
 		Button button = GetEmptyButton(margin, Width, Height);
-		button.Background = new ImageBrush(ButtonBaseImage.GetButtonImage(Width, Height, isSmall, WpfColorToDrawingColor(color ?? BASIC_BUTTON_COLOR)))
+		button.Background = new ImageBrush(ButtonBaseImage.GetButtonImage(Width, Height, isSmall, WpfColorToDrawingColor(color ?? BASIC_BUTTON_COLOR), isShadowColored))
 		{
 			Stretch = Stretch.Fill,
 		};
 
 		return button;
 	}
-	public static Button GetBasicButton(Thickness margin, int Width, int Height, ContentControl label, bool isSmall = false, Color? color = null)
+	public static Button GetBasicButton(Thickness margin, int Width, int Height, ContentControl label, bool isSmall = false, Color? color = null, bool isShadowColored = false)
 	{
-		Button button = GetBasicButton(margin, Width, Height, isSmall, color);
+		Button button = GetBasicButton(margin, Width, Height, isSmall, color, isShadowColored);
 		button.Content = label;
 		return button;
 	}
