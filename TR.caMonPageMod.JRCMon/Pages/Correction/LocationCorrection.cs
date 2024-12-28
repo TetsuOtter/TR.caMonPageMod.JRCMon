@@ -9,7 +9,7 @@ public partial class LocationCorrectionPage : NormalPageBase, IMultiPageFooterIn
 	public int SelectedIndex { get; set; }
 	public int MaxIndex { get; } = 2;
 
-	public LocationCorrectionPage() : base(ResourceManager.ResourceFiles.LocationCorrection_1)
+	public LocationCorrectionPage() : base(ResourceManager.ResourceFiles.LocationCorrection)
 	{
 	}
 }

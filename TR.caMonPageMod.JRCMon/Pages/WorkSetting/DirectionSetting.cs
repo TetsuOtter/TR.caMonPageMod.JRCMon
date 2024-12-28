@@ -9,7 +9,7 @@ public partial class DirectionSetting : NormalPageBase, IMultiPageFooterInfo
 	public int SelectedIndex { get; set; }
 	public int MaxIndex { get; } = 2;
 
-	public DirectionSetting() : base(ResourceManager.ResourceFiles.DirectionSetting_1)
+	public DirectionSetting() : base(ResourceManager.ResourceFiles.DirectionSetting)
 	{
 	}
 }
