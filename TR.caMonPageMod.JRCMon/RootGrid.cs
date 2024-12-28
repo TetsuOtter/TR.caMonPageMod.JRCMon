@@ -33,6 +33,7 @@ public class RootGrid : Grid
 		SetPageType<Pages.SystemControl.MenuPage>();
 	}
 
+	Type lastPageType = typeof(Pages.SystemControl.MenuPage);
 	public void SetPageType<T>() where T : FrameworkElement, new()
 	{
 		Children.Clear();
@@ -51,6 +52,7 @@ public class RootGrid : Grid
 					this,
 					footerInfo.FooterInfoList,
 					typeof(T),
+					lastPageType,
 					multiPageFooterInfo.MaxIndex
 				);
 				footerArea.SetPageIndex(multiPageFooterInfo.SelectedIndex);
@@ -64,7 +66,8 @@ public class RootGrid : Grid
 				footerArea = new(
 					this,
 					footerInfo.FooterInfoList,
-					typeof(T)
+					typeof(T),
+					lastPageType
 				);
 			}
 			SetRow(footerArea, 2);
@@ -93,6 +96,8 @@ public class RootGrid : Grid
 		{
 			throw new InvalidOperationException("Invalid Page Type");
 		}
+
+		lastPageType = typeof(T);
 
 		if (cc is IHoldRootGridInstance page)
 		{

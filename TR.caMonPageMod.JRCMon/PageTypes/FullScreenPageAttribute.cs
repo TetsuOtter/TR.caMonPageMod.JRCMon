@@ -1,6 +1,6 @@
 namespace TR.caMonPageMod.JRCMon.PageTypes;
 
 [AttributeUsage(AttributeTargets.Class)]
-internal class FullScreenPageAttribute : Attribute
+internal class FullScreenPageAttribute(string footerPageName = "") : FooterPageNameAttribute(footerPageName)
 {
 }

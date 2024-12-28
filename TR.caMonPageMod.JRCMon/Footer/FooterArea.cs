@@ -1,7 +1,10 @@
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+
+using TR.caMonPageMod.JRCMon.PageTypes;
 
 namespace TR.caMonPageMod.JRCMon.Footer;
 
@@ -20,7 +23,8 @@ public class FooterArea : Canvas
 	public FooterArea(
 		RootGrid rootGrid,
 		IReadOnlyList<FooterInfo> footerInfoList,
-		Type pageType
+		Type pageType,
+		Type lastPageType
 	)
 	{
 		Height = Constants.FOOTER_HEIGHT;
@@ -39,24 +43,77 @@ public class FooterArea : Canvas
 		});
 		foreach (var (info, index) in footerInfoList.Where(v => v.IsLeftAligned).Select((f, i) => (f, i)))
 		{
-			bool isSelected = info.IsForceSelected || pageType.Equals(info.PageClass) || pageType.IsSubclassOf(info.PageClass);
-			(_, Button btn) = AddButton(true, info.Label, isSelected, index, isEnabled: info.IsEnabled);
-			btn.Click += (s, e) => rootGrid.SetPageType(info.PageClass);
+			bool isSelected = getIsSelected(info, pageType);
+			string label = getLabel(info, pageType);
+			Type pageClass = getPageType(info, pageType, lastPageType);
+			(_, Button btn) = AddButton(true, label, isSelected, index, isEnabled: info.IsEnabled);
+			btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
 		}
 		foreach (var (info, index) in footerInfoList.Where(v => !v.IsLeftAligned).Reverse().Select((f, i) => (f, i)))
 		{
-			bool isSelected = info.IsForceSelected || pageType.Equals(info.PageClass) || pageType.IsSubclassOf(info.PageClass);
-			(_, Button btn) = AddButton(false, info.Label, isSelected, index, isEnabled: info.IsEnabled);
-			btn.Click += (s, e) => rootGrid.SetPageType(info.PageClass);
+			bool isSelected = getIsSelected(info, pageType);
+			string label = getLabel(info, pageType);
+			Type pageClass = getPageType(info, pageType, lastPageType);
+			(_, Button btn) = AddButton(false, label, isSelected, index, isEnabled: info.IsEnabled);
+			btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
 		}
 	}
+
+	static bool getIsSelected(FooterInfo info, Type pageType)
+	{
+		if (info.IsForceSelected)
+		{
+			return true;
+		}
+
+		if (info is FooterInfoPage infoPage)
+		{
+			return pageType.Equals(infoPage.PageClass) || pageType.IsSubclassOf(infoPage.PageClass);
+		}
+		else if (info is FooterInfoCurrentPage)
+		{
+			return true;
+		}
+		else if (info is FooterInfoGoBack)
+		{
+			return false;
+		}
+
+		return false;
+	}
+
+	static Type getPageType(FooterInfo info, Type pageType, Type lastPageType)
+		=> info switch
+		{
+			FooterInfoPage infoPage => infoPage.PageClass,
+			FooterInfoCurrentPage => pageType,
+			FooterInfoGoBack => lastPageType,
+			_ => throw new NotSupportedException("Unsupported FooterInfo")
+		};
+	static string getLabel(FooterInfo info, Type pageType)
+		=> info switch
+		{
+			FooterInfoPage infoPage => getFooterPageName(infoPage.PageClass),
+			FooterInfoCurrentPage => getFooterPageName(pageType),
+			FooterInfoGoBack => "戻る",
+			_ => throw new NotSupportedException("Unsupported FooterInfo")
+		};
+	public static string getFooterPageName(Type pageType)
+	{
+		var attr = pageType.GetCustomAttribute<FooterPageNameAttribute>();
+		if (attr is not null)
+			return attr.FooterPageName;
+		return string.Empty;
+	}
+
 
 	public FooterArea(
 		RootGrid rootGrid,
 		IReadOnlyList<FooterInfo> footerInfoList,
 		Type pageType,
+		Type lastPageType,
 		int maxPageIndex
-	) : this(rootGrid, footerInfoList, pageType)
+	) : this(rootGrid, footerInfoList, pageType, lastPageType)
 	{
 		this.maxPageIndex = maxPageIndex;
 
@@ -79,7 +136,8 @@ public class FooterArea : Canvas
 		int index,
 		bool addToChildren = true,
 		bool isEnabled = true
-	) {
+	)
+	{
 		double imgX = (Constants.FOOTER_MENU_BUTTON_IMG_WIDTH + Constants.FOOTER_MENU_BUTTON_IMG_SPACING) * index;
 		double imgXR = Constants.DISPLAY_WIDTH - Constants.FOOTER_MENU_BUTTON_IMG_WIDTH - imgX;
 		Image btnImg = ResourceManager.GetResourceAsImage(

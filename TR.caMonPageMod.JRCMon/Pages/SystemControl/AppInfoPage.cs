@@ -7,10 +7,10 @@ using TR.caMonPageMod.JRCMon.Footer;
 
 namespace TR.caMonPageMod.JRCMon.Pages.SystemControl;
 
-[PageTypes.FullScreenPage]
+[PageTypes.FullScreenPage("ｱﾌﾟﾘ情報")]
 public partial class AppInfoPage : Canvas, IFooterInfo
 {
-	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.APP_INFO;
+	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.CURRENT_AND_EMBED_MAN;
 
 	const int TITLE_LABEL_LEFT_MARGIN = 8;
 	const int PAGE_TITLE_LABEL_TOP_MARGIN = 12;

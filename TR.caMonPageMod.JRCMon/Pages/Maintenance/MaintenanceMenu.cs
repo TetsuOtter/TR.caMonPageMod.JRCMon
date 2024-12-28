@@ -7,11 +7,11 @@ using TR.caMonPageMod.JRCMon.Utils;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Maintenance;
 
-[PageTypes.NormalPage("検　修", ResourceManager.ResourceFiles.MaintenanceIcon)]
+[PageTypes.NormalPage("検　修", ResourceManager.ResourceFiles.MaintenanceIcon, "検修ﾒﾆｭｰ")]
 public partial class MaintenanceMenuPage : Canvas, IHoldRootGridInstance, IFooterInfo
 {
 	public RootGrid? RootGrid { get; set; }
-	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.MAINTENANCE_MENU;
+	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.CURRENT_AND_MENU;
 
 	const int FIRST_COL_X = 42;
 	const int COL_STEP_X = 153;
