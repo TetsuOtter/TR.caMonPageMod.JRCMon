@@ -114,7 +114,7 @@ public static class FooterType
 	[
 		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(DirectionMenu)),
+		new FooterInfoDummy("運行設定"),
 		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -124,7 +124,7 @@ public static class FooterType
 		new FooterInfoDummy("車掌情報"),
 		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(DirectionMenu)),
+		new FooterInfoDummy("運行設定"),
 		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
