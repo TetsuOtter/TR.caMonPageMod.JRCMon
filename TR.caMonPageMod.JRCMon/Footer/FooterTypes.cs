@@ -10,6 +10,7 @@ public abstract record FooterInfo(bool IsForceSelected = false, bool IsLeftAlign
 public record FooterInfoPage(Type PageClass, bool IsForceSelected = false, bool IsLeftAligned = false, bool IsEnabled = true) : FooterInfo(IsForceSelected, IsLeftAligned, IsEnabled);
 public record FooterInfoCurrentPage(bool IsLeftAligned = false) : FooterInfo(false, IsLeftAligned, true);
 public record FooterInfoGoBack(bool IsLeftAligned = false) : FooterInfo(false, IsLeftAligned, true);
+public record FooterInfoDummy(string label, bool IsForceSelected = false, bool IsLeftAligned = false) : FooterInfo(IsForceSelected, IsLeftAligned, false);
 
 public static class FooterType
 {

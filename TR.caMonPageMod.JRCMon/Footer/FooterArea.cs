@@ -45,17 +45,23 @@ public class FooterArea : Canvas
 		{
 			bool isSelected = getIsSelected(info, pageType);
 			string label = getLabel(info, pageType);
-			Type pageClass = getPageType(info, pageType, lastPageType);
 			(_, Button btn) = AddButton(true, label, isSelected, index, isEnabled: info.IsEnabled);
-			btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
+			if (info.IsEnabled)
+			{
+				Type pageClass = getPageType(info, pageType, lastPageType);
+				btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
+			}
 		}
 		foreach (var (info, index) in footerInfoList.Where(v => !v.IsLeftAligned).Reverse().Select((f, i) => (f, i)))
 		{
 			bool isSelected = getIsSelected(info, pageType);
 			string label = getLabel(info, pageType);
-			Type pageClass = getPageType(info, pageType, lastPageType);
 			(_, Button btn) = AddButton(false, label, isSelected, index, isEnabled: info.IsEnabled);
-			btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
+			if (info.IsEnabled)
+			{
+				Type pageClass = getPageType(info, pageType, lastPageType);
+				btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
+			}
 		}
 	}
 
@@ -96,6 +102,7 @@ public class FooterArea : Canvas
 			FooterInfoPage infoPage => getFooterPageName(infoPage.PageClass),
 			FooterInfoCurrentPage => getFooterPageName(pageType),
 			FooterInfoGoBack => "戻る",
+			FooterInfoDummy dummy => dummy.label,
 			_ => throw new NotSupportedException("Unsupported FooterInfo")
 		};
 	public static string getFooterPageName(Type pageType)
