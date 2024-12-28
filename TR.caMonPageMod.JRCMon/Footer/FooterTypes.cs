@@ -1,4 +1,5 @@
 using TR.caMonPageMod.JRCMon.Pages.Correction;
+using TR.caMonPageMod.JRCMon.Pages.Driver;
 using TR.caMonPageMod.JRCMon.Pages.Maintenance;
 using TR.caMonPageMod.JRCMon.Pages.OtherSeries;
 using TR.caMonPageMod.JRCMon.Pages.SystemControl;
@@ -111,32 +112,42 @@ public static class FooterType
 	];
 	public static IReadOnlyList<FooterInfo> DRIVER_BASE { get; } =
 	[
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionMenu)),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(DriveInfo)),
+		new FooterInfoPage(typeof(MenuPage)),
+	];
+	public static IReadOnlyList<FooterInfo> DRIVER_ONEMAN { get; } =
+	[
+		new FooterInfoDummy("車掌情報"),
+		new FooterInfoDummy("徐行情報"),
+		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(DirectionMenu)),
+		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE { get; } =
 	[
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("空調制御"),
+		new FooterInfoDummy("サービス"),
+		new FooterInfoDummy("車掌情報"),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_INFO { get; } =
 	[
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("運行設定"),
 
 		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("空調制御"),
+		new FooterInfoDummy("サービス"),
+		new FooterInfoDummy("車掌情報"),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
