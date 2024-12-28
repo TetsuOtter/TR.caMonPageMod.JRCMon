@@ -1,4 +1,5 @@
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Other;
 
@@ -9,5 +10,6 @@ public partial class OccupancyRatePage : NormalPageBase, IFooterInfo
 
 	public OccupancyRatePage() : base(ResourceManager.ResourceFiles.OccupancyRatePage)
 	{
+		Children.Add(new LocationLabel());
 	}
 }

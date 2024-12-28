@@ -1,4 +1,5 @@
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Correction;
 
@@ -11,5 +12,6 @@ public partial class LocationCorrectionPage : NormalPageBase, IMultiPageFooterIn
 
 	public LocationCorrectionPage() : base(ResourceManager.ResourceFiles.LocationCorrection)
 	{
+		Children.Add(new LocationLabel());
 	}
 }

@@ -1,4 +1,5 @@
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Maintenance;
 
@@ -9,5 +10,6 @@ public partial class MaintenanceTestRun : NormalPageBase, IFooterInfo
 
 	public MaintenanceTestRun() : base(ResourceManager.ResourceFiles.MaintenanceTestRun)
 	{
+		Children.Add(new LocationLabel());
 	}
 }
