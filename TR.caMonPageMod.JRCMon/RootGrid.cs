@@ -103,6 +103,10 @@ public class RootGrid : Grid
 		{
 			page.RootGrid = this;
 		}
+		if (cc is IAppStateSetter appStateSetter)
+		{
+			appStateSetter.SetAppState(State);
+		}
 		if (hasFooter && cc is IBaseImage baseImagePage)
 		{
 			baseImagePage.BaseImage.Height -= Constants.FOOTER_HEIGHT;
