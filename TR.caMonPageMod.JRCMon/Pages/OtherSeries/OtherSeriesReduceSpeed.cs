@@ -7,7 +7,7 @@ public partial class OtherSeriesReduceSpeedPage : NormalPageBase, IFooterInfo
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.OTHER_SERIES_BASE;
 
-	public OtherSeriesReduceSpeedPage() : base(ResourceManager.ResourceFiles.OtherSeriesReduceSpeed)
+	public OtherSeriesReduceSpeedPage() : base(ResourceManager.ResourceFiles.ReduceSpeed)
 	{
 	}
 }

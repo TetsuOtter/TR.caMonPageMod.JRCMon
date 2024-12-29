@@ -115,7 +115,7 @@ public static class FooterType
 
 	public static IReadOnlyList<FooterInfo> DRIVER_BASE { get; } =
 	[
-		new FooterInfoDummy("徐行情報"),
+		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionSetting)),
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
@@ -125,7 +125,7 @@ public static class FooterType
 	public static IReadOnlyList<FooterInfo> DRIVER_ONEMAN { get; } =
 	[
 		new FooterInfoPage(typeof(ConductorInto)),
-		new FooterInfoDummy("徐行情報"),
+		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionSetting)),
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
