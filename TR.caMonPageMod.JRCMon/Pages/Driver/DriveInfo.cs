@@ -8,7 +8,7 @@ using TR.caMonPageMod.JRCMon.Parts.Unit;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Driver;
 
-[PageTypes.NormalPage("運転情報", ResourceManager.ResourceFiles.DriverIcon)]
+[PageTypes.NormalPage("運転士", ResourceManager.ResourceFiles.DriverIcon, "運転情報")]
 public class DriveInfo : Canvas, IFooterInfo
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.DRIVER_BASE;
