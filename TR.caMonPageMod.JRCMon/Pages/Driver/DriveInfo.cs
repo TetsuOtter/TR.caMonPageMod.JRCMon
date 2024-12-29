@@ -4,11 +4,12 @@ using System.Windows.Shapes;
 
 using TR.caMonPageMod.JRCMon.Footer;
 using TR.caMonPageMod.JRCMon.Parts;
+using TR.caMonPageMod.JRCMon.Parts.Unit;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Driver;
 
 [PageTypes.NormalPage("運転情報", ResourceManager.ResourceFiles.DriverIcon)]
-public class DriveInfo : Canvas, IFooterInfo
+public class DriveInfo : Canvas, IFooterInfo, IAppStateSetter
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.DRIVER_BASE;
 
@@ -50,5 +51,14 @@ public class DriveInfo : Canvas, IFooterInfo
 			Stroke = Brushes.White,
 			StrokeThickness = LOWER_BOX_STROKE_THICKNESS,
 		});
+	}
+
+	TrainFormationImage? trainFormationImage;
+	public void SetAppState(AppState state)
+	{
+		if (trainFormationImage is not null)
+			Children.Remove(trainFormationImage);
+		trainFormationImage = new(state);
+		Children.Add(trainFormationImage);
 	}
 }
