@@ -34,13 +34,16 @@ public class RootGrid : Grid
 	}
 
 	Type lastPageType = typeof(Pages.SystemControl.MenuPage);
-	public void SetPageType<T>() where T : FrameworkElement, new()
+	public void SetPageType<T>() where T : FrameworkElement
+		=> SetPageType(typeof(T));
+
+	internal void SetPageType(Type pageType)
 	{
 		Children.Clear();
-		FrameworkElement cc = new T
-		{
-			Width = Constants.DISPLAY_WIDTH,
-		};
+
+		FrameworkElement cc = CreateElement(pageType) as FrameworkElement ?? throw new InvalidOperationException("Invalid Page Type");
+		cc.Width = Constants.DISPLAY_WIDTH;
+
 		bool hasFooter = false;
 		if (cc is IFooterInfo footerInfo)
 		{
@@ -51,7 +54,7 @@ public class RootGrid : Grid
 				footerArea = new(
 					this,
 					footerInfo.FooterInfoList,
-					typeof(T),
+					pageType,
 					lastPageType,
 					multiPageFooterInfo.MaxIndex
 				);
@@ -66,20 +69,20 @@ public class RootGrid : Grid
 				footerArea = new(
 					this,
 					footerInfo.FooterInfoList,
-					typeof(T),
+					pageType,
 					lastPageType
 				);
 			}
 			SetRow(footerArea, 2);
 			Children.Add(footerArea);
 		}
-		if (typeof(T).GetCustomAttribute<FullScreenPageAttribute>() is not null)
+		if (pageType.GetCustomAttribute<FullScreenPageAttribute>() is not null)
 		{
 			SetRowSpan(cc, hasFooter ? 2 : 3);
 			cc.Height = Constants.DISPLAY_HEIGHT - (hasFooter ? Constants.FOOTER_HEIGHT : 0);
 			Children.Add(cc);
 		}
-		else if (typeof(T).GetCustomAttribute<NormalPageAttribute>() is NormalPageAttribute pageAttribute)
+		else if (pageType.GetCustomAttribute<NormalPageAttribute>() is NormalPageAttribute pageAttribute)
 		{
 			SetRow(HeaderArea, 0);
 			SetRow(cc, 1);
@@ -97,26 +100,31 @@ public class RootGrid : Grid
 			throw new InvalidOperationException("Invalid Page Type");
 		}
 
-		lastPageType = typeof(T);
+		lastPageType = pageType;
 
 		if (cc is IHoldRootGridInstance page)
 		{
 			page.RootGrid = this;
-		}
-		if (cc is IAppStateSetter appStateSetter)
-		{
-			appStateSetter.SetAppState(State);
 		}
 		if (hasFooter && cc is IBaseImage baseImagePage)
 		{
 			baseImagePage.BaseImage.Height -= Constants.FOOTER_HEIGHT;
 		}
 	}
-
-	internal void SetPageType(Type pageType)
+	object? CreateElement(Type pageType)
 	{
-		MethodInfo method = typeof(RootGrid).GetMethod(nameof(SetPageType))!;
-		method.MakeGenericMethod(pageType).Invoke(this, null);
+		if (pageType.GetConstructor([typeof(AppState)]) is ConstructorInfo ctorWithState)
+		{
+			return ctorWithState.Invoke([State]);
+		}
+		else if (pageType.GetConstructor(Type.EmptyTypes) is ConstructorInfo defaultCtor)
+		{
+			return defaultCtor.Invoke(null);
+		}
+		else
+		{
+			throw new InvalidOperationException("Invalid Page Type");
+		}
 	}
 
 	public void BackToHomeInvoke() => BackToHome?.Invoke(this, EventArgs.Empty);

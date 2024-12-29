@@ -34,7 +34,7 @@ public partial class EmbeddedManual : FullScreenPageBase, IHoldRootGridInstance
 		Children.Add(CloseAppButton);
 	}
 
-	void AddButtonWithRowCol<T>(int col, int row, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButtonWithRowCol<T>(int col, int row, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		int x = FIRST_COL_X + COL_STEP_X * col;
 		int y = FIRST_ROW_Y + ROW_STEP_Y * row;
@@ -43,7 +43,7 @@ public partial class EmbeddedManual : FullScreenPageBase, IHoldRootGridInstance
 	void AddButtonWithRowCol(int col, int row)
 		=> AddButtonWithRowCol<FrameworkElement>(col, row, true);
 
-	void AddButtonWithXY<T>(int x, int y, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButtonWithXY<T>(int x, int y, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Button btn = ComponentFactory.GetEmptyButton(new(x, y, 0, 0), 132, 68);
 		if (isNotImplemented)

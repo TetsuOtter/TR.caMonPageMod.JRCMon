@@ -58,7 +58,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		Children.Add(btn);
 	}
 
-	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Image img = ResourceManager.GetResourceAsImage(resource);
 		img.Stretch = Stretch.None;

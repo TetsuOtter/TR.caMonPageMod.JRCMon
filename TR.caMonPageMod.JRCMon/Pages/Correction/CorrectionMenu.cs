@@ -17,7 +17,7 @@ public partial class CorrectionMenu : NormalPageBase, IHoldRootGridInstance, IFo
 		AddButtonWithXY<FrameworkElement>(532, 230, "乗車率体重", true);
 	}
 
-	void AddButtonWithXY<T>(int x, int y, string labelStr, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButtonWithXY<T>(int x, int y, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Label label = ComponentFactory.Get1HalfXLabel();
 		Button btn = ComponentFactory.GetBasicButton(new(x, y, 0, 0), 132, 68);

@@ -35,13 +35,13 @@ public partial class MaintenanceMenuPage : Canvas, IHoldRootGridInstance, IFoote
 		AddButton(3, 1, "設定状態");
 	}
 
-	void AddButton<T>(int col, int row, string labelStr, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButton<T>(int col, int row, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Label label = ComponentFactory.Get1XLong2Label();
 		label.Content = labelStr;
 		AddButtonWithContent<T>(col, row, label, isNotImplemented);
 	}
-	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Image img = ResourceManager.GetResourceAsImage(resource);
 		img.Stretch = System.Windows.Media.Stretch.None;
@@ -59,7 +59,7 @@ public partial class MaintenanceMenuPage : Canvas, IHoldRootGridInstance, IFoote
 	}
 	void AddButton(int col, int row, string labelStr)
 		=> AddButton<FrameworkElement>(col, row, labelStr, true);
-	void AddButtonWithContent<T>(int col, int row, object content, bool isNotImplemented = false) where T : FrameworkElement, new()
+	void AddButtonWithContent<T>(int col, int row, object content, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		int x = FIRST_COL_X + COL_STEP_X * col;
 		int y = FIRST_ROW_Y + ROW_STEP_Y * row;

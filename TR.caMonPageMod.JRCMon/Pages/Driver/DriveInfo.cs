@@ -9,7 +9,7 @@ using TR.caMonPageMod.JRCMon.Parts.Unit;
 namespace TR.caMonPageMod.JRCMon.Pages.Driver;
 
 [PageTypes.NormalPage("運転情報", ResourceManager.ResourceFiles.DriverIcon)]
-public class DriveInfo : Canvas, IFooterInfo, IAppStateSetter
+public class DriveInfo : Canvas, IFooterInfo
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.DRIVER_BASE;
 
@@ -19,7 +19,7 @@ public class DriveInfo : Canvas, IFooterInfo, IAppStateSetter
 	const int LOWER_BOX_BOTTOM = -1;
 	const int LOWER_BOX_SEPARATOR_LEFT = 188;
 
-	public DriveInfo()
+	public DriveInfo(AppState state)
 	{
 		Children.Add(new LocationLabel());
 		Children.Add(new BrightnessControlButton());
@@ -51,14 +51,7 @@ public class DriveInfo : Canvas, IFooterInfo, IAppStateSetter
 			Stroke = Brushes.White,
 			StrokeThickness = LOWER_BOX_STROKE_THICKNESS,
 		});
-	}
 
-	TrainFormationImage? trainFormationImage;
-	public void SetAppState(AppState state)
-	{
-		if (trainFormationImage is not null)
-			Children.Remove(trainFormationImage);
-		trainFormationImage = new(state);
-		Children.Add(trainFormationImage);
+		Children.Add(new TrainFormationImage(state));
 	}
 }
