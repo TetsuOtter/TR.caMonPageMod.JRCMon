@@ -13,8 +13,8 @@ public static class CarImageGen
 	public const int WIDTH = 47;
 	const PixelFormat PIXEL_FORMAT = PixelFormat.Format32bppArgb;
 	const int BYTE_PER_PIXEL = 4;
-	const int ROOF_Y = 11;
-	const int SEPARATOR_Y = 29;
+	public const int ROOF_Y = 11;
+	public const int SEPARATOR_Y = 29;
 	const int CAB_WIDTH = 22;
 	const int RIGHT_CAB_CLIFF_COL = WIDTH - CAB_WIDTH;
 	const int BOGIE_H_W = 7;
