@@ -45,9 +45,9 @@ public static class FooterType
 
 	public static IReadOnlyList<FooterInfo> WORK_SETTING { get; } =
 	[
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("号車"),
+		new FooterInfoPage(typeof(DirectionMenu)),
+		new FooterInfoPage(typeof(DirectionSettingNumber)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
