@@ -99,7 +99,7 @@ public class FooterArea : Canvas
 	static string getLabel(FooterInfo info, Type pageType)
 		=> info switch
 		{
-			FooterInfoPage infoPage => getFooterPageName(infoPage.PageClass),
+			FooterInfoPage infoPage => infoPage.Label ?? getFooterPageName(infoPage.PageClass),
 			FooterInfoCurrentPage => getFooterPageName(pageType),
 			FooterInfoGoBack => "戻る",
 			FooterInfoDummy dummy => dummy.label,
