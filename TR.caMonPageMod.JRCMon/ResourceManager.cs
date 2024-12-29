@@ -10,6 +10,7 @@ public static class ResourceManager
 {
 	public enum ResourceFiles
 	{
+		Test,
 		HeaderBase,
 
 		AppSetting,
@@ -20,6 +21,7 @@ public static class ResourceManager
 		CorrectionMenu,
 		DirectionMenu,
 		DirectionSetting,
+		DirectionSettingNumber,
 		EmbeddedManual,
 		LocationCorrection,
 		MaintenanceCommState,
@@ -66,6 +68,7 @@ public static class ResourceManager
 
 	static readonly IReadOnlyDictionary<ResourceFiles, string[]> ResourceFileNames = new Dictionary<ResourceFiles, string[]>
 	{
+		[ResourceFiles.Test] = ["Body", "運転情報.png"],
 		[ResourceFiles.HeaderBase] = ["Header", "Base.png"],
 
 		[ResourceFiles.AppSetting] = ["Body", "AppSetting.png"],
@@ -76,6 +79,7 @@ public static class ResourceManager
 		[ResourceFiles.CorrectionMenu] = ["Body", "CorrectionMenu.png"],
 		[ResourceFiles.DirectionMenu] = ["Body", "DirectionMenu.png"],
 		[ResourceFiles.DirectionSetting] = ["Body", "DirectionSetting.png"],
+		[ResourceFiles.DirectionSettingNumber] = ["Body", "DirectionSettingNumber.png"],
 		[ResourceFiles.EmbeddedManual] = ["Body", "EmbeddedManual.png"],
 		[ResourceFiles.LocationCorrection] = ["Body", "LocationCorrection.png"],
 		[ResourceFiles.MaintenanceCommState] = ["Body", "MaintenanceCommState.png"],
