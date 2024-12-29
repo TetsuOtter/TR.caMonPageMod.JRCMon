@@ -75,7 +75,17 @@ public class RootGrid : Grid
 			}
 			SetRow(footerArea, 2);
 			Children.Add(footerArea);
+
+			if (!footerInfo.FooterInfoList.Contains(new FooterInfoGoBack()))
+			{
+				lastPageType = pageType;
+			}
 		}
+		else
+		{
+			lastPageType = pageType;
+		}
+
 		if (pageType.GetCustomAttribute<FullScreenPageAttribute>() is not null)
 		{
 			SetRowSpan(cc, hasFooter ? 2 : 3);
@@ -99,8 +109,6 @@ public class RootGrid : Grid
 		{
 			throw new InvalidOperationException("Invalid Page Type");
 		}
-
-		lastPageType = pageType;
 
 		if (cc is IHoldRootGridInstance page)
 		{
