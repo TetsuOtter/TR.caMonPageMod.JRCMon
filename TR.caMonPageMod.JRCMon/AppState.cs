@@ -102,7 +102,7 @@ public class AppState
 	/// </summary>
 	public bool IsCarSetReversed { get; private set; }
 	public bool IsOtherSeriesConnected { get; private set; }
-	public bool Is315Connected { get; private set; }
+	public bool Is315Connected { get; private set; } = true;
 	public event EventHandler? TrainFormationChanged;
 	public void SetTrainFormation(IReadOnlyList<CarSetInfo> trainFormation, bool isCarSetReversed)
 	{

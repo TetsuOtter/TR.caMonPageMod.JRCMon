@@ -1,3 +1,4 @@
+using TR.caMonPageMod.JRCMon.Pages.Conductor;
 using TR.caMonPageMod.JRCMon.Pages.Correction;
 using TR.caMonPageMod.JRCMon.Pages.Driver;
 using TR.caMonPageMod.JRCMon.Pages.Maintenance;
@@ -114,17 +115,17 @@ public static class FooterType
 	[
 		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoDummy("運行設定"),
+		new FooterInfoPage(typeof(DirectionSetting)),
 		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> DRIVER_ONEMAN { get; } =
 	[
-		new FooterInfoDummy("車掌情報"),
+		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoDummy("運行設定"),
+		new FooterInfoPage(typeof(DirectionSetting)),
 		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -134,33 +135,43 @@ public static class FooterType
 	[
 		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoDummy("空調制御"),
-		new FooterInfoDummy("サービス"),
-		new FooterInfoDummy("車掌情報"),
+		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
+		new FooterInfoPage(typeof(ConductorService)),
+		new FooterInfoPage(typeof(ConductorInto)),
+		new FooterInfoPage(typeof(MenuPage)),
+	];
+	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE_315 { get; } =
+	[
+		new FooterInfoPage(typeof(Conductor315)),
+		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
+		new FooterInfoPage(typeof(ConductorService)),
+		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_INFO { get; } =
 	[
-		new FooterInfoDummy("運行設定"),
+		new FooterInfoPage(typeof(DirectionSetting)),
 
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoDummy("空調制御"),
-		new FooterInfoDummy("サービス"),
-		new FooterInfoDummy("車掌情報"),
+		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
+		new FooterInfoPage(typeof(ConductorService)),
+		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_AIR_COND { get; } =
 	[
-		new FooterInfoPage(typeof(MenuPage), IsLeftAligned: true, IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoPage(typeof(ConductorAC), IsLeftAligned: true),
+		new FooterInfoPage(typeof(ConductorAC_Vent)),
+		new FooterInfoPage(typeof(ConductorAC_Sub)),
+		new FooterInfoPage(typeof(ConductorAC_CrossFlow)),
 
-		new FooterInfoPage(typeof(MenuPage), IsForceSelected: true, IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
+		new FooterInfoDummy("空調制御", IsForceSelected: true),
+		new FooterInfoPage(typeof(ConductorService)),
+		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 }
