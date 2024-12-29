@@ -10,7 +10,7 @@ namespace TR.caMonPageMod.JRCMon.Parts.Unit;
 public static class CarImageGen
 {
 	public const int HEIGHT = 62;
-	public const int WIDTH = 48;
+	public const int WIDTH = 47;
 	const PixelFormat PIXEL_FORMAT = PixelFormat.Format32bppArgb;
 	const int BYTE_PER_PIXEL = 4;
 	const int ROOF_Y = 11;
