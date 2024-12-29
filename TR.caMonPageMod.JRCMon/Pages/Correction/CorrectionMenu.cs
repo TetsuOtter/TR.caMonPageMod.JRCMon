@@ -19,13 +19,11 @@ public partial class CorrectionMenu : NormalPageBase, IHoldRootGridInstance, IFo
 
 	void AddButtonWithXY<T>(int x, int y, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
 	{
-		Label label = ComponentFactory.Get1HalfXLabel();
+		Label label = ComponentFactory.Get1XLong2Label();
 		Button btn = ComponentFactory.GetBasicButton(new(x, y, 0, 0), 132, 68);
-		if (isNotImplemented)
-			label.Content = $"未実装\n{labelStr}";
-		else
+		label.Content = labelStr;
+		if (!isNotImplemented)
 		{
-			label.Content = labelStr;
 			btn.Click += (s, e) => RootGrid?.SetPageType<T>();
 		}
 		btn.Content = label;
