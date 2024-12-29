@@ -17,7 +17,9 @@ public static class CarImageGen
 	const int SEPARATOR_Y = 29;
 	const int CAB_WIDTH = 22;
 	const int RIGHT_CAB_CLIFF_COL = WIDTH - CAB_WIDTH;
-	const int BOGIE_H_W = 8;
+	const int BOGIE_H_W = 7;
+	const int BOGIE_PADDING_LR = 1;
+	const int BOGIE_AREA_WIDTH = BOGIE_H_W + BOGIE_PADDING_LR * 2;
 	const int PANTOGRAPH_H_W = 11;
 	static readonly Color DRIVER_CAB_COLOR = Color.FromArgb(0xFF, 0x00, 0x5F, 0xED);
 	static readonly byte[] DRIVER_CAB_COLOR_BYTES = BitConverter.GetBytes(DRIVER_CAB_COLOR.ToArgb());
@@ -25,14 +27,13 @@ public static class CarImageGen
 	static readonly byte[] TYPE315_COLOR_BYTES = BitConverter.GetBytes(TYPE315_COLOR.ToArgb());
 
 	static readonly byte[][] BOGLE = [
-		[0, 0, 0, 1, 1, 0, 0, 0],
-		[0, 0, 1, 0, 0, 1, 0, 0],
-		[0, 1, 0, 0, 0, 0, 1, 0],
-		[1, 0, 0, 0, 0, 0, 0, 1],
-		[1, 0, 0, 0, 0, 0, 0, 1],
-		[0, 1, 0, 0, 0, 0, 1, 0],
-		[0, 0, 1, 0, 0, 1, 0, 0],
-		[0, 0, 0, 1, 1, 0, 0, 0],
+		[0, 0, 1, 1, 1, 0, 0],
+		[0, 1, 0, 0, 0, 1, 0],
+		[1, 0, 0, 0, 0, 0, 1],
+		[1, 0, 0, 0, 0, 0, 1],
+		[1, 0, 0, 0, 0, 0, 1],
+		[0, 1, 0, 0, 0, 1, 0],
+		[0, 0, 1, 1, 1, 0, 0],
 	];
 
 	public record CarImageInfo(
@@ -44,6 +45,8 @@ public static class CarImageGen
 
 		bool IsLeftBogieMotored,
 		bool IsRightBogieMotored,
+		bool IsLeftBogieMotorWorking,
+		bool IsRightBogieMotorWorking,
 
 		bool Is315,
 		bool IsDriverCab
@@ -215,31 +218,40 @@ public static class CarImageGen
 
 		if (info.IsLeftBogieMotored)
 		{
-			SetBogiePixels(imgSpan, data.Stride, 1);
-			SetBogiePixels(imgSpan, data.Stride, 1 + BOGIE_H_W);
+			SetBogiePixels(imgSpan, data.Stride, BOGIE_PADDING_LR, info.IsLeftBogieMotorWorking);
+			SetBogiePixels(imgSpan, data.Stride, BOGIE_AREA_WIDTH + BOGIE_PADDING_LR, info.IsLeftBogieMotorWorking);
 		}
 		if (info.IsRightBogieMotored)
 		{
-			SetBogiePixels(imgSpan, data.Stride, WIDTH - 1 - BOGIE_H_W);
-			SetBogiePixels(imgSpan, data.Stride, WIDTH - 1 - BOGIE_H_W * 2);
+			SetBogiePixels(imgSpan, data.Stride, WIDTH - BOGIE_AREA_WIDTH + BOGIE_PADDING_LR, info.IsRightBogieMotorWorking);
+			SetBogiePixels(imgSpan, data.Stride, WIDTH - BOGIE_AREA_WIDTH * 2 + BOGIE_PADDING_LR, info.IsRightBogieMotorWorking);
 		}
 
 		Marshal.Copy(imgBytes, 0, data.Scan0, imgBytes.Length);
 		bmp.UnlockBits(data);
 	}
 
-	static void SetBogiePixels(Span<byte> imgSpan, int stride, int col)
+	static void SetBogiePixels(Span<byte> imgSpan, int stride, int col, bool isBogieWorking)
 	{
 		for (int bogieRow = 0; bogieRow < BOGLE.Length; ++bogieRow)
 		{
 			int imgRow = HEIGHT - BOGIE_H_W + bogieRow;
-			Span<byte> rowSpan = imgSpan[(imgRow * stride)..((imgRow + 1) * stride)];
-			for (int bogieCol = 0; bogieCol < BOGLE[bogieRow].Length; ++bogieCol)
+			Span<byte> rowSpan = imgSpan[(imgRow * stride + (col * BYTE_PER_PIXEL))..((imgRow + 1) * stride)];
+			ReadOnlySpan<byte> bogieRowBytes = BOGLE[bogieRow];
+			if (isBogieWorking)
 			{
-				int imgCol = col + bogieCol;
-				if (BOGLE[bogieRow][bogieCol] == 1)
+				int startBogieCol = bogieRowBytes.IndexOf((byte)1);
+				int endBogieCol = bogieRowBytes.LastIndexOf((byte)1);
+				rowSpan[(startBogieCol * BYTE_PER_PIXEL)..((endBogieCol + 1) * BYTE_PER_PIXEL)].Fill(0xFF);
+			}
+			else
+			{
+				for (int bogieCol = 0; bogieCol < bogieRowBytes.Length; ++bogieCol)
 				{
-					rowSpan[(imgCol * BYTE_PER_PIXEL)..((imgCol + 1) * BYTE_PER_PIXEL)].Fill(0xFF);
+					if (bogieRowBytes[bogieCol] == 1)
+					{
+						rowSpan[(bogieCol * BYTE_PER_PIXEL)..((bogieCol + 1) * BYTE_PER_PIXEL)].Fill(0xFF);
+					}
 				}
 			}
 		}
