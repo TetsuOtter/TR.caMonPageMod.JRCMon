@@ -3,6 +3,8 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 
+using TR.caMonPageMod.JRCMon.Utils;
+
 namespace TR.caMonPageMod.JRCMon.Parts;
 
 public static class ButtonBaseImage
@@ -52,17 +54,18 @@ public static class ButtonBaseImage
 
 		byte[] fillColorBytes = BitConverter.GetBytes(info.color.ToArgb());
 		byte[] shadowColorBytes = isShadowColored ? fillColorBytes : BASE_COLOR_BYTES;
+		Span<byte> fillColor = new(fillColorBytes);
+		Span<byte> shadowColor = new(shadowColorBytes);
 
 		// 一番下の辺
 		Marshal.Copy(line, 0, ptr + data.Stride * (info.Height - 1), line.Length);
 		for (int row = 0; row <= (shadowWidth + 1); ++row)
 		{
-			if (row != 0 && row != (shadowWidth + 1))
+			if (1 < row)
 			{
 				// 右上の段々
-				int fillColorTargetTop = (info.Width - 1 - row) * BYTE_PER_PIXEL;
-				for (int i = 0; i < BYTE_PER_PIXEL; ++i)
-					line[fillColorTargetTop + i] = shadowColorBytes[i];
+				int fillColorTargetTop = (info.Width - row) * BYTE_PER_PIXEL;
+				shadowColor.CopyTo(rgbValues[fillColorTargetTop..]);
 			}
 			// 上の白い部分
 			Marshal.Copy(line, 0, ptr + data.Stride * row, line.Length);
@@ -70,13 +73,8 @@ public static class ButtonBaseImage
 		// 下から2番目の辺
 		Marshal.Copy(line, 0, ptr + data.Stride * (info.Height - 2 - shadowWidth), line.Length);
 
-		for (int col = 2 + shadowWidth; col < (info.Width - 2 - shadowWidth); ++col)
-		{
-			// 中の色
-			int fillColorTarget = col * BYTE_PER_PIXEL;
-			for (int i = 0; i < BYTE_PER_PIXEL; ++i)
-				line[fillColorTarget + i] = fillColorBytes[i];
-		}
+		// 中の色
+		fillColor.CopyAndFill(rgbValues[((2 + shadowWidth) * BYTE_PER_PIXEL)..((info.Width - 2 - shadowWidth) * BYTE_PER_PIXEL)]);
 
 		for (int row = 2 + shadowWidth; row < (info.Height - 2 - shadowWidth); ++row)
 		{
@@ -87,16 +85,14 @@ public static class ButtonBaseImage
 		{
 			// 下の隙間
 			int fillColorTarget = col * BYTE_PER_PIXEL;
-			for (int i = 0; i < BYTE_PER_PIXEL; ++i)
-				line[fillColorTarget + i] = shadowColorBytes[i];
+			shadowColor.CopyTo(rgbValues[fillColorTarget..]);
 		}
 		for (int row = info.Height - 1 - shadowWidth; row < (info.Height - 1); ++row)
 		{
 			// 左下の段々
 			int v = row - (info.Height - 1 - shadowWidth);
-			int fillColorTargetTop = (1 + shadowWidth - v - 1) * BYTE_PER_PIXEL;
-			for (int i = 0; i < BYTE_PER_PIXEL; ++i)
-				line[fillColorTargetTop + i] = shadowColorBytes[i];
+			int fillColorTargetTop = (1 + shadowWidth - v) * BYTE_PER_PIXEL;
+			shadowColor.CopyTo(rgbValues[fillColorTargetTop..]);
 			Marshal.Copy(line, 0, ptr + data.Stride * row, line.Length);
 		}
 
