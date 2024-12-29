@@ -113,15 +113,6 @@ public static class FooterType
 		new FooterInfoPage(typeof(MaintenanceMenuPage)),
 	];
 
-	public static IReadOnlyList<FooterInfo> CAR_INFO { get; } =
-	[
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoPage(typeof(MenuPage), IsEnabled: false),
-		new FooterInfoGoBack(),
-	];
 	public static IReadOnlyList<FooterInfo> DRIVER_BASE { get; } =
 	[
 		new FooterInfoDummy("徐行情報"),
