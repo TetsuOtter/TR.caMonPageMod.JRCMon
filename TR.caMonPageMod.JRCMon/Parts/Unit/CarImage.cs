@@ -19,7 +19,8 @@ public class CarImage : Canvas
 		bool isLeftCab,
 		bool isRightCab,
 		bool is315,
-		bool isOtherSeries
+		bool isOtherSeries,
+		int carNumber
 	)
 	{
 
@@ -51,5 +52,13 @@ public class CarImage : Canvas
 		TypeLabel.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 		TypeLabel.Content = carInfo.CarType;
 		Children.Add(TypeLabel);
+
+		Label carNumberLabel = ComponentFactory.Get1XLabel();
+		carNumberLabel.Content = carNumber.ToString();
+		carNumberLabel.Width = CarImageGen.WIDTH;
+		carNumberLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+		SetLeft(carNumberLabel, 0);
+		SetTop(carNumberLabel, CarImageGen.HEIGHT + 2);
+		Children.Add(carNumberLabel);
 	}
 }
