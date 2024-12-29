@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+using TR.caMonPageMod.JRCMon.Pages.CarState;
 using TR.caMonPageMod.JRCMon.Pages.Conductor;
 using TR.caMonPageMod.JRCMon.Pages.Correction;
 using TR.caMonPageMod.JRCMon.Pages.Driver;
@@ -33,7 +34,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		AddButton<EmbeddedManual>(3, 1, ResourceManager.ResourceFiles.EmbeddedManualIcon, "応急ﾏﾆｭｱﾙ");
 
 		AddButton<DirectionMenu>(0, 2, ResourceManager.ResourceFiles.WorkSettingIcon, "運行設定");
-		AddButton(1, 2, ResourceManager.ResourceFiles.CarInfoIcon, "車両状態");
+		AddButton<CarStateSW>(1, 2, ResourceManager.ResourceFiles.CarInfoIcon, "車両状態");
 		AddButton<OccupancyRatePage>(2, 2, ResourceManager.ResourceFiles.OccupancyRateIcon, "乗車率");
 		AddButton<CorrectionMenu>(3, 2, ResourceManager.ResourceFiles.CorrectionIcon, "補　正");
 

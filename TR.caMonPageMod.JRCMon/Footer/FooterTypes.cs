@@ -1,3 +1,4 @@
+using TR.caMonPageMod.JRCMon.Pages.CarState;
 using TR.caMonPageMod.JRCMon.Pages.Conductor;
 using TR.caMonPageMod.JRCMon.Pages.Correction;
 using TR.caMonPageMod.JRCMon.Pages.Driver;
@@ -88,6 +89,16 @@ public static class FooterType
 		new FooterInfoPage(typeof(OtherSeriesTrouble)),
 	];
 
+	public static IReadOnlyList<FooterInfo> CAR_STATE { get; } =
+	[
+		new FooterInfoPage(typeof(CarStatePowerBrake)),
+		new FooterInfoPage(typeof(CarStateThreePhase)),
+		new FooterInfoDummy("制動確認"),
+		new FooterInfoDummy("起動確認"),
+		new FooterInfoPage(typeof(CarStateSW)),
+		new FooterInfoGoBack(),
+	];
+
 	public static IReadOnlyList<FooterInfo> CURRENT_AND_MAINTENANCE_MENU { get; } =
 	[
 		new FooterInfoCurrentPage(),
@@ -116,7 +127,7 @@ public static class FooterType
 		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionSetting)),
-		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
@@ -126,14 +137,14 @@ public static class FooterType
 		new FooterInfoDummy("徐行情報"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionSetting)),
-		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE { get; } =
 	[
-		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
@@ -143,7 +154,7 @@ public static class FooterType
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE_315 { get; } =
 	[
 		new FooterInfoPage(typeof(Conductor315)),
-		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
@@ -154,7 +165,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(DirectionSetting)),
 
-		new FooterInfoDummy("車両状態"),
+		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
