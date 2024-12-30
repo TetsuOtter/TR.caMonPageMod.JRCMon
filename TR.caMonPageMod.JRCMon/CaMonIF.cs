@@ -26,8 +26,8 @@ public class CaMonIF : Page, IPages
 		{
 			Child = RootGrid,
 		};
-		RenderOptions.SetEdgeMode(viewbox, EdgeMode.Aliased);
-		RenderOptions.SetBitmapScalingMode(viewbox, BitmapScalingMode.NearestNeighbor);
+		RenderOptions.SetEdgeMode(RootGrid, EdgeMode.Aliased);
+		RenderOptions.SetBitmapScalingMode(RootGrid, BitmapScalingMode.NearestNeighbor);
 #if DEBUG
 		Background = new SolidColorBrush(Color.FromRgb(0x20, 0x20, 0x20));
 		ScrollViewer scrollViewer = new()

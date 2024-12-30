@@ -21,7 +21,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 	const int COL_STEP_X = 159;
 	const int FIRST_ROW_Y = 35;
 	const int ROW_STEP_Y = 144;
-	const int BUTTON_WIDTH = 113;
+	const int BUTTON_WIDTH = 114;
 	const int BUTTON_HEIGHT = 68;
 
 	public MenuPage()
@@ -31,7 +31,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		AddButton<DriveInfo>(0, 1, ResourceManager.ResourceFiles.DriverIcon, "運転士");
 		AddButton<ConductorInto>(1, 1, ResourceManager.ResourceFiles.ConductorIcon, "車　掌");
 		AddButton<MaintenanceMenuPage>(2, 1, ResourceManager.ResourceFiles.MaintenanceIcon, "検　修");
-		AddButton<EmbeddedManual>(3, 1, ResourceManager.ResourceFiles.EmbeddedManualIcon, "応急ﾏﾆｭｱﾙ");
+		AddButton<EmbeddedManual>(3, 1, ResourceManager.ResourceFiles.EmbeddedManualIcon, "応急ﾏﾆｭｱﾙ", 0.5);
 
 		AddButton<DirectionMenu>(0, 2, ResourceManager.ResourceFiles.WorkSettingIcon, "運行設定");
 		AddButton<CarStateSW>(1, 2, ResourceManager.ResourceFiles.CarInfoIcon, "車両状態");
@@ -61,7 +61,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		Children.Add(btn);
 	}
 
-	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
+	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, double adjustX = 0, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Image img = ResourceManager.GetResourceAsImage(resource);
 		img.Stretch = Stretch.None;
@@ -77,12 +77,12 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 
 		Label label = ComponentFactory.Get1XLong2Label();
 		label.Content = labelStr;
-		label.Margin = new(x, y + BUTTON_HEIGHT, 0, 0);
+		label.Margin = new(x + adjustX, y + BUTTON_HEIGHT, 0, 0);
 		label.Padding = new(0, 4, 0, 0);
 		label.Width = BUTTON_WIDTH;
 		label.HorizontalContentAlignment = HorizontalAlignment.Center;
 		Children.Add(label);
 	}
-	void AddButton(int col, int row, ResourceManager.ResourceFiles resource, string labelStr)
-		=> AddButton<FrameworkElement>(col, row, resource, labelStr, true);
+	void AddButton(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, double adjustX = 0)
+		=> AddButton<FrameworkElement>(col, row, resource, labelStr, adjustX, true);
 }

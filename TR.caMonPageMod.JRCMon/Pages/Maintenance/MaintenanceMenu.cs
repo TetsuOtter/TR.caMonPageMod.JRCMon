@@ -41,7 +41,7 @@ public partial class MaintenanceMenuPage : Canvas, IHoldRootGridInstance, IFoote
 		label.Content = labelStr;
 		AddButtonWithContent<T>(col, row, label, isNotImplemented);
 	}
-	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
+	void AddButton<T>(int col, int row, ResourceManager.ResourceFiles resource, string labelStr, double adjustX = 0, bool isNotImplemented = false) where T : FrameworkElement
 	{
 		Image img = ResourceManager.GetResourceAsImage(resource);
 		img.Stretch = System.Windows.Media.Stretch.None;
@@ -51,7 +51,7 @@ public partial class MaintenanceMenuPage : Canvas, IHoldRootGridInstance, IFoote
 		label.Content = labelStr;
 		int buttonX = FIRST_COL_X + COL_STEP_X * col;
 		int buttonY = FIRST_ROW_Y + ROW_STEP_Y * row;
-		label.Margin = new(buttonX, buttonY + BUTTON_HEIGHT, 0, 0);
+		label.Margin = new(buttonX + adjustX, buttonY + BUTTON_HEIGHT, 0, 0);
 		label.Padding = new(0, 1, 0, 0);
 		label.Width = BUTTON_WIDTH;
 		label.HorizontalContentAlignment = HorizontalAlignment.Center;
