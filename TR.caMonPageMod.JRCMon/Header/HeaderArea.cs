@@ -31,8 +31,8 @@ class HeaderArea : Grid
 	readonly Label TrainNumber = ComponentFactory.Get1XLong2Label();
 	readonly Label TrainType = ComponentFactory.Get1XLong2Label();
 	readonly Label TrainDirection = ComponentFactory.Get1XLong2Label();
-	readonly Label TimeHH = ComponentFactory.Get2XLongLabel();
-	readonly Label TimeMM = ComponentFactory.Get2XLongLabel();
+	readonly Label TimeHH = ComponentFactory.Get2XLabel();
+	readonly Label TimeMM = ComponentFactory.Get2XLabel();
 	readonly AppState State;
 	public HeaderArea(AppState state)
 	{
@@ -78,17 +78,17 @@ class HeaderArea : Grid
 		TrainDirection.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
 		Children.Add(TrainDirection);
 
-		TimeHH.Margin = new(682, 0.5, 0, 0);
+		TimeHH.Margin = new(682, TEXT_AREA_TOP, 0, 0);
 		TimeHH.Width = 56;
-		TimeHH.Height = (TEXT_AREA_HEIGHT + TEXT_AREA_TOP) / 1.5;
-		TimeHH.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		TimeHH.Height = TEXT_AREA_HEIGHT;
+		TimeHH.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 		TimeHH.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		Children.Add(TimeHH);
 
-		TimeMM.Margin = new(738, 0.5, 0, 0);
+		TimeMM.Margin = new(738, TEXT_AREA_TOP, 0, 0);
 		TimeMM.Width = 56;
-		TimeMM.Height = (TEXT_AREA_HEIGHT + TEXT_AREA_TOP) / 1.5;
-		TimeMM.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		TimeMM.Height = TEXT_AREA_HEIGHT;
+		TimeMM.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 		TimeMM.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		Children.Add(TimeMM);
 
