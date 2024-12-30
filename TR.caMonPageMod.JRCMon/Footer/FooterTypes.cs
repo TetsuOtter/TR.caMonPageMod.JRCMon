@@ -117,7 +117,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(DirectionSetting)),
+		new FooterInfoPage(typeof(DirectionSetting), "運行設定"),
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -127,7 +127,7 @@ public static class FooterType
 		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(DirectionSetting)),
+		new FooterInfoPage(typeof(DirectionSetting), "運行設定"),
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -154,7 +154,7 @@ public static class FooterType
 	];
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_INFO { get; } =
 	[
-		new FooterInfoPage(typeof(DirectionSetting)),
+		new FooterInfoPage(typeof(DirectionSetting), "運行設定"),
 
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
