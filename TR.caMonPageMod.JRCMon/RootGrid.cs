@@ -34,6 +34,7 @@ public class RootGrid : Grid
 	}
 
 	Type lastPageType = typeof(Pages.SystemControl.MenuPage);
+	public Type CurrentPageType { get; private set; } = typeof(Pages.SystemControl.MenuPage);
 	public void SetPageType<T>() where T : FrameworkElement
 		=> SetPageType(typeof(T));
 
@@ -85,6 +86,7 @@ public class RootGrid : Grid
 		{
 			lastPageType = pageType;
 		}
+		CurrentPageType = pageType;
 
 		if (pageType.GetCustomAttribute<FullScreenPageAttribute>() is not null)
 		{

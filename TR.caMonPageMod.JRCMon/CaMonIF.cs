@@ -1,5 +1,6 @@
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 using caMon;
 
@@ -15,6 +16,9 @@ public class CaMonIF : Page, IPages
 	public event EventHandler? CloseApp { add => RootGrid.CloseApp += value; remove => RootGrid.CloseApp -= value; }
 
 	private readonly RootGrid RootGrid = new();
+
+	const string ASSEMBLY_NS = "TR.caMonPageMod.JRCMon.";
+	const string PAGES_NS = "TR.caMonPageMod.JRCMon.Pages.";
 
 	public CaMonIF()
 	{
@@ -32,7 +36,7 @@ public class CaMonIF : Page, IPages
 			VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
 			HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
 		};
-		scrollViewer.KeyDown += (s, e) =>
+		KeyDown += (s, e) =>
 		{
 			switch (e.Key)
 			{
@@ -82,6 +86,45 @@ public class CaMonIF : Page, IPages
 #else
 		Content = viewbox;
 #endif
+		KeyDown += (s, e) =>
+		{
+			switch (e.Key)
+			{
+				case System.Windows.Input.Key.P:
+					if (e.KeyboardDevice.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Control))
+						GetImage();
+					return;
+				default:
+					return;
+			}
+		};
+	}
+
+	private void GetImage()
+	{
+		try
+		{
+			RenderTargetBitmap renderTargetBitmap = new(Constants.DISPLAY_WIDTH, Constants.DISPLAY_HEIGHT, 96, 96, PixelFormats.Pbgra32);
+			renderTargetBitmap.Render(RootGrid);
+			string path = ResourceManager.CurrentAssembly.Location;
+			string pageName = RootGrid.CurrentPageType.FullName ?? RootGrid.CurrentPageType.Name;
+			if (pageName.StartsWith(PAGES_NS))
+				pageName = pageName[PAGES_NS.Length..];
+			else if (pageName.StartsWith(ASSEMBLY_NS))
+				pageName = pageName[ASSEMBLY_NS.Length..];
+			string fileName = $"{DateTime.Now:yyyyMMdd_HHmmss}.{pageName}.png";
+			string savePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(path) ?? "", fileName);
+
+			using System.IO.FileStream fileStream = new(savePath, System.IO.FileMode.Create);
+			PngBitmapEncoder pngBitmapEncoder = new();
+			pngBitmapEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+			pngBitmapEncoder.Save(fileStream);
+			System.Windows.MessageBox.Show($"Saved to {savePath}");
+		}
+		catch (Exception ex)
+		{
+			System.Windows.MessageBox.Show(ex.ToString());
+		}
 	}
 
 	protected virtual void Dispose(bool disposing)
