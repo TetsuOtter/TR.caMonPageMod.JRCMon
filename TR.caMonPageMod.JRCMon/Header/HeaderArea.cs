@@ -1,7 +1,6 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 using TR.BIDSSMemLib;
 using TR.caMonPageMod.JRCMon.PageTypes;
@@ -13,7 +12,9 @@ namespace TR.caMonPageMod.JRCMon.Header;
 class HeaderArea : Canvas
 {
 	const int PAGE_ICON_SIZE = 40;
-	const double TEXT_AREA_BOTTOM = 3.75;
+	const int PAGE_ICON_LEFT = 4;
+	const int PAGE_NAME_LEFT = PAGE_ICON_LEFT + Constants.FONT_SIZE_1X * 4;
+	const double TEXT_AREA_BOTTOM = 4;
 	const int TRAIN_NUMBER_LR_PADDING = 8;
 	const int TRAIN_TYPE_LEFT_PADDING = Constants.FONT_SIZE_1X;
 	const int TRAIN_DEST_LEFT_PADDING = Constants.FONT_SIZE_1X * 2;
@@ -45,9 +46,9 @@ class HeaderArea : Canvas
 		Image baseImage = ResourceManager.GetResourceAsImage(ResourceManager.ResourceFiles.HeaderBase);
 		Children.Add(baseImage);
 
-		SetLeft(PageIcon, 6);
+		SetLeft(PageIcon, PAGE_ICON_LEFT);
 
-		SetLeft(PageName, 52);
+		SetLeft(PageName, PAGE_NAME_LEFT);
 		SetBottom(PageName, TEXT_AREA_BOTTOM);
 		Children.Add(PageIcon);
 		Children.Add(PageName);
