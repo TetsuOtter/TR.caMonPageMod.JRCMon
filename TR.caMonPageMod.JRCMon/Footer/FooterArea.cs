@@ -179,8 +179,6 @@ public class FooterArea : Canvas
 		label.VerticalContentAlignment = VerticalAlignment.Center;
 		label.Height = Constants.FOOTER_MENU_BUTTON_HEIGHT;
 		label.Width = Constants.FOOTER_MENU_BUTTON_WIDTH;
-		label.FontSize = Constants.FONT_SIZE_FOOTER;
-		label.FontFamily = Constants.FONT_FAMILY_FOOTER;
 		label.Content = labelStr;
 		btn.Content = label;
 		btn.IsEnabled = isEnabled;
