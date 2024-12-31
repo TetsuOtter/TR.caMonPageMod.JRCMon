@@ -27,6 +27,11 @@ public static class FooterType
 		new FooterInfoCurrentPage(),
 		new FooterInfoGoBack(),
 	];
+	public static IReadOnlyList<FooterInfo> getCurrentAndBackWithArgs(Func<object[]> getArgs)
+	 => [
+			new FooterInfoCurrentPage(),
+			new FooterInfoGoBack(getArgs),
+		];
 
 	public static IReadOnlyList<FooterInfo> CURRENT_AND_SELECT_CAR_UNIT { get; } =
 	[
@@ -45,13 +50,18 @@ public static class FooterType
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
-	public static IReadOnlyList<FooterInfo> WORK_SETTING { get; } =
-	[
-		new FooterInfoDummy("号車"),
-		new FooterInfoPage(typeof(DirectionMenu)),
-		new FooterInfoPage(typeof(DirectionSettingNumber)),
-		new FooterInfoPage(typeof(MenuPage)),
-	];
+	public static IReadOnlyList<FooterInfo> getForWorkSetting(Func<WorkSettingContext> getContext)
+	{
+		if (getContext().Source == WorkSettingContext.PageSource.Driver)
+			return CURRENT_AND_MENU;
+
+		return [
+			new FooterInfoDummy("号車"),
+			new FooterInfoPage(typeof(DirectionMenu), getArgs: () => [getContext()]),
+			new FooterInfoPage(typeof(DirectionSettingNumber), getArgs: () => [getContext()]),
+			new FooterInfoPage(typeof(MenuPage)),
+		];
+	}
 
 	public static IReadOnlyList<FooterInfo> OTHER_SERIES_BASE { get; } =
 	[
@@ -117,7 +127,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(DirectionSetting), "運行設定"),
+		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(WorkSettingContext.PageSource.Driver)]),
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -127,7 +137,7 @@ public static class FooterType
 		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(DirectionSetting), "運行設定"),
+		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(WorkSettingContext.PageSource.Driver)]),
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -154,7 +164,7 @@ public static class FooterType
 	];
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_INFO { get; } =
 	[
-		new FooterInfoPage(typeof(DirectionSetting), "運行設定"),
+		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(WorkSettingContext.PageSource.Conductor)]),
 
 		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),

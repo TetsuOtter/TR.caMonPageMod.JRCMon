@@ -1,13 +1,19 @@
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Header;
 
 namespace TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 
 [PageTypes.NormalPage("運行設定", ResourceManager.ResourceFiles.WorkSettingIcon, "列番設定")]
-public partial class DirectionSettingNumber : NormalPageBase, IFooterInfo
+public partial class DirectionSettingNumber : NormalPageBase, IHeaderOverride, IFooterInfo
 {
-	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.WORK_SETTING;
+	public string HeaderTitle => Context.HeaderTitle;
+	public ResourceManager.ResourceFiles HeaderIcon { get; } = ResourceManager.ResourceFiles.WorkSettingIcon;
+	public IReadOnlyList<FooterInfo> FooterInfoList { get; }
 
-	public DirectionSettingNumber() : base(ResourceManager.ResourceFiles.DirectionSettingNumber)
+	WorkSettingContext Context;
+	public DirectionSettingNumber(WorkSettingContext context) : base(ResourceManager.ResourceFiles.DirectionSettingNumber)
 	{
+		Context = context;
+		FooterInfoList = FooterType.getForWorkSetting(() => Context);
 	}
 }
