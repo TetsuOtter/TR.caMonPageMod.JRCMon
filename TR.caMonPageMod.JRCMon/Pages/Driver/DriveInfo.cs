@@ -13,10 +13,14 @@ public class DriveInfo : Canvas, IFooterInfo
 {
 	public IReadOnlyList<FooterInfo> FooterInfoList => FooterType.DRIVER_BASE;
 
-	const int LOWER_BOX_HEIGHT = 70;
-	const int LOWER_BOX_LEFT = 2;
-	const int LOWER_BOX_BOTTOM = -1;
-	const int LOWER_BOX_SEPARATOR_LEFT = 188;
+	const int LOWER_BOX_HEIGHT = Constants.FONT_SIZE_1X * 3;
+	const int LOWER_BOX_LEFT = 0;
+	const int LOWER_BOX_BOTTOM = 0;
+	const int LOWER_BOX_SEPARATOR_LEFT = 160;
+
+	const int NEXT_STOP_LABEL_PADDING_TOP = 2;
+	const int ASSIST_LABEL_TOP = 180;
+	const int ASSIST_LABEL_LEFT = 4;
 
 	public DriveInfo(AppState state)
 	{
@@ -50,6 +54,19 @@ public class DriveInfo : Canvas, IFooterInfo
 			Stroke = Brushes.White,
 			StrokeThickness = Constants.FOOTER_LINE_HEIGHT,
 		});
+
+		BitmapLabel nextStopLabel = ComponentFactory.Get1XLabel();
+		nextStopLabel.Text = "次停車駅";
+		nextStopLabel.Width = LOWER_BOX_SEPARATOR_LEFT;
+		nextStopLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+		SetTop(nextStopLabel, Constants.BODY_HEIGHT - LOWER_BOX_HEIGHT + NEXT_STOP_LABEL_PADDING_TOP);
+		Children.Add(nextStopLabel);
+
+		BitmapLabel assistLabel = ComponentFactory.Get1XLabel();
+		assistLabel.Text = "項目名にタッチ　→　処置表示";
+		SetTop(assistLabel, ASSIST_LABEL_TOP);
+		SetLeft(assistLabel, ASSIST_LABEL_LEFT);
+		Children.Add(assistLabel);
 
 		Children.Add(new TrainFormationImage(state));
 	}

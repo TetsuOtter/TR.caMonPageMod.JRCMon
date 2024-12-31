@@ -2,6 +2,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 using TR.caMonPageMod.JRCMon.TrainFormation;
+using TR.caMonPageMod.JRCMon.Utils;
 
 namespace TR.caMonPageMod.JRCMon.Parts.Unit;
 
@@ -54,7 +55,7 @@ public class CarImage : Canvas
 		Children.Add(TypeLabel);
 
 		BitmapLabel carNumberLabel = ComponentFactory.Get1XLabel();
-		carNumberLabel.Text = carNumber.ToString();
+		carNumberLabel.Text = carNumber.ToString().ToWide();
 		carNumberLabel.Width = CarImageGen.WIDTH;
 		carNumberLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		SetLeft(carNumberLabel, 0);

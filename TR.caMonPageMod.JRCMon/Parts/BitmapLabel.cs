@@ -12,11 +12,15 @@ public class BitmapLabel : Canvas
 		Children.Add(image);
 	}
 
+	bool isCustomHeightSet = false;
+	bool isCustomWidthSet = false;
 	protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 	{
 		base.OnPropertyChanged(e);
 		if (e.Property.Name is nameof(Width) or nameof(Height))
 			OnSizePosChanged();
+		isCustomHeightSet = isCustomHeightSet || e.Property.Name == nameof(Height);
+		isCustomWidthSet = isCustomWidthSet || e.Property.Name == nameof(Width);
 	}
 
 	private Brush _Foreground = Brushes.White;
@@ -170,9 +174,9 @@ public class BitmapLabel : Canvas
 			return;
 		image.Width = Source.Width * ScaleX;
 		image.Height = Source.Height * ScaleY;
-		if (double.IsNaN(Width))
+		if (!isCustomWidthSet)
 			Width = image.Width;
-		if (double.IsNaN(Height))
+		if (!isCustomHeightSet)
 			Height = image.Height;
 
 		switch (HorizontalContentAlignment)
