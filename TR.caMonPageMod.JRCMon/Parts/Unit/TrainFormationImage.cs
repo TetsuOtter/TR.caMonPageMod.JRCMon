@@ -4,8 +4,8 @@ namespace TR.caMonPageMod.JRCMon.Parts.Unit;
 
 public class TrainFormationImage : Canvas
 {
-	public const int TOP = 60;
-	public const int LEFT = 191;
+	public const int TOP = 50;
+	public const int LEFT = 194;
 
 	private readonly AppState state;
 	public TrainFormationImage(AppState state)

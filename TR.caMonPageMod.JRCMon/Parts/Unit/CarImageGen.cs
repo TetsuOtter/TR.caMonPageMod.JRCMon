@@ -9,13 +9,16 @@ namespace TR.caMonPageMod.JRCMon.Parts.Unit;
 
 public static class CarImageGen
 {
-	public const int HEIGHT = 62;
-	public const int WIDTH = 47;
+	public const int HEIGHT = 60;
+	public const int WIDTH = 48;
 	const PixelFormat PIXEL_FORMAT = PixelFormat.Format32bppArgb;
 	const int BYTE_PER_PIXEL = 4;
+	public const int CAB_Y = 1;
 	public const int ROOF_Y = 11;
-	public const int SEPARATOR_Y = 29;
-	const int CAB_WIDTH = 22;
+	public const int SEPARATOR_Y = ROOF_Y + Constants.FONT_SIZE_1X;
+	const int CAB_WIDTH = 25;
+	const int CAB_BORDER_ROW_COUNT = ROOF_Y - CAB_Y + 1;
+	const double CAB_BORDER_WIDTH = (double)CAB_WIDTH / CAB_BORDER_ROW_COUNT;
 	const int RIGHT_CAB_CLIFF_COL = WIDTH - CAB_WIDTH;
 	const int BOGIE_H_W = 7;
 	const int BOGIE_PADDING_LR = 1;
@@ -35,6 +38,33 @@ public static class CarImageGen
 		[0, 1, 0, 0, 0, 1, 0],
 		[0, 0, 1, 1, 1, 0, 0],
 	];
+
+	const byte CAB_BORDER = 1;
+	const byte CAB_INNER = 2;
+	static readonly byte[][] LEFT_CAB;
+	static readonly byte[][] RIGHT_CAB;
+	static CarImageGen()
+	{
+		LEFT_CAB = new byte[CAB_BORDER_ROW_COUNT][];
+		RIGHT_CAB = new byte[CAB_BORDER_ROW_COUNT][];
+
+		static int getLeftCabStartCol(int cabRow)
+			=> (int)(CAB_BORDER_WIDTH * (CAB_BORDER_ROW_COUNT - cabRow - 1));
+		for (int row = 0; row < CAB_BORDER_ROW_COUNT; ++row)
+		{
+			byte[] rowBytes = new byte[CAB_WIDTH];
+			Span<byte> rowSpan = rowBytes;
+			int startCol = getLeftCabStartCol(row);
+			int endCol = getLeftCabStartCol(row - 1);
+			rowSpan[startCol..endCol].Fill(CAB_BORDER);
+			if (endCol < (CAB_WIDTH - 1))
+				rowSpan[endCol..(CAB_WIDTH - 1)].Fill(CAB_INNER);
+			rowSpan[CAB_WIDTH - 1] = CAB_BORDER;
+
+			LEFT_CAB[row] = rowBytes;
+			RIGHT_CAB[row] = rowBytes.Reverse().ToArray();
+		}
+	}
 
 	public record CarImageInfo(
 		bool IsLeftCab,
@@ -85,37 +115,30 @@ public static class CarImageGen
 		Span<byte> imgSpan = new(imgBytes);
 		imgSpan.Clear();
 
-		static int getLeftCabStartCol(int row) => CAB_WIDTH - ((row + 1) * 2);
-		static int getRightCabStartCol(int row) => (RIGHT_CAB_CLIFF_COL - 1) + (row * 2);
-		if (info.IsLeftCab)
+		byte[]? ColorBytes = info.IsDriverCab ? DRIVER_CAB_COLOR_BYTES : info.Is315 ? TYPE315_COLOR_BYTES : null;
+		Span<byte> colorSpan = ColorBytes.AsSpan();
+
+		if (info.IsLeftCab || info.IsRightCab)
 		{
-			int cliffCol = CAB_WIDTH - 1;
-			for (int row = 0; row < ROOF_Y; ++row)
+			byte[][] src = info.IsLeftCab ? LEFT_CAB : RIGHT_CAB;
+			int imgCabStartCol = info.IsLeftCab ? 0 : RIGHT_CAB_CLIFF_COL;
+			for (int cabRow = 0; cabRow < LEFT_CAB.Length; ++cabRow)
 			{
-				Span<byte> rowSpan = imgSpan[(row * data.Stride)..((row + 1) * data.Stride)];
-				int startCol = getLeftCabStartCol(row);
-				int endCol = startCol + 3;
-				if (row == 0)
+				int imgRow = CAB_Y + cabRow;
+				Span<byte> rowSpan = imgSpan[(imgRow * data.Stride)..((imgRow + 1) * data.Stride)];
+				for (int cabCol = 0; cabCol < src[cabRow].Length; ++cabCol)
 				{
-					endCol = cliffCol;
+					int imgCol = imgCabStartCol + cabCol;
+					Span<byte> targetSpan = rowSpan[(imgCol * BYTE_PER_PIXEL)..((imgCol + 1) * BYTE_PER_PIXEL)];
+					if (src[cabRow][cabCol] == CAB_BORDER)
+					{
+						targetSpan.Fill(0xFF);
+					}
+					else if (ColorBytes is not null && src[cabRow][cabCol] == CAB_INNER)
+					{
+						colorSpan.CopyTo(targetSpan);
+					}
 				}
-				rowSpan[(startCol * BYTE_PER_PIXEL)..(endCol * BYTE_PER_PIXEL)].Fill(0xFF);
-				rowSpan[(cliffCol * BYTE_PER_PIXEL)..((cliffCol + 1) * BYTE_PER_PIXEL)].Fill(0xFF);
-			}
-		}
-		if (info.IsRightCab)
-		{
-			for (int row = 0; row < ROOF_Y; ++row)
-			{
-				Span<byte> rowSpan = imgSpan[(row * data.Stride)..((row + 1) * data.Stride)];
-				int startCol = getRightCabStartCol(row);
-				int endCol = startCol + 3;
-				if (row == 0)
-				{
-					startCol = RIGHT_CAB_CLIFF_COL + 1;
-				}
-				rowSpan[(startCol * BYTE_PER_PIXEL)..(endCol * BYTE_PER_PIXEL)].Fill(0xFF);
-				rowSpan[(RIGHT_CAB_CLIFF_COL * BYTE_PER_PIXEL)..((RIGHT_CAB_CLIFF_COL + 1) * BYTE_PER_PIXEL)].Fill(0xFF);
 			}
 		}
 
@@ -181,34 +204,6 @@ public static class CarImageGen
 
 		if (info.Is315 || info.IsDriverCab)
 		{
-			byte[] ColorBytes = info.IsDriverCab ? DRIVER_CAB_COLOR_BYTES : TYPE315_COLOR_BYTES;
-			Span<byte> colorSpan = ColorBytes.AsSpan();
-			if (info.IsLeftCab || info.IsRightCab)
-			{
-				for (int row = 2; row < ROOF_Y; ++row)
-				{
-					Span<byte> rowSpan = imgSpan[(row * data.Stride)..((row + 1) * data.Stride)];
-					if (info.IsLeftCab)
-					{
-						int startCol = getLeftCabStartCol(row) + 3;
-						colorSpan.CopyAndFill(rowSpan[(startCol * BYTE_PER_PIXEL)..((CAB_WIDTH - 1) * BYTE_PER_PIXEL)]);
-					}
-					if (info.IsRightCab)
-					{
-						int endCol = getRightCabStartCol(row);
-						colorSpan.CopyAndFill(rowSpan[((RIGHT_CAB_CLIFF_COL + 1) * BYTE_PER_PIXEL)..(endCol * BYTE_PER_PIXEL)]);
-					}
-				}
-				Span<byte> roofRowSpan = imgSpan[(ROOF_Y * data.Stride)..((ROOF_Y + 1) * data.Stride)];
-				if (info.IsLeftCab)
-				{
-					colorSpan.CopyAndFill(roofRowSpan[BYTE_PER_PIXEL..((CAB_WIDTH - 1) * BYTE_PER_PIXEL)]);
-				}
-				if (info.IsRightCab)
-				{
-					colorSpan.CopyAndFill(roofRowSpan[((RIGHT_CAB_CLIFF_COL + 1) * BYTE_PER_PIXEL)..((WIDTH - 1) * BYTE_PER_PIXEL)]);
-				}
-			}
 			for (int row = ROOF_Y + 1; row < SEPARATOR_Y; ++row)
 			{
 				Span<byte> rowSpan = imgSpan[(row * data.Stride)..((row + 1) * data.Stride)];
