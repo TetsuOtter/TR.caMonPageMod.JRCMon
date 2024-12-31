@@ -1,0 +1,54 @@
+name: Build Action
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  workflow_dispatch:
+
+env:
+  CSPROJ_PATH: ./TR.caMonPageMod.JRCMon/TR.caMonPageMod.JRCMon.csproj
+  TARGET_FRAMEWORK: net8.0-windows
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+
+      - name: Install dependencies
+        run: dotnet restore ${{ env.CSPROJ_PATH }}
+
+      - name: Debug Build
+        run: >
+          dotnet publish ${{ env.CSPROJ_PATH }}
+          -f ${{ env.TARGET_FRAMEWORK }}
+          -c Debug
+          -o ./debug-bin
+
+      - name: Upload Debug DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-bin
+          path: ./debug-bin/*
+
+      - name: Release Build
+        run: >
+          dotnet publish ${{ env.CSPROJ_PATH }}
+          -f ${{ env.TARGET_FRAMEWORK }}
+          -c Release
+          -o ./release-bin
+
+      - name: Upload Release DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-bin
+          path: ./release-bin/*
