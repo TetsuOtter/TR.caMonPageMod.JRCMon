@@ -8,7 +8,7 @@ public class BrightnessControlButton : Button
 	const int WIDTH = 104;
 	const int HEIGHT = 28;
 
-	private readonly Label BrightnessValueLabel = ComponentFactory.Get1XLabel();
+	private readonly BitmapLabel BrightnessValueLabel = ComponentFactory.Get1XLabel();
 
 	public BrightnessControlButton()
 	{
@@ -28,11 +28,11 @@ public class BrightnessControlButton : Button
 			Stretch = Stretch.Fill,
 		};
 
-		Label brightnessLabel = ComponentFactory.Get1XLabel();
-		brightnessLabel.Content = "輝度";
+		BitmapLabel brightnessLabel = ComponentFactory.Get1XLabel();
+		brightnessLabel.Text = "輝度";
 		brightnessLabel.Width = Constants.FONT_SIZE_1X * 4;
 		brightnessLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
-		BrightnessValueLabel.Content = "明";
+		BrightnessValueLabel.Text = "明";
 		BrightnessValueLabel.Width = brightnessLabel.Width;
 		BrightnessValueLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
 

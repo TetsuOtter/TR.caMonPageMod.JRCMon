@@ -10,12 +10,9 @@ namespace TR.caMonPageMod.JRCMon;
 
 public class ComponentFactory
 {
-	public static Label GetBasicLabel(Brush? foreground = null) => new()
+	public static BitmapLabel GetBasicLabel(Brush? foreground = null) => new()
 	{
 		Margin = new(0),
-		Padding = new(0),
-		FontFamily = Constants.FONT_FAMILY,
-		FontSize = Constants.FONT_SIZE_1X,
 		Foreground = foreground ?? Brushes.White,
 		HorizontalAlignment = HorizontalAlignment.Left,
 		VerticalAlignment = VerticalAlignment.Top,
@@ -23,42 +20,18 @@ public class ComponentFactory
 		Background = new SolidColorBrush(Color.FromArgb(0x50, 0, 0xFF, 0)),
 #endif
 	};
-	public static Label Get1XLabel(Brush? foreground = null) => GetBasicLabel(foreground);
-	public static Label Get1HalfXLabel(Brush? foreground = null)
+	public static BitmapLabel Get1XLabel(Brush? foreground = null) => GetBasicLabel(foreground);
+	public static BitmapLabel Get2XLabel(Brush? foreground = null)
 	{
-		Label label = GetBasicLabel(foreground);
-		label.FontSize = Constants.FONT_SIZE_1_HALF_X;
+		BitmapLabel label = GetBasicLabel(foreground);
+		label.ScaleX = 2;
+		label.ScaleY = 2;
 		return label;
 	}
-	public static Label Get2XLabel(Brush? foreground = null)
+	public static BitmapLabel Get1XLongLabel(Brush? foreground = null)
 	{
-		Label label = GetBasicLabel(foreground);
-		label.FontSize = Constants.FONT_SIZE_2X;
-		return label;
-	}
-	public static Label Get1XLongLabel(Brush? foreground = null)
-	{
-		Label label = GetBasicLabel(foreground);
-		label.LayoutTransform = new ScaleTransform(1, 1.5);
-		return label;
-	}
-	public static Label Get1XLong2Label(Brush? foreground = null)
-	{
-		Label label = GetBasicLabel(foreground);
-		label.LayoutTransform = new ScaleTransform(1, 2);
-		return label;
-	}
-	public static Label Get1HalfXLongLabel(Brush? foreground = null)
-	{
-		Label label = Get1HalfXLabel(foreground);
-		label.LayoutTransform = new ScaleTransform(1, 1.5);
-		return label;
-	}
-	public static Label Get2XLongLabel(Brush? foreground = null)
-	{
-		Label label = GetBasicLabel(foreground);
-		label.FontSize = Constants.FONT_SIZE_2X;
-		label.LayoutTransform = new ScaleTransform(1, 1.5);
+		BitmapLabel label = GetBasicLabel(foreground);
+		label.ScaleY = 2;
 		return label;
 	}
 
@@ -119,7 +92,7 @@ public class ComponentFactory
 
 		return button;
 	}
-	public static Button GetBasicButton(Thickness margin, int Width, int Height, ContentControl label, bool isSmall = false, Color? color = null, bool isShadowColored = false)
+	public static Button GetBasicButton(Thickness margin, int Width, int Height, object label, bool isSmall = false, Color? color = null, bool isShadowColored = false)
 	{
 		Button button = GetBasicButton(margin, Width, Height, isSmall, color, isShadowColored);
 		button.Content = label;
@@ -136,7 +109,7 @@ public class ComponentFactory
 		};
 		return button;
 	}
-	public static Button GetRedReplacedImgButton(ResourceManager.ResourceFiles resource, Thickness margin, ContentControl label, Color? color = null)
+	public static Button GetRedReplacedImgButton(ResourceManager.ResourceFiles resource, Thickness margin, object label, Color? color = null)
 	{
 		Button button = GetRedReplacedImgButton(resource, margin, color);
 		button.Content = label;

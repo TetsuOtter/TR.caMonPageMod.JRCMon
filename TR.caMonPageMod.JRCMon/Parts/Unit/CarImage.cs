@@ -12,7 +12,7 @@ public class CarImage : Canvas
 		Width = CarImageGen.WIDTH,
 		Height = CarImageGen.HEIGHT,
 	};
-	private readonly Label TypeLabel;
+	private readonly BitmapLabel TypeLabel;
 	private readonly CarImageGen.CarImageInfo carImageInfo;
 	public CarImage(
 		CarInfo carInfo,
@@ -50,11 +50,11 @@ public class CarImage : Canvas
 		TypeLabel.Width = CarImageGen.WIDTH - 2;
 		TypeLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		TypeLabel.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-		TypeLabel.Content = carInfo.CarType;
+		TypeLabel.Text = carInfo.CarType;
 		Children.Add(TypeLabel);
 
-		Label carNumberLabel = ComponentFactory.Get1XLabel();
-		carNumberLabel.Content = carNumber.ToString();
+		BitmapLabel carNumberLabel = ComponentFactory.Get1XLabel();
+		carNumberLabel.Text = carNumber.ToString();
 		carNumberLabel.Width = CarImageGen.WIDTH;
 		carNumberLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
 		SetLeft(carNumberLabel, 0);

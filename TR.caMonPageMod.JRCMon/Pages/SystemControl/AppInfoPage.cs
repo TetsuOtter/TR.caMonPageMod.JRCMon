@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.SystemControl;
 
@@ -17,7 +18,6 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 	const int APP_VERSION_BORDER_WIDTH = 4;
 
 	static readonly Thickness AppVersionLabelMargin = new(162, 104, 0, 0);
-	static readonly Thickness AppVersionLabelPadding = new(8, 0, 8, 0);
 	static readonly Thickness AppVersionBorderMargin = new(AppVersionLabelMargin.Left - APP_VERSION_BORDER_WIDTH, AppVersionLabelMargin.Top - APP_VERSION_BORDER_WIDTH, 0, 0);
 	static readonly Thickness AppVersionTitleLabelMargin = new(TITLE_LABEL_LEFT_MARGIN, AppVersionLabelMargin.Top + 2, 0, 0);
 	static readonly Thickness AppVersionUpdateButtonMargin = new(157, 168, 0, 0);
@@ -38,9 +38,9 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 
 	public AppInfoPage()
 	{
-		Label PageTitleLabel = ComponentFactory.Get1HalfXLongLabel();
+		BitmapLabel PageTitleLabel = ComponentFactory.Get2XLabel();
 		PageTitleLabel.Margin = new(0, PAGE_TITLE_LABEL_TOP_MARGIN, 0, 0);
-		PageTitleLabel.Content = "アプリ情報";
+		PageTitleLabel.Text = "アプリ情報";
 		PageTitleLabel.Width = Constants.DISPLAY_WIDTH;
 		PageTitleLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
 		PageTitleLabel.Foreground = Brushes.Yellow;
@@ -57,19 +57,18 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 			StrokeThickness = APP_VERSION_BORDER_WIDTH
 		};
 		Children.Add(AppVersionBorder);
-		Label AppVersionLabel = ComponentFactory.Get1XLongLabel();
+		BitmapLabel AppVersionLabel = ComponentFactory.Get1XLongLabel();
 		AppVersionLabel.Height = APP_VERSION_LABEL_HEIGHT / 1.5;
 		AppVersionLabel.Width = APP_VERSION_LABEL_WIDTH;
 		AppVersionLabel.Margin = AppVersionLabelMargin;
-		AppVersionLabel.Padding = AppVersionLabelPadding;
 		AppVersionLabel.VerticalContentAlignment = VerticalAlignment.Center;
 		AppVersionLabel.HorizontalContentAlignment = HorizontalAlignment.Right;
-		AppVersionLabel.Content = ResourceManager.CurrentAssembly.GetName().Version?.ToString() ?? "Unknown";
+		AppVersionLabel.Text = ResourceManager.CurrentAssembly.GetName().Version?.ToString() ?? "Unknown";
 		Children.Add(AppVersionLabel);
 
 		PutTitleLabel("バージョンを更新", AppVersionUpdateButtonTitleLabelMargin);
-		Label AppVersionUpdateLabel = ComponentFactory.Get1XLongLabel();
-		AppVersionUpdateLabel.Content = "更新する";
+		BitmapLabel AppVersionUpdateLabel = ComponentFactory.Get1XLongLabel();
+		AppVersionUpdateLabel.Text = "更新する";
 		Button AppVersionUpdateButton = ComponentFactory.GetBasicButton(
 			AppVersionUpdateButtonMargin,
 			APP_VERSION_UPDATE_BUTTON_WIDTH,
@@ -90,17 +89,17 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 
 	void PutTitleLabel(string title, Thickness margin)
 	{
-		Label titleLabel = ComponentFactory.Get1XLongLabel();
+		BitmapLabel titleLabel = ComponentFactory.Get1XLongLabel();
 		titleLabel.Margin = margin;
-		titleLabel.Content = title;
+		titleLabel.Text = title;
 		titleLabel.HorizontalContentAlignment = HorizontalAlignment.Left;
 		Children.Add(titleLabel);
 	}
 
 	Button PutRoundSW_S(string title, Thickness margin, Color color, Brush textColor)
 	{
-		Label label = ComponentFactory.Get1XLabel();
-		label.Content = title;
+		BitmapLabel label = ComponentFactory.Get1XLabel();
+		label.Text = title;
 		label.Foreground = textColor;
 		Button button = ComponentFactory.GetRedReplacedImgButton(
 			ResourceManager.ResourceFiles.RoundSW_S,

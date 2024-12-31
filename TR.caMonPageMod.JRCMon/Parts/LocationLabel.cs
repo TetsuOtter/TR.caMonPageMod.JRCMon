@@ -25,8 +25,8 @@ class LocationLabel : Grid
 	const int DECIMAL_NUMBER_X = DOT_POS_X + DOT_SIZE + DOT_PADDING;
 	const int UNIT_X = WIDTH - UNIT_WIDTH - 2;
 
-	private readonly Label IntegerNumberLabel = ComponentFactory.Get2XLabel();
-	private readonly Label DecimalNumberLabel = ComponentFactory.Get2XLabel();
+	private readonly BitmapLabel IntegerNumberLabel = ComponentFactory.Get2XLabel();
+	private readonly BitmapLabel DecimalNumberLabel = ComponentFactory.Get2XLabel();
 
 	public LocationLabel()
 	{
@@ -34,9 +34,9 @@ class LocationLabel : Grid
 		Width = WIDTH;
 		Height = HEIGHT;
 
-		Label label = ComponentFactory.Get1XLabel();
+		BitmapLabel label = ComponentFactory.Get1XLabel();
 		label.Margin = new(4, 6, 0, 0);
-		label.Content = "キロ程";
+		label.Text = "キロ程";
 		Children.Add(label);
 
 		Line line = new()
@@ -85,13 +85,13 @@ class LocationLabel : Grid
 		};
 		Children.Add(dot);
 
-		Label unit = ComponentFactory.Get2XLabel();
+		BitmapLabel unit = ComponentFactory.Get2XLabel();
 		unit.Margin = new(UNIT_X, NUMBER_Y, 0, 0);
 		unit.Width = UNIT_WIDTH;
 		unit.Height = NUMBER_HEIGHT;
 		unit.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
 		unit.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
-		unit.Content = "km";
+		unit.Text = "km";
 		Children.Add(unit);
 
 		SetLocation_km(1234.5);
@@ -111,8 +111,8 @@ class LocationLabel : Grid
 
 		Dispatcher.Invoke(() =>
 		{
-			IntegerNumberLabel.Content = integerStr;
-			DecimalNumberLabel.Content = decimalStr;
+			IntegerNumberLabel.Text = integerStr;
+			DecimalNumberLabel.Text = decimalStr;
 		});
 	}
 }

@@ -1,20 +1,20 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 using TR.BIDSSMemLib;
 using TR.caMonPageMod.JRCMon.PageTypes;
+using TR.caMonPageMod.JRCMon.Parts;
 using TR.caMonPageMod.JRCMon.Utils;
 
 namespace TR.caMonPageMod.JRCMon.Header;
 
-class HeaderArea : Grid
+class HeaderArea : Canvas
 {
 	const int PAGE_ICON_SIZE = 40;
-	const int TEXT_AREA_TOP = 5;
-	const int TEXT_AREA_HEIGHT = 42;
+	const double TEXT_AREA_BOTTOM = 3.75;
 	const int TRAIN_NUMBER_LR_PADDING = 8;
-	const int TRAIN_INFO_TB_PADDING = 1;
 	const int TRAIN_TYPE_LEFT_PADDING = Constants.FONT_SIZE_1X;
 	const int TRAIN_DEST_LEFT_PADDING = Constants.FONT_SIZE_1X * 2;
 
@@ -27,12 +27,11 @@ class HeaderArea : Grid
 		VerticalAlignment = System.Windows.VerticalAlignment.Center,
 		HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
 	};
-	readonly Label PageName = ComponentFactory.Get1XLong2Label();
-	readonly Label TrainNumber = ComponentFactory.Get1XLong2Label();
-	readonly Label TrainType = ComponentFactory.Get1XLong2Label();
-	readonly Label TrainDirection = ComponentFactory.Get1XLong2Label();
-	readonly Label TimeHH = ComponentFactory.Get2XLabel();
-	readonly Label TimeMM = ComponentFactory.Get2XLabel();
+	readonly BitmapLabel PageName = ComponentFactory.Get1XLongLabel();
+	readonly BitmapLabel TrainNumber = ComponentFactory.Get1XLongLabel();
+	readonly BitmapLabel TrainType = ComponentFactory.Get1XLongLabel();
+	readonly BitmapLabel TrainDirection = ComponentFactory.Get1XLongLabel();
+	readonly BitmapLabel TimeLabel = ComponentFactory.Get2XLabel();
 	readonly AppState State;
 	public HeaderArea(AppState state)
 	{
@@ -46,51 +45,37 @@ class HeaderArea : Grid
 		Image baseImage = ResourceManager.GetResourceAsImage(ResourceManager.ResourceFiles.HeaderBase);
 		Children.Add(baseImage);
 
-		PageIcon.Margin = new(6, 2, 0, 0);
-		PageName.Margin = new(52, TEXT_AREA_TOP, 0, 0);
-		PageName.Padding = new(0, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
-		PageName.Height = TEXT_AREA_HEIGHT / 2;
-		PageName.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		SetLeft(PageIcon, 6);
+
+		SetLeft(PageName, 52);
+		SetBottom(PageName, TEXT_AREA_BOTTOM);
 		Children.Add(PageIcon);
 		Children.Add(PageName);
 
-		TrainNumber.Margin = new(190, TEXT_AREA_TOP, 0, 0);
-		TrainNumber.Padding = new(TRAIN_NUMBER_LR_PADDING, TRAIN_INFO_TB_PADDING, TRAIN_NUMBER_LR_PADDING, TRAIN_INFO_TB_PADDING);
-		TrainNumber.Height = TEXT_AREA_HEIGHT / 2;
-		TrainNumber.Width = 124;
-		TrainNumber.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		SetLeft(TrainNumber, 200 + TRAIN_NUMBER_LR_PADDING);
+		SetBottom(TrainNumber, TEXT_AREA_BOTTOM);
+		TrainNumber.Width = 120 - TRAIN_NUMBER_LR_PADDING * 2;
+		TrainNumber.Height = Constants.FONT_SIZE_2X;
 		TrainNumber.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
 		Children.Add(TrainNumber);
 
-		TrainType.Margin = new(316, TEXT_AREA_TOP, 0, 0);
-		TrainType.Padding = new(TRAIN_TYPE_LEFT_PADDING, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
-		TrainType.Height = TEXT_AREA_HEIGHT / 2;
-		TrainType.Width = 165;
-		TrainType.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		SetLeft(TrainType, 320 + TRAIN_TYPE_LEFT_PADDING);
+		SetBottom(TrainType, TEXT_AREA_BOTTOM);
+		TrainType.Width = 162 - TRAIN_TYPE_LEFT_PADDING;
 		TrainType.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
 		Children.Add(TrainType);
 
-		TrainDirection.Margin = new(524, TEXT_AREA_TOP, 0, 0);
-		TrainDirection.Padding = new(TRAIN_DEST_LEFT_PADDING, TRAIN_INFO_TB_PADDING, 0, TRAIN_INFO_TB_PADDING);
-		TrainDirection.Height = TEXT_AREA_HEIGHT / 2;
-		TrainDirection.Width = 155;
-		TrainDirection.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		SetLeft(TrainDirection, 520 + TRAIN_DEST_LEFT_PADDING);
+		SetBottom(TrainDirection, TEXT_AREA_BOTTOM);
+		TrainDirection.Width = 160 - TRAIN_DEST_LEFT_PADDING;
 		TrainDirection.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
 		Children.Add(TrainDirection);
 
-		TimeHH.Margin = new(682, TEXT_AREA_TOP, 0, 0);
-		TimeHH.Width = 56;
-		TimeHH.Height = TEXT_AREA_HEIGHT;
-		TimeHH.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-		TimeHH.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-		Children.Add(TimeHH);
-
-		TimeMM.Margin = new(738, TEXT_AREA_TOP, 0, 0);
-		TimeMM.Width = 56;
-		TimeMM.Height = TEXT_AREA_HEIGHT;
-		TimeMM.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-		TimeMM.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-		Children.Add(TimeMM);
+		SetLeft(TimeLabel, 680);
+		SetBottom(TimeLabel, TEXT_AREA_BOTTOM);
+		TimeLabel.Width = 120;
+		TimeLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+		Children.Add(TimeLabel);
 
 		OnTrainInfoChanged();
 		SetTimeLabel(12, 34);
@@ -120,9 +105,9 @@ class HeaderArea : Grid
 		{
 			Dispatcher.Invoke(() =>
 			{
-				TrainNumber.Content = State.TrainNumber.ToWide();
-				TrainType.Content = State.TrainType.ToWide();
-				TrainDirection.Content = State.TrainDirection;
+				TrainNumber.Text = State.TrainNumber.ToWide();
+				TrainType.Text = State.TrainType.ToWide();
+				TrainDirection.Text = State.TrainDirection;
 			});
 		}
 		catch (Exception ex)
@@ -133,10 +118,11 @@ class HeaderArea : Grid
 
 	private void SetTimeLabel(int hh, int mm)
 	{
+		string hhStr = hh.ToString("D2");
+		string mmStr = mm.ToString("D2").PadLeft(2, '0');
 		Dispatcher.Invoke(() =>
 		{
-			TimeHH.Content = hh.ToString("D2");
-			TimeMM.Content = mm.ToString("D2");
+			TimeLabel.Text = $"{hhStr}:{mmStr}";
 		});
 	}
 
@@ -148,6 +134,6 @@ class HeaderArea : Grid
 			IconImageCache[pageAttribute.IconImage] = iconImage;
 		}
 		PageIcon.Source = iconImage;
-		PageName.Content = pageAttribute.PageName;
+		PageName.Text = pageAttribute.PageName;
 	}
 }

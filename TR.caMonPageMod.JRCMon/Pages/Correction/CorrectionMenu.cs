@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.Correction;
 
@@ -19,9 +20,9 @@ public partial class CorrectionMenu : NormalPageBase, IHoldRootGridInstance, IFo
 
 	void AddButtonWithXY<T>(int x, int y, string labelStr, bool isNotImplemented = false) where T : FrameworkElement
 	{
-		Label label = ComponentFactory.Get1XLong2Label();
+		BitmapLabel label = ComponentFactory.Get1XLongLabel();
 		Button btn = ComponentFactory.GetBasicButton(new(x, y, 0, 0), 132, 68);
-		label.Content = labelStr;
+		label.Text = labelStr;
 		if (!isNotImplemented)
 		{
 			btn.Click += (s, e) => RootGrid?.SetPageType<T>();

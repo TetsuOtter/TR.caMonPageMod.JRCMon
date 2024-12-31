@@ -9,6 +9,7 @@ using TR.caMonPageMod.JRCMon.Pages.Driver;
 using TR.caMonPageMod.JRCMon.Pages.Maintenance;
 using TR.caMonPageMod.JRCMon.Pages.Other;
 using TR.caMonPageMod.JRCMon.Pages.WorkSetting;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.SystemControl;
 
@@ -52,8 +53,8 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 			isShadowColored: true
 		);
 
-		Label label = ComponentFactory.Get1XLabel();
-		label.Content = "画面消去";
+		BitmapLabel label = ComponentFactory.Get1XLabel();
+		label.Text = "画面消去";
 		label.Foreground = Brushes.Black;
 		btn.Content = label;
 
@@ -75,10 +76,9 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		btn.Content = img;
 		Children.Add(btn);
 
-		Label label = ComponentFactory.Get1XLong2Label();
-		label.Content = labelStr;
-		label.Margin = new(x + adjustX, y + BUTTON_HEIGHT, 0, 0);
-		label.Padding = new(0, 4, 0, 0);
+		BitmapLabel label = ComponentFactory.Get1XLongLabel();
+		label.Text = labelStr;
+		label.Margin = new(x + adjustX, y + BUTTON_HEIGHT + 4, 0, 0);
 		label.Width = BUTTON_WIDTH;
 		label.HorizontalContentAlignment = HorizontalAlignment.Center;
 		Children.Add(label);

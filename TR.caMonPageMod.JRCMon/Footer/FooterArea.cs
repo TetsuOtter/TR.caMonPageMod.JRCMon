@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 using TR.caMonPageMod.JRCMon.PageTypes;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Footer;
 
@@ -174,12 +175,12 @@ public class FooterArea : Canvas
 			Constants.FOOTER_MENU_BUTTON_HEIGHT
 		);
 
-		Label label = ComponentFactory.GetBasicLabel();
+		BitmapLabel label = ComponentFactory.GetBasicLabel();
 		label.HorizontalContentAlignment = HorizontalAlignment.Center;
 		label.VerticalContentAlignment = VerticalAlignment.Center;
 		label.Height = Constants.FOOTER_MENU_BUTTON_HEIGHT;
 		label.Width = Constants.FOOTER_MENU_BUTTON_WIDTH;
-		label.Content = labelStr;
+		label.Text = labelStr;
 		btn.Content = label;
 		btn.IsEnabled = isEnabled;
 #if DEBUG

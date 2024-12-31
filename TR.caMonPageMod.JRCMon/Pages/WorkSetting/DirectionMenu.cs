@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 using TR.caMonPageMod.JRCMon.Footer;
+using TR.caMonPageMod.JRCMon.Parts;
 
 namespace TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 
@@ -38,8 +39,8 @@ public partial class DirectionMenu : NormalPageBase, IFooterInfo, IHoldRootGridI
 		}
 		Children.Add(btn);
 
-		Label label = ComponentFactory.Get1XLongLabel();
-		label.Content = labelStr;
+		BitmapLabel label = ComponentFactory.Get1XLongLabel();
+		label.Text = labelStr;
 		btn.Content = label;
 	}
 	void AddButton(int col, int row, string labelStr)
