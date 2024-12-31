@@ -14,8 +14,6 @@ public class FooterArea : Canvas
 	private readonly int maxPageIndex = 0;
 	public event EventHandler<int>? PageChanged;
 
-	private const int FOOTER_AREA_TOP = 1;
-
 	private readonly (Image, Button)? goNextPageButton;
 	private readonly (Image, Button)? goPrevPageButton0;
 	private readonly (Image, Button)? goPrevPageButton1;
@@ -33,9 +31,9 @@ public class FooterArea : Canvas
 		Children.Add(new Line
 		{
 			X1 = 0,
-			Y1 = FOOTER_AREA_TOP + (Constants.FOOTER_LINE_HEIGHT / 2),
+			Y1 = Constants.FOOTER_LINE_HEIGHT / 2,
 			X2 = Constants.DISPLAY_WIDTH,
-			Y2 = FOOTER_AREA_TOP + (Constants.FOOTER_LINE_HEIGHT / 2),
+			Y2 = Constants.FOOTER_LINE_HEIGHT / 2,
 			Stroke = Brushes.White,
 			StrokeThickness = Constants.FOOTER_LINE_HEIGHT,
 			HorizontalAlignment = HorizontalAlignment.Left,
@@ -145,30 +143,30 @@ public class FooterArea : Canvas
 		bool isEnabled = true
 	)
 	{
-		double imgX = (Constants.FOOTER_MENU_BUTTON_IMG_WIDTH + Constants.FOOTER_MENU_BUTTON_IMG_SPACING) * index;
-		double imgXR = Constants.DISPLAY_WIDTH - Constants.FOOTER_MENU_BUTTON_IMG_WIDTH - imgX;
+		double imgX = Constants.FOOTER_MENU_BUTTON_WIDTH * index;
+		double imgXR = Constants.DISPLAY_WIDTH - Constants.FOOTER_MENU_BUTTON_WIDTH - imgX;
 		Image btnImg = ResourceManager.GetResourceAsImage(
 			isSelected ? ResourceManager.ResourceFiles.FooterSW_ON : ResourceManager.ResourceFiles.FooterSW_OFF
 		);
 		btnImg.Margin = new Thickness(
 			isLeftAligned ? imgX : imgXR,
-			FOOTER_AREA_TOP,
+			0,
 			isLeftAligned ? imgXR : imgX,
 			0
 		);
-		btnImg.Height = Constants.FOOTER_MENU_BUTTON_IMG_HEIGHT;
-		btnImg.Width = Constants.FOOTER_MENU_BUTTON_IMG_WIDTH;
+		btnImg.Height = Constants.FOOTER_MENU_BUTTON_HEIGHT;
+		btnImg.Width = Constants.FOOTER_MENU_BUTTON_WIDTH;
 		if (addToChildren)
 		{
 			Children.Add(btnImg);
 		}
 
-		double btnX = imgX + (Constants.FOOTER_MENU_BUTTON_IMG_WIDTH - Constants.FOOTER_MENU_BUTTON_WIDTH) / 2;
-		double btnXR = imgXR + (Constants.FOOTER_MENU_BUTTON_IMG_WIDTH - Constants.FOOTER_MENU_BUTTON_WIDTH) / 2;
+		double btnX = imgX + (Constants.FOOTER_MENU_BUTTON_WIDTH - Constants.FOOTER_MENU_BUTTON_WIDTH) / 2;
+		double btnXR = imgXR + (Constants.FOOTER_MENU_BUTTON_WIDTH - Constants.FOOTER_MENU_BUTTON_WIDTH) / 2;
 		Button btn = ComponentFactory.GetEmptyButton(
 			new Thickness(
 				isLeftAligned ? btnX : btnXR,
-				FOOTER_AREA_TOP + Constants.FOOTER_LINE_HEIGHT,
+				Constants.FOOTER_LINE_HEIGHT,
 				isLeftAligned ? btnXR : btnX,
 				0
 			),
@@ -182,6 +180,7 @@ public class FooterArea : Canvas
 		label.Height = Constants.FOOTER_MENU_BUTTON_HEIGHT;
 		label.Width = Constants.FOOTER_MENU_BUTTON_WIDTH;
 		label.FontSize = Constants.FONT_SIZE_FOOTER;
+		label.FontFamily = Constants.FONT_FAMILY_FOOTER;
 		label.Content = labelStr;
 		btn.Content = label;
 		btn.IsEnabled = isEnabled;

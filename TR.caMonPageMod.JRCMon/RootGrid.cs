@@ -118,7 +118,7 @@ public class RootGrid : Grid
 		}
 		if (hasFooter && cc is IBaseImage baseImagePage)
 		{
-			baseImagePage.BaseImage.Height -= Constants.FOOTER_HEIGHT;
+			baseImagePage.BaseImage.Height = Constants.BODY_IMG_HEIGHT;
 		}
 	}
 	object? CreateElement(Type pageType)
