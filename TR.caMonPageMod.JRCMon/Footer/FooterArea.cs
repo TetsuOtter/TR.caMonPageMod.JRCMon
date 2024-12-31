@@ -45,10 +45,10 @@ public class FooterArea : Canvas
 			bool isSelected = getIsSelected(info, pageType);
 			string label = getLabel(info, pageType);
 			(_, Button btn) = AddButton(true, label, isSelected, index, isEnabled: info.IsEnabled);
-			if (info.IsEnabled)
+			if (info.IsEnabled && !isSelected)
 			{
-				Type pageClass = getPageType(info, pageType, lastPageType);
-				btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
+				var (pageClass, args) = getPageType(info, pageType, lastPageType);
+				btn.Click += (s, e) => rootGrid.SetPageTypeWithArgs(pageClass, args);
 			}
 		}
 		foreach (var (info, index) in footerInfoList.Where(v => !v.IsLeftAligned).Reverse().Select((f, i) => (f, i)))
@@ -56,10 +56,10 @@ public class FooterArea : Canvas
 			bool isSelected = getIsSelected(info, pageType);
 			string label = getLabel(info, pageType);
 			(_, Button btn) = AddButton(false, label, isSelected, index, isEnabled: info.IsEnabled);
-			if (info.IsEnabled)
+			if (info.IsEnabled && !isSelected)
 			{
-				Type pageClass = getPageType(info, pageType, lastPageType);
-				btn.Click += (s, e) => rootGrid.SetPageType(pageClass);
+				var (pageClass, args) = getPageType(info, pageType, lastPageType);
+				btn.Click += (s, e) => rootGrid.SetPageTypeWithArgs(pageClass, args);
 			}
 		}
 	}
@@ -87,12 +87,12 @@ public class FooterArea : Canvas
 		return false;
 	}
 
-	static Type getPageType(FooterInfo info, Type pageType, Type lastPageType)
+	static (Type buttonPageType, object[] args) getPageType(FooterInfo info, Type pageType, Type lastPageType)
 		=> info switch
 		{
-			FooterInfoPage infoPage => infoPage.PageClass,
-			FooterInfoCurrentPage => pageType,
-			FooterInfoGoBack => lastPageType,
+			FooterInfoPage infoPage => (infoPage.PageClass, infoPage.getArgs?.Invoke() ?? []),
+			FooterInfoCurrentPage => (pageType, []),
+			FooterInfoGoBack => (lastPageType, []),
 			_ => throw new NotSupportedException("Unsupported FooterInfo")
 		};
 	static string getLabel(FooterInfo info, Type pageType)

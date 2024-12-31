@@ -10,9 +10,9 @@ using TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 namespace TR.caMonPageMod.JRCMon.Footer;
 
 public abstract record FooterInfo(bool IsForceSelected = false, bool IsLeftAligned = false, bool IsEnabled = true);
-public record FooterInfoPage(Type PageClass, string? Label = null, bool IsForceSelected = false, bool IsLeftAligned = false, bool IsEnabled = true) : FooterInfo(IsForceSelected, IsLeftAligned, IsEnabled);
+public record FooterInfoPage(Type PageClass, string? Label = null, Func<object[]>? getArgs = null, bool IsForceSelected = false, bool IsLeftAligned = false, bool IsEnabled = true) : FooterInfo(IsForceSelected, IsLeftAligned, IsEnabled);
 public record FooterInfoCurrentPage(bool IsLeftAligned = false) : FooterInfo(false, IsLeftAligned, true);
-public record FooterInfoGoBack(bool IsLeftAligned = false) : FooterInfo(false, IsLeftAligned, true);
+public record FooterInfoGoBack(Func<object[]>? getArgs = null, bool IsLeftAligned = false) : FooterInfo(false, IsLeftAligned, true);
 public record FooterInfoDummy(string label, bool IsForceSelected = false, bool IsLeftAligned = false) : FooterInfo(IsForceSelected, IsLeftAligned, false);
 
 public static class FooterType

@@ -35,14 +35,18 @@ public class RootGrid : Grid
 
 	Type lastPageType = typeof(Pages.SystemControl.MenuPage);
 	public Type CurrentPageType { get; private set; } = typeof(Pages.SystemControl.MenuPage);
-	public void SetPageType<T>() where T : FrameworkElement
-		=> SetPageType(typeof(T));
+	public void SetPageType<T>(params object[] args) where T : FrameworkElement
+		=> SetPageTypeWithArgs(typeof(T), args);
+	public void SetPageTypeWithArgs<T>(object[] args) where T : FrameworkElement
+		=> SetPageTypeWithArgs(typeof(T), args);
 
-	internal void SetPageType(Type pageType)
+	public void SetPageType(Type pageType, params object[] args)
+		=> SetPageTypeWithArgs(pageType, args);
+	public void SetPageTypeWithArgs(Type pageType, object[] args)
 	{
 		Children.Clear();
 
-		FrameworkElement cc = CreateElement(pageType) as FrameworkElement ?? throw new InvalidOperationException("Invalid Page Type");
+		FrameworkElement cc = CreateElement(pageType, args) as FrameworkElement ?? throw new InvalidOperationException("Invalid Page Type");
 		cc.Width = Constants.DISPLAY_WIDTH;
 
 		bool hasFooter = false;
@@ -130,6 +134,27 @@ public class RootGrid : Grid
 		else if (pageType.GetConstructor(Type.EmptyTypes) is ConstructorInfo defaultCtor)
 		{
 			return defaultCtor.Invoke(null);
+		}
+		else
+		{
+			throw new InvalidOperationException("Invalid Page Type");
+		}
+	}
+	object? CreateElement(Type pageType, object[] args)
+	{
+		if (args.Length == 0)
+		{
+			return CreateElement(pageType);
+		}
+
+		Type[] argTypeArray = args.Select(a => a.GetType()).ToArray();
+		if (pageType.GetConstructor([typeof(AppState), .. argTypeArray]) is ConstructorInfo ctorWithState)
+		{
+			return ctorWithState.Invoke([State, .. args]);
+		}
+		else if (pageType.GetConstructor(argTypeArray) is ConstructorInfo defaultCtor)
+		{
+			return defaultCtor.Invoke(args);
 		}
 		else
 		{
