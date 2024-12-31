@@ -4,29 +4,25 @@ using System.Windows.Shapes;
 
 namespace TR.caMonPageMod.JRCMon.Parts;
 
-class LocationLabel : Grid
+class LocationLabel : Canvas
 {
-	const int WIDTH = 207;
-	const int HEIGHT = 60;
-	const int NUMBER_BOTTOM_MARGIN = 8;
-	const int NUMBER_HEIGHT = HEIGHT - NUMBER_BOTTOM_MARGIN;
-	const int NUMBER_Y = HEIGHT - NUMBER_HEIGHT - NUMBER_BOTTOM_MARGIN;
-	const int DOT_SIZE = 4;
-	const int DOT_POS_X = 138;
-	const int DOT_POS_Y = 44;
-	const int DOT_PADDING = 4;
-	const int LINE_X = 60;
-	const int LINE_WIDTH = 148;
-	const int INTEGER_NUMBER_WIDTH = 72;
-	const int DECIMAL_NUMBER_WIDTH = 18;
-	const int UNIT_WIDTH = 36;
+	const int WIDTH = 214;
+	const int HEIGHT = 44;
 
-	const int INTEGER_NUMBER_X = DOT_POS_X - INTEGER_NUMBER_WIDTH;
-	const int DECIMAL_NUMBER_X = DOT_POS_X + DOT_SIZE + DOT_PADDING;
-	const int UNIT_X = WIDTH - UNIT_WIDTH - 2;
+	const int LABEL_TOP = 5;
+	const int LABEL_LEFT = 4;
 
-	private readonly BitmapLabel IntegerNumberLabel = ComponentFactory.Get2XLabel();
-	private readonly BitmapLabel DecimalNumberLabel = ComponentFactory.Get2XLabel();
+	const int LINE_X = LABEL_LEFT + (Constants.FONT_SIZE_1X * 3) + 1;
+	const int LINE_THICKNESS = 1;
+	const int LINE_WIDTH = WIDTH - LINE_X;
+	const int NUMBER_WIDTH = Constants.FONT_SIZE_2X * 3;
+	const int NUMBER_BOTTOM = 4;
+	const int NUMBER_PADDING_RIGHT = Constants.FONT_SIZE_2X / 2;
+	const int UNIT_RIGHT = 6;
+
+	const int NUMBER_RIGHT = UNIT_RIGHT + Constants.FONT_SIZE_2X + NUMBER_PADDING_RIGHT;
+
+	private readonly BitmapLabel NumberLabel = ComponentFactory.Get2XLabel();
 
 	public LocationLabel()
 	{
@@ -35,66 +31,37 @@ class LocationLabel : Grid
 		Height = HEIGHT;
 
 		BitmapLabel label = ComponentFactory.Get1XLabel();
-		label.Margin = new(4, 6, 0, 0);
+		SetLeft(label, LABEL_LEFT);
+		SetTop(label, LABEL_TOP);
 		label.Text = "キロ程";
 		Children.Add(label);
 
 		Line line = new()
 		{
-			X1 = LINE_X,
-			Y1 = 54,
-			X2 = LINE_X + LINE_WIDTH,
-			Y2 = 54,
+			X1 = 0,
+			Y1 = LINE_THICKNESS / 2,
+			X2 = LINE_WIDTH,
+			Y2 = LINE_THICKNESS / 2,
 			Stroke = Brushes.White,
-			StrokeThickness = 2
+			StrokeThickness = LINE_THICKNESS
 		};
+		SetLeft(line, LINE_X);
+		SetBottom(line, 0);
 		Children.Add(line);
 
-		IntegerNumberLabel.Margin = new(
-			INTEGER_NUMBER_X,
-			NUMBER_Y,
-			0,
-			0
-		);
-		IntegerNumberLabel.Width = INTEGER_NUMBER_WIDTH;
-		IntegerNumberLabel.Height = NUMBER_HEIGHT;
-		IntegerNumberLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
-		IntegerNumberLabel.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
-		Children.Add(IntegerNumberLabel);
-
-		DecimalNumberLabel.Margin = new(
-			DECIMAL_NUMBER_X,
-			NUMBER_Y,
-			0,
-			0
-		);
-		DecimalNumberLabel.Width = DECIMAL_NUMBER_WIDTH;
-		DecimalNumberLabel.Height = NUMBER_HEIGHT;
-		DecimalNumberLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
-		DecimalNumberLabel.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
-		Children.Add(DecimalNumberLabel);
-
-		Rectangle dot = new()
-		{
-			Margin = new(DOT_POS_X, DOT_POS_Y, 0, 0),
-			Width = DOT_SIZE,
-			Height = DOT_SIZE,
-			Fill = Brushes.White,
-			HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-			VerticalAlignment = System.Windows.VerticalAlignment.Top,
-		};
-		Children.Add(dot);
+		NumberLabel.Width = NUMBER_WIDTH;
+		NumberLabel.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
+		SetRight(NumberLabel, NUMBER_RIGHT);
+		SetBottom(NumberLabel, NUMBER_BOTTOM);
+		Children.Add(NumberLabel);
 
 		BitmapLabel unit = ComponentFactory.Get2XLabel();
-		unit.Margin = new(UNIT_X, NUMBER_Y, 0, 0);
-		unit.Width = UNIT_WIDTH;
-		unit.Height = NUMBER_HEIGHT;
-		unit.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
-		unit.VerticalContentAlignment = System.Windows.VerticalAlignment.Bottom;
+		SetRight(unit, UNIT_RIGHT);
+		SetBottom(unit, NUMBER_BOTTOM);
 		unit.Text = "km";
 		Children.Add(unit);
 
-		SetLocation_km(1234.5);
+		SetLocation_km(174.3);
 	}
 
 	void SetLocation_km(double km)
@@ -111,8 +78,7 @@ class LocationLabel : Grid
 
 		Dispatcher.Invoke(() =>
 		{
-			IntegerNumberLabel.Text = integerStr;
-			DecimalNumberLabel.Text = decimalStr;
+			NumberLabel.Text = $"{integerStr}.{decimalStr}";
 		});
 	}
 }
