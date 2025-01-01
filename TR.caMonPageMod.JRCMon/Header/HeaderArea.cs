@@ -107,7 +107,7 @@ class HeaderArea : Canvas
 			Dispatcher.Invoke(() =>
 			{
 				TrainNumber.Text = State.TrainNumber.ToWide();
-				TrainType.Text = State.TrainType.ToWide();
+				TrainType.Text = State.TrainType;
 				TrainDirection.Text = State.TrainDirection;
 			});
 		}
