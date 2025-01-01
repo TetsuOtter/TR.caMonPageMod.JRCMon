@@ -1,7 +1,7 @@
 namespace TR.caMonPageMod.JRCMon.Pages.WorkSetting;
 
 public record WorkSettingContext(
-	WorkSettingContext.PageSource Source,
+	PageSource Source,
 	string TrainNumber,
 	string TrainType,
 	string TrainDestination_All,
@@ -9,12 +9,6 @@ public record WorkSettingContext(
 	int Direction_EditingTarget
 )
 {
-	public enum PageSource
-	{
-		Menu,
-		Driver,
-		Conductor,
-	}
 	public const int TRAIN_DESTINATION_COUNT = 6;
 
 	public WorkSettingContext(PageSource Source) : this(
