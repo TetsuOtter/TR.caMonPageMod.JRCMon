@@ -2,6 +2,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+using TR.BIDSSMemLib;
+
 namespace TR.caMonPageMod.JRCMon.Parts;
 
 class LocationLabel : Canvas
@@ -61,9 +63,16 @@ class LocationLabel : Canvas
 		unit.Text = "km";
 		Children.Add(unit);
 
-		SetLocation_km(174.3);
+		SetLocation_km(0);
+
+		SMemLib.SMC_BSMDChanged += (s, e) =>
+		{
+			SetLocation_km(e.NewValue.StateData.Z / 1000);
+		};
 	}
 
+	string lastIntegerStr = "";
+	string lastDecimalStr = "";
 	void SetLocation_km(double km)
 	{
 		int integerValue = (int)km;
@@ -75,6 +84,12 @@ class LocationLabel : Canvas
 			integerStr = "****";
 			decimalStr = "*";
 		}
+
+		if (integerStr == lastIntegerStr && decimalStr == lastDecimalStr)
+			return;
+
+		lastIntegerStr = integerStr;
+		lastDecimalStr = decimalStr;
 
 		Dispatcher.Invoke(() =>
 		{
