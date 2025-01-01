@@ -19,8 +19,6 @@ public class DriveInfo : Canvas, IFooterInfo
 	const int LOWER_BOX_SEPARATOR_LEFT = 160;
 
 	const int NEXT_STOP_LABEL_PADDING_TOP = 2;
-	const int ASSIST_LABEL_TOP = 180;
-	const int ASSIST_LABEL_LEFT = 4;
 
 	public DriveInfo(AppState state)
 	{
@@ -62,12 +60,7 @@ public class DriveInfo : Canvas, IFooterInfo
 		SetTop(nextStopLabel, Constants.BODY_HEIGHT - LOWER_BOX_HEIGHT + NEXT_STOP_LABEL_PADDING_TOP);
 		Children.Add(nextStopLabel);
 
-		BitmapLabel assistLabel = ComponentFactory.Get1XLabel();
-		assistLabel.Text = "項目名にタッチ　→　処置表示";
-		SetTop(assistLabel, ASSIST_LABEL_TOP);
-		SetLeft(assistLabel, ASSIST_LABEL_LEFT);
-		Children.Add(assistLabel);
-
+		Children.Add(ComponentFactory.Driver.GetAssistLabel());
 		Children.Add(new TrainFormationImage(state));
 	}
 }

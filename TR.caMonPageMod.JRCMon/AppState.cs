@@ -103,6 +103,7 @@ public class AppState
 	public bool IsCarSetReversed { get; private set; }
 	public bool IsOtherSeriesConnected { get; private set; }
 	public bool Is315Connected { get; private set; } = true;
+	public int CarCount { get; private set; } = 6;
 	public event EventHandler? TrainFormationChanged;
 	public void SetTrainFormation(IReadOnlyList<CarSetInfo> trainFormation, bool isCarSetReversed)
 	{
@@ -112,6 +113,7 @@ public class AppState
 		IsCarSetReversed = isCarSetReversed;
 		IsOtherSeriesConnected = trainFormation.Any(v => v.IsOtherSeries);
 		Is315Connected = trainFormation.Any(v => v.Is315);
+		CarCount = trainFormation.Sum(v => v.CarInfoList.Count);
 		TrainFormationChanged?.Invoke(this, EventArgs.Empty);
 	}
 

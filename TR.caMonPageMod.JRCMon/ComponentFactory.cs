@@ -115,4 +115,18 @@ public class ComponentFactory
 		button.Content = label;
 		return button;
 	}
+
+	public static class Driver
+	{
+		public const int ASSIST_LABEL_TOP = 180;
+		public const int ASSIST_LABEL_LEFT = 4;
+		public static BitmapLabel GetAssistLabel()
+		{
+			BitmapLabel assistLabel = Get1XLabel();
+			assistLabel.Text = "項目名にタッチ　→　処置表示";
+			Canvas.SetLeft(assistLabel, ASSIST_LABEL_LEFT);
+			Canvas.SetTop(assistLabel, ASSIST_LABEL_TOP);
+			return assistLabel;
+		}
+	}
 }
