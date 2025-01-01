@@ -160,7 +160,7 @@ public static class FooterType
 	public static IReadOnlyList<FooterInfo> DRIVER_BASE { get; } =
 	[
 		new FooterInfoPage(typeof(ReduceSpeed)),
-		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(LocationCorrectionPage), getArgs: () => [PageSource.Driver]),
 		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(PageSource.Driver)]),
 		new FooterInfoPage(typeof(CarStateInfo), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
@@ -170,7 +170,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(ReduceSpeed)),
-		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(LocationCorrectionPage), getArgs: () => [PageSource.Driver]),
 		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(PageSource.Driver)]),
 		new FooterInfoPage(typeof(CarStateInfo), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
@@ -180,7 +180,7 @@ public static class FooterType
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE { get; } =
 	[
 		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
-		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(LocationCorrectionPage), getArgs: () => [PageSource.Conductor]),
 		new FooterInfoPage(typeof(ConductorAC_Sub), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
 		new FooterInfoPage(typeof(ConductorInto)),
@@ -190,7 +190,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(Conductor315)),
 		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
-		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(LocationCorrectionPage), getArgs: () => [PageSource.Conductor]),
 		new FooterInfoPage(typeof(ConductorAC_Sub), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
 		new FooterInfoPage(typeof(ConductorInto)),
@@ -201,7 +201,7 @@ public static class FooterType
 		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(PageSource.Conductor)]),
 
 		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
-		new FooterInfoPage(typeof(LocationCorrectionPage)),
+		new FooterInfoPage(typeof(LocationCorrectionPage), getArgs: () => [PageSource.Conductor]),
 		new FooterInfoPage(typeof(ConductorAC_Sub), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
 		new FooterInfoPage(typeof(ConductorInto)),
