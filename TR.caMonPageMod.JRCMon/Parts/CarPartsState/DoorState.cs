@@ -31,16 +31,16 @@ public class DoorState : CarPartsStateBase
 	{
 		this.isDoorClosed = isDoorClosed;
 		this.isEnabled = IsEnabled;
+		Foreground = Brushes.White;
+
 		if (IsEnabled)
 		{
 			Background = isDoorClosed ? Brushes.Transparent : Brushes.Red;
-			Foreground = isDoorClosed ? Brushes.White : Brushes.Black;
 			Text = isDoorClosed ? "閉" : "開";
 		}
 		else
 		{
 			Background = Brushes.Transparent;
-			Foreground = Brushes.White;
 			Text = "-";
 		}
 	}
