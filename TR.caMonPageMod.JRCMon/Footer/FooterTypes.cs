@@ -105,7 +105,41 @@ public static class FooterType
 		new FooterInfoPage(typeof(CarStateThreePhase)),
 		new FooterInfoDummy("制動確認"),
 		new FooterInfoDummy("起動確認"),
-		new FooterInfoPage(typeof(CarStateSW)),
+		new FooterInfoPage(typeof(CarStateInfo)),
+		new FooterInfoGoBack(),
+	];
+	public static IReadOnlyList<FooterInfo> CAR_STATE_INFO { get; } =
+	[
+		new FooterInfoPage(typeof(CarStateSW.Page1), "次画面", IsLeftAligned: true),
+
+		new FooterInfoPage(typeof(CarStatePowerBrake)),
+		new FooterInfoPage(typeof(CarStateThreePhase)),
+		new FooterInfoDummy("制動確認"),
+		new FooterInfoDummy("起動確認"),
+		new FooterInfoPage(typeof(CarStateInfo)),
+		new FooterInfoGoBack(),
+	];
+	public static IReadOnlyList<FooterInfo> CAR_STATE_SW1 { get; } =
+	[
+		new FooterInfoPage(typeof(CarStateSW.Page2), "次画面", IsLeftAligned: true),
+		new FooterInfoPage(typeof(CarStateInfo), "前画面", IsLeftAligned: true),
+
+		new FooterInfoPage(typeof(CarStatePowerBrake)),
+		new FooterInfoPage(typeof(CarStateThreePhase)),
+		new FooterInfoDummy("制動確認"),
+		new FooterInfoDummy("起動確認"),
+		new FooterInfoPage(typeof(CarStateSW.Page1)),
+		new FooterInfoGoBack(),
+	];
+	public static IReadOnlyList<FooterInfo> CAR_STATE_SW2 { get; } =
+	[
+		new FooterInfoPage(typeof(CarStateSW.Page1), "前画面", IsLeftAligned: true),
+
+		new FooterInfoPage(typeof(CarStatePowerBrake)),
+		new FooterInfoPage(typeof(CarStateThreePhase)),
+		new FooterInfoDummy("制動確認"),
+		new FooterInfoDummy("起動確認"),
+		new FooterInfoPage(typeof(CarStateSW.Page2)),
 		new FooterInfoGoBack(),
 	];
 
@@ -128,7 +162,7 @@ public static class FooterType
 		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(WorkSettingContext.PageSource.Driver)]),
-		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
+		new FooterInfoPage(typeof(CarStateInfo), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
@@ -138,14 +172,14 @@ public static class FooterType
 		new FooterInfoPage(typeof(ReduceSpeed)),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(WorkSettingContext.PageSource.Driver)]),
-		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
+		new FooterInfoPage(typeof(CarStateInfo), "車両状態"),
 		new FooterInfoPage(typeof(DriveInfo)),
 		new FooterInfoPage(typeof(MenuPage)),
 	];
 
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE { get; } =
 	[
-		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
+		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
@@ -155,7 +189,7 @@ public static class FooterType
 	public static IReadOnlyList<FooterInfo> CONDUCTOR_BASE_315 { get; } =
 	[
 		new FooterInfoPage(typeof(Conductor315)),
-		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
+		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
@@ -166,7 +200,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(DirectionSettingNumber), "運行設定", () => [new WorkSettingContext(WorkSettingContext.PageSource.Conductor)]),
 
-		new FooterInfoPage(typeof(CarStateSW), "車両状態"),
+		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
 		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
