@@ -26,6 +26,8 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		Context = context;
 		FooterInfoList = FooterType.getCurrentAndBackWithArgs(() => [Context]);
 
+		Children.Add(new LocationLabel());
+
 		AddButton<DirectionSettingNumber>(47, 97, "列車番号", context);
 		AddButton<DirectionSetting>(47, 284, "一　括", context);
 
