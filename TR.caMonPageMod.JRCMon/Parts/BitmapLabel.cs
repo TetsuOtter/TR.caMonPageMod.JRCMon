@@ -74,6 +74,12 @@ public class BitmapLabel : Canvas
 		}
 	}
 
+	public Thickness Padding
+	{
+		get => image.Margin;
+		set => image.Margin = value;
+	}
+
 	private HorizontalAlignment _HorizontalContentAlignment = HorizontalAlignment.Left;
 	public HorizontalAlignment HorizontalContentAlignment
 	{
