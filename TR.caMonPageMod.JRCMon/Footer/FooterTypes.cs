@@ -181,7 +181,7 @@ public static class FooterType
 	[
 		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
+		new FooterInfoPage(typeof(ConductorAC_Sub), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
 		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -191,7 +191,7 @@ public static class FooterType
 		new FooterInfoPage(typeof(Conductor315)),
 		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
+		new FooterInfoPage(typeof(ConductorAC_Sub), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
 		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(MenuPage)),
@@ -202,7 +202,7 @@ public static class FooterType
 
 		new FooterInfoPage(typeof(CarStateSW.Page1), "車両状態"),
 		new FooterInfoPage(typeof(LocationCorrectionPage)),
-		new FooterInfoPage(typeof(ConductorAC), "空調制御"),
+		new FooterInfoPage(typeof(ConductorAC_Sub), "空調制御"),
 		new FooterInfoPage(typeof(ConductorService)),
 		new FooterInfoPage(typeof(ConductorInto)),
 		new FooterInfoPage(typeof(MenuPage)),
