@@ -35,7 +35,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 		AddButton<EmbeddedManual>(3, 1, ResourceManager.ResourceFiles.EmbeddedManualIcon, "応急ﾏﾆｭｱﾙ");
 
 		AddButton<DirectionMenu>(0, 2, ResourceManager.ResourceFiles.WorkSettingIcon, "運行設定", [new WorkSettingContext(PageSource.Menu)]);
-		AddButton<CarStateSW>(1, 2, ResourceManager.ResourceFiles.CarInfoIcon, "車両状態");
+		AddButton<CarStateInfo>(1, 2, ResourceManager.ResourceFiles.CarInfoIcon, "車両状態");
 		AddButton<OccupancyRatePage>(2, 2, ResourceManager.ResourceFiles.OccupancyRateIcon, "乗車率");
 		AddButton<CorrectionMenu>(3, 2, ResourceManager.ResourceFiles.CorrectionIcon, "補　正");
 
