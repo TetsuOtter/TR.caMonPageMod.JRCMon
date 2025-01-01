@@ -16,6 +16,7 @@ public static class CarImageGen
 	public const int CAB_Y = 1;
 	public const int ROOF_Y = 11;
 	public const int SEPARATOR_Y = ROOF_Y + Constants.FONT_SIZE_1X;
+	public const int SEPARATOR_HEIGHT = 2;
 	const int CAB_WIDTH = 25;
 	const int CAB_BORDER_ROW_COUNT = ROOF_Y - CAB_Y + 1;
 	const double CAB_BORDER_WIDTH = (double)CAB_WIDTH / CAB_BORDER_ROW_COUNT;
@@ -159,7 +160,7 @@ public static class CarImageGen
 					rowSpan[((WIDTH - 1) * BYTE_PER_PIXEL)..(WIDTH * BYTE_PER_PIXEL)].Fill(0xFF);
 				}
 			}
-			else if (row == (HEIGHT - BOGIE_H_W - 1) || row == SEPARATOR_Y)
+			else if (row == (HEIGHT - BOGIE_H_W - 1) || (SEPARATOR_Y <= row && row < SEPARATOR_Y + SEPARATOR_HEIGHT))
 			{
 				rowSpan[(0 * BYTE_PER_PIXEL)..(WIDTH * BYTE_PER_PIXEL)].Fill(0xFF);
 			}
