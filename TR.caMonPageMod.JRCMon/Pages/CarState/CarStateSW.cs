@@ -6,6 +6,7 @@ using TR.caMonPageMod.JRCMon.Footer;
 using TR.caMonPageMod.JRCMon.Parts;
 using TR.caMonPageMod.JRCMon.Parts.CarPartsState;
 using TR.caMonPageMod.JRCMon.Parts.Unit;
+using TR.caMonPageMod.JRCMon.TrainFormation;
 using TR.caMonPageMod.JRCMon.Utils;
 
 namespace TR.caMonPageMod.JRCMon.Pages.CarState;
@@ -148,6 +149,8 @@ public partial class CarStateSW : Canvas, IMultiPageFooterInfo
 			"CCOS".ToWide(),
 		];
 
+		readonly StateLabel?[][] StateLabels;
+
 		readonly AppState State;
 		public Page1And2(AppState state, int page)
 		{
@@ -174,9 +177,9 @@ public partial class CarStateSW : Canvas, IMultiPageFooterInfo
 				Line line = new()
 				{
 					X1 = 0,
-					Y1 = 0,
+					Y1 = TABLE_BORDER_THICKNESS * 0.5,
 					X2 = tableOuterWidth,
-					Y2 = 0,
+					Y2 = TABLE_BORDER_THICKNESS * 0.5,
 					Stroke = Brushes.Lime,
 					StrokeThickness = TABLE_BORDER_THICKNESS,
 				};
@@ -191,6 +194,7 @@ public partial class CarStateSW : Canvas, IMultiPageFooterInfo
 				2 => HEAD_LABELS_2,
 				_ => throw new ArgumentOutOfRangeException(nameof(page)),
 			};
+			StateLabels = new StateLabel[labels.Length][];
 			for (int i = 0; i < labels.Length; i++)
 			{
 				BitmapLabel label = ComponentFactory.Get1XLabel();
@@ -198,6 +202,8 @@ public partial class CarStateSW : Canvas, IMultiPageFooterInfo
 				SetTop(label, TABLE_OUTER_TOP + (ROW_INNER_HEIGHT + TABLE_BORDER_THICKNESS) * i + TABLE_BORDER_THICKNESS);
 				SetLeft(label, HEAD_COL_LABEL_LEFT);
 				Children.Add(label);
+
+				StateLabels[i] = new StateLabel[state.CarCount];
 			}
 
 			// 縦罫線を引く
@@ -205,16 +211,212 @@ public partial class CarStateSW : Canvas, IMultiPageFooterInfo
 			{
 				Line line = new()
 				{
-					X1 = 0,
+					X1 = TABLE_BORDER_THICKNESS * 0.5,
 					Y1 = 0,
-					X2 = 0,
+					X2 = TABLE_BORDER_THICKNESS * 0.5,
 					Y2 = TABLE_OUTER_HEIGHT,
 					Stroke = Brushes.Lime,
 					StrokeThickness = TABLE_BORDER_THICKNESS,
 				};
-				SetLeft(line, TABLE_LEFT + HEAD_COL_INNER_WIDTH + TABLE_BORDER_THICKNESS + (CarImageGen.WIDTH * i));
+				SetLeft(line, TABLE_LEFT + HEAD_COL_INNER_WIDTH + (CarImageGen.WIDTH * i));
 				SetBottom(line, TABLE_BOTTOM);
 				Children.Add(line);
+			}
+
+			switch (page)
+			{
+				case 1:
+					SetPage1StateLabels();
+					break;
+				case 2:
+					SetPage2StateLabels();
+					break;
+			}
+		}
+
+		void SetPage1StateLabels()
+		{
+			if (State.TrainFormation is null)
+				return;
+
+			int carIndex = 0;
+			foreach (var trainFormation in State.TrainFormation)
+			{
+				for (int i = 0; i < trainFormation.CarInfoList.Count; i++)
+				{
+					CarInfo carInfo = trainFormation.CarInfoList[i];
+
+					bool isEven = carIndex % 2 == 0;
+					if (carInfo.HasSIV)
+					{
+						StateLabels[0][carIndex] = new(carIndex, 0, isEven)
+						{
+							Text = isEven ? "動作" : "停止",
+						};
+					}
+					if (carInfo.HasCP)
+					{
+						StateLabels[1][carIndex] = new(carIndex, 1, isEven)
+						{
+							Text = isEven ? "動作" : "停止",
+						};
+					}
+
+					StateLabels[2][carIndex] = new(carIndex, 2, isEven, !isEven)
+					{
+						Text = isEven ? "正常" : "異常",
+					};
+
+					if (i == 0 || i == trainFormation.CarInfoList.Count - 1)
+					{
+						bool isFront = carIndex == 0;
+						bool isRear = carIndex == State.CarCount - 1;
+						StateLabels[3][carIndex] = new(carIndex, 3, false)
+						{
+							Text = isFront ? "前" : isRear ? "後" : "中",
+						};
+					}
+
+					if (carInfo.IsLeftBogieMotored || carInfo.IsRightBogieMotored)
+					{
+						StateLabels[4][carIndex] = new(carIndex, 4, true)
+						{
+							Text = "VVVF",
+						};
+
+						StateLabels[5][carIndex] = new(carIndex, 5, isEven)
+						{
+							Text = isEven ? "入" : "切",
+						};
+						StateLabels[6][carIndex] = new(carIndex, 6, isEven)
+						{
+							Text = isEven ? "入" : "切",
+						};
+					}
+
+					StateLabels[8][carIndex] = new(carIndex, 8, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+
+					if (i == 0 || i == trainFormation.CarInfoList.Count - 1)
+					{
+						StateLabels[9][carIndex] = new(carIndex, 9, isEven)
+						{
+							Text = isEven ? "入" : "切",
+						};
+						StateLabels[10][carIndex] = new(carIndex, 10, isEven)
+						{
+							Text = isEven ? "入" : "切",
+						};
+						StateLabels[11][carIndex] = new(carIndex, 11, isEven)
+						{
+							Text = isEven ? "入" : "切",
+						};
+					}
+
+					carIndex++;
+				}
+			}
+
+			foreach (var labels in StateLabels)
+			{
+				foreach (var label in labels)
+				{
+					if (label is not null)
+						Children.Add(label);
+				}
+			}
+		}
+
+		void SetPage2StateLabels()
+		{
+			if (State.TrainFormation is null)
+				return;
+
+			int carIndex = 0;
+			foreach (var trainFormation in State.TrainFormation)
+			{
+				for (int i = 0; i < trainFormation.CarInfoList.Count; i++)
+				{
+					CarInfo carInfo = trainFormation.CarInfoList[i];
+					bool isMotoredCar = carInfo.IsLeftBogieMotored || carInfo.IsRightBogieMotored;
+					if (!isMotoredCar)
+					{
+						++carIndex;
+						continue;
+					}
+
+					bool isEven = carIndex % 2 == 0;
+					StateLabels[0][carIndex] = new(carIndex, 0, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+					StateLabels[1][carIndex] = new(carIndex, 1, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+
+					StateLabels[2][carIndex] = new(carIndex, 2, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+					StateLabels[3][carIndex] = new(carIndex, 3, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+					StateLabels[4][carIndex] = new(carIndex, 4, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+
+					StateLabels[5][carIndex] = new(carIndex, 5, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+					StateLabels[6][carIndex] = new(carIndex, 6, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+					StateLabels[7][carIndex] = new(carIndex, 7, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+					StateLabels[8][carIndex] = new(carIndex, 8, isEven)
+					{
+						Text = isEven ? "入" : "切",
+					};
+
+					StateLabels[9][carIndex] = new(carIndex, 9, isEven, !isEven)
+					{
+						Text = isEven ? "正常" : "異常",
+					};
+
+					++carIndex;
+				}
+			}
+
+			foreach (var labels in StateLabels)
+			{
+				foreach (var label in labels)
+				{
+					if (label is not null)
+						Children.Add(label);
+				}
+			}
+		}
+
+		class StateLabel : BitmapLabel
+		{
+			public StateLabel(int carIndex, int rowIndex, bool isYellow, bool isError = false)
+			{
+				SetTop(this, TABLE_OUTER_TOP + TABLE_BORDER_THICKNESS + (ROW_INNER_HEIGHT + TABLE_BORDER_THICKNESS) * rowIndex);
+				SetLeft(this, TABLE_LEFT + HEAD_COL_INNER_WIDTH + TABLE_BORDER_THICKNESS + (CarImageGen.WIDTH * carIndex));
+				HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+				Height = ROW_INNER_HEIGHT;
+				Width = CarImageGen.WIDTH - TABLE_BORDER_THICKNESS;
+				Background = isError ? Brushes.Red : isYellow ? Brushes.Yellow : Brushes.White;
+				Foreground = isError ? Brushes.White : Brushes.Black;
 			}
 		}
 	}

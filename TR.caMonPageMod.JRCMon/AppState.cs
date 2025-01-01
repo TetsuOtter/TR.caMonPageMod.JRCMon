@@ -49,7 +49,7 @@ public class AppState
 					HasPantograph: false,
 					HasSecondPantograph: false,
 					IsLeftBogieMotored: false,
-					IsRightBogieMotored: true,
+					IsRightBogieMotored: false,
 					MaxPassenger: 100,
 					HasSIV: false,
 					HasCP: false
@@ -87,7 +87,7 @@ public class AppState
 					HasPantograph: false,
 					HasSecondPantograph: false,
 					IsLeftBogieMotored: false,
-					IsRightBogieMotored: true,
+					IsRightBogieMotored: false,
 					MaxPassenger: 100,
 					HasSIV: false,
 					HasCP: false
