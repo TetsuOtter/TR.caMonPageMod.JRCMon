@@ -92,7 +92,7 @@ public class FooterArea : Canvas
 		{
 			FooterInfoPage infoPage => (infoPage.PageClass, infoPage.getArgs?.Invoke() ?? []),
 			FooterInfoCurrentPage => (pageType, []),
-			FooterInfoGoBack => (lastPageType, []),
+			FooterInfoGoBack goBack => (lastPageType, goBack.getArgs?.Invoke() ?? []),
 			_ => throw new NotSupportedException("Unsupported FooterInfo")
 		};
 	static string getLabel(FooterInfo info, Type pageType)
