@@ -7,12 +7,12 @@ namespace TR.caMonPageMod.JRCMon.Parts.CarPartsStateArea;
 public class DoorStateArea : Canvas
 {
 	const int SEMIAUTO_LABEL_TOP = Constants.FONT_SIZE_2X / 2;
-	const int SEMIAUTO_LABEL_LEFT = StateAreaConstants.LEFT + Constants.FONT_SIZE_2X * 3 + 4;
+	const int SEMIAUTO_LABEL_LEFT = StateAreaConstants.LEFT + Constants.FONT_SIZE_2X * 3 + 5;
 
 	BitmapLabel semiAutoLabel = ComponentFactory.Get1XLabel();
 	public DoorStateArea(AppState state)
 	{
-		SetTop(this, StateAreaConstants.TOP);
+		StateAreaConstants.setTop(this, 0);
 
 		BitmapLabel toheiLabel = ComponentFactory.Get2XLabel();
 		toheiLabel.Text = "戸　閉";

@@ -11,9 +11,10 @@ public class CarPartsStateBase : Canvas
 	public const int STROKE_THICKNESS = 1;
 	public const int MARGIN_X = 3 - STROKE_THICKNESS;
 	public const int INNER_WIDTH = CarImageGen.WIDTH - ((MARGIN_X + STROKE_THICKNESS) * 2);
-	public const int INNER_HEIGHT = Constants.FONT_SIZE_1X + 1;
+	public const int INNER_HEIGHT = Constants.FONT_SIZE_1X + 3;
 	public const int OUTER_WIDTH = INNER_WIDTH + (STROKE_THICKNESS * 2);
 	public const int OUTER_HEIGHT = INNER_HEIGHT + (STROKE_THICKNESS * 2);
+	public const int LABEL_TOP = 1;
 	readonly BitmapLabel label = ComponentFactory.Get1XLabel();
 	public CarPartsStateBase(int carIndex, int top)
 	{
@@ -34,11 +35,11 @@ public class CarPartsStateBase : Canvas
 		Children.Add(rect);
 
 		label.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-		label.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+		label.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
 		label.Width = INNER_WIDTH;
-		label.Height = INNER_HEIGHT;
+		label.Height = INNER_HEIGHT - LABEL_TOP;
 		SetLeft(label, STROKE_THICKNESS);
-		SetTop(label, STROKE_THICKNESS);
+		SetTop(label, STROKE_THICKNESS + LABEL_TOP);
 		Children.Add(label);
 	}
 

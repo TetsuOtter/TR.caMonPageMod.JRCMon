@@ -18,6 +18,8 @@ static internal class Constants
 	public const int FONT_SIZE_1X = 16;
 	public const int FONT_SIZE_2X = 32;
 
+	public const int TEXT_PADDING_Y = 2;
+
 	public const double FOOTER_LINE_HEIGHT = 1;
 	public const int FOOTER_MENU_BUTTON_HEIGHT = FOOTER_HEIGHT;
 	public const int FOOTER_MENU_BUTTON_WIDTH = 84;

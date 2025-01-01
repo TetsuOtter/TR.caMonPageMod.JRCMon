@@ -34,6 +34,12 @@ public class ComponentFactory
 		label.ScaleY = 2;
 		return label;
 	}
+	public static BitmapLabel Get1XWideLabel(Brush? foreground = null)
+	{
+		BitmapLabel label = GetBasicLabel(foreground);
+		label.ScaleX = 2;
+		return label;
+	}
 
 	public static readonly Color BASIC_BUTTON_COLOR = Color.FromArgb(0xFF, 0x0B, 0x62, 0xED);
 	public static System.Drawing.Color WpfColorToDrawingColor(Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
