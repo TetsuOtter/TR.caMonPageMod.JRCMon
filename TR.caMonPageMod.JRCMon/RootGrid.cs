@@ -124,10 +124,6 @@ public class RootGrid : Grid
 		{
 			HeaderArea.OnChangePage(new(headerOverride.HeaderTitle, headerOverride.HeaderIcon));
 		}
-		if (hasFooter && cc is IBaseImage baseImagePage)
-		{
-			baseImagePage.BaseImage.Height = Constants.BODY_IMG_HEIGHT;
-		}
 	}
 	object? CreateElement(Type pageType)
 	{

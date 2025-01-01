@@ -160,10 +160,13 @@ public static class ResourceManager
 	}
 	public static Image GetResourceAsImage(ResourceFiles resourceFile)
 	{
+		BitmapImage src = GetResourceAsBitmapImage(resourceFile);
 		var image = new Image
 		{
-			Source = GetResourceAsBitmapImage(resourceFile),
+			Source = src,
 			Stretch = Stretch.Fill,
+			Height = src.Height,
+			Width = src.Width,
 		};
 		return image;
 	}
