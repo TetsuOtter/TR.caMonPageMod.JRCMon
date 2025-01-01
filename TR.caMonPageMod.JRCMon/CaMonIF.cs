@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,14 +21,33 @@ public class CaMonIF : Page, IPages
 	const string ASSEMBLY_NS = "TR.caMonPageMod.JRCMon.";
 	const string PAGES_NS = "TR.caMonPageMod.JRCMon.Pages.";
 
+	readonly Viewbox viewbox;
+	Window? window;
 	public CaMonIF()
 	{
-		Viewbox viewbox = new()
+		viewbox = new()
 		{
 			Child = RootGrid,
 		};
 		RenderOptions.SetEdgeMode(RootGrid, EdgeMode.Aliased);
 		RenderOptions.SetBitmapScalingMode(RootGrid, BitmapScalingMode.NearestNeighbor);
+
+		window = Application.Current.MainWindow;
+		Application.Current.LoadCompleted += (s, e) =>
+		{
+			if (window is not null)
+				return;
+			window = Application.Current.MainWindow;
+			if (window is not null)
+			{
+				window.KeyDown += OnKeyDown;
+#if DEBUG
+				window.KeyDown += OnKeyDownDebug;
+#endif
+			}
+		};
+
+
 #if DEBUG
 		Background = new SolidColorBrush(Color.FromRgb(0x20, 0x20, 0x20));
 		ScrollViewer scrollViewer = new()
@@ -36,69 +56,73 @@ public class CaMonIF : Page, IPages
 			VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
 			HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
 		};
-		KeyDown += (s, e) =>
-		{
-			switch (e.Key)
-			{
-				case System.Windows.Input.Key.D0:
-				case System.Windows.Input.Key.D1:
-					viewbox.LayoutTransform = new ScaleTransform(1, 1);
-					break;
-				case System.Windows.Input.Key.D2:
-					viewbox.LayoutTransform = new ScaleTransform(2, 2);
-					break;
-				case System.Windows.Input.Key.D3:
-					viewbox.LayoutTransform = new ScaleTransform(3, 3);
-					break;
-				case System.Windows.Input.Key.D4:
-					viewbox.LayoutTransform = new ScaleTransform(4, 4);
-					break;
-				case System.Windows.Input.Key.D5:
-					viewbox.LayoutTransform = new ScaleTransform(5, 5);
-					break;
-				case System.Windows.Input.Key.D6:
-					viewbox.LayoutTransform = new ScaleTransform(6, 6);
-					break;
-				case System.Windows.Input.Key.D7:
-					viewbox.LayoutTransform = new ScaleTransform(7, 7);
-					break;
-				case System.Windows.Input.Key.D8:
-					viewbox.LayoutTransform = new ScaleTransform(8, 8);
-					break;
-				case System.Windows.Input.Key.D9:
-					viewbox.LayoutTransform = new ScaleTransform(9, 9);
-					break;
-				default:
-					return;
-			}
-			if (e.Key == System.Windows.Input.Key.D0)
-			{
-				viewbox.Height = Constants.DISPLAY_HEIGHT;
-				viewbox.Width = Constants.DISPLAY_WIDTH;
-			}
-			else
-			{
-				viewbox.Height = double.NaN;
-				viewbox.Width = double.NaN;
-			}
-		};
 		Content = scrollViewer;
 #else
 		Content = viewbox;
 #endif
-		KeyDown += (s, e) =>
-		{
-			switch (e.Key)
-			{
-				case System.Windows.Input.Key.P:
-					if (e.KeyboardDevice.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Control))
-						GetImage();
-					return;
-				default:
-					return;
-			}
-		};
 	}
+
+
+	void OnKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+	{
+		switch (e.Key)
+		{
+			case System.Windows.Input.Key.P:
+				if (e.KeyboardDevice.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Control))
+					GetImage();
+				return;
+			default:
+				return;
+		}
+	}
+#if DEBUG
+	void OnKeyDownDebug(object sender, System.Windows.Input.KeyEventArgs e)
+	{
+		switch (e.Key)
+		{
+			case System.Windows.Input.Key.D0:
+			case System.Windows.Input.Key.D1:
+				viewbox.LayoutTransform = new ScaleTransform(1, 1);
+				break;
+			case System.Windows.Input.Key.D2:
+				viewbox.LayoutTransform = new ScaleTransform(2, 2);
+				break;
+			case System.Windows.Input.Key.D3:
+				viewbox.LayoutTransform = new ScaleTransform(3, 3);
+				break;
+			case System.Windows.Input.Key.D4:
+				viewbox.LayoutTransform = new ScaleTransform(4, 4);
+				break;
+			case System.Windows.Input.Key.D5:
+				viewbox.LayoutTransform = new ScaleTransform(5, 5);
+				break;
+			case System.Windows.Input.Key.D6:
+				viewbox.LayoutTransform = new ScaleTransform(6, 6);
+				break;
+			case System.Windows.Input.Key.D7:
+				viewbox.LayoutTransform = new ScaleTransform(7, 7);
+				break;
+			case System.Windows.Input.Key.D8:
+				viewbox.LayoutTransform = new ScaleTransform(8, 8);
+				break;
+			case System.Windows.Input.Key.D9:
+				viewbox.LayoutTransform = new ScaleTransform(9, 9);
+				break;
+			default:
+				return;
+		}
+		if (e.Key == System.Windows.Input.Key.D0)
+		{
+			viewbox.Height = Constants.DISPLAY_HEIGHT;
+			viewbox.Width = Constants.DISPLAY_WIDTH;
+		}
+		else
+		{
+			viewbox.Height = double.NaN;
+			viewbox.Width = double.NaN;
+		}
+	}
+#endif
 
 	private void GetImage()
 	{
@@ -133,6 +157,13 @@ public class CaMonIF : Page, IPages
 		{
 			if (disposing)
 			{
+				if (window is not null)
+				{
+					window.KeyDown -= OnKeyDown;
+#if DEBUG
+					window.KeyDown -= OnKeyDownDebug;
+#endif
+				}
 			}
 
 			disposedValue = true;
