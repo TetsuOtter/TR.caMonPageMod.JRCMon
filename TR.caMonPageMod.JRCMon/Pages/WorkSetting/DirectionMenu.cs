@@ -18,41 +18,66 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 
 	public RootGrid? RootGrid { get; set; }
 
-	const int LABEL_LEFT = 8;
-	const int LABEL_BOTTOM = 8;
+	const int LABEL_LEFT = 16;
+	const int LABEL_BOTTOM = 14;
 
-	const int BUTTON_WIDTH = 104;
-	const int BUTTON_HEIGHT = 54;
+	const int BUTTON_WIDTH = 100;
+	const int BUTTON_HEIGHT = TITLE_HEIGHT + 10;
 
-	const int BUTTON_DISPLAY_PADDING = 6;
+	const int TITLE_HEIGHT = 42;
+	const int TITLE_WIDTH = Constants.FONT_SIZE_1X * 9;
+	static readonly Thickness TITLE_PADDING = new(0, 4, 0, 0);
 
-	const int TRAIN_NUMBER_BUTTON_LEFT = 60;
-	const int TRAIN_NUMBER_BUTTON_TOP = 108;
-	const int TRAIN_NUMBER_BUTTON_WIDTH = BUTTON_WIDTH;
-	const int TRAIN_NUMBER_BUTTON_HEIGHT = BUTTON_HEIGHT - 4;
-	const int TRAIN_NUMBER_DISPLAY_SPACING = 20;
+	const int TYPE_DIRECTION_DISPLAY_WIDTH = Constants.FONT_SIZE_1X * 15;
+
+	const int BUTTON_DISPLAY_PADDING = 8;
+
+	const int SUBMIT_BUTTON_LEFT = TRAIN_TYPE_DISPLAY_LEFT + TYPE_DIRECTION_DISPLAY_WIDTH - SUBMIT_BUTTON_WIDTH;
+	const int SUBMIT_BUTTON_BOTTOM = LABEL_BOTTOM + Constants.FONT_SIZE_1X * 5 + 10;
+	const int SUBMIT_BUTTON_HEIGHT = 30;
+	const int SUBMIT_BUTTON_WIDTH = 90;
+
+	#region Train Number
+	const int TRAIN_NUMBER_AREA_TOP = 82;
+	const int TRAIN_NUMBER_AREA_LEFT = 12;
+	const int TRAIN_NUMBER_AREA_HEIGHT = 122;
+
+	const int TRAIN_NUMBER_BUTTON_LEFT = 56;
+	const int TRAIN_NUMBER_BUTTON_TOP = TRAIN_NUMBER_AREA_TOP + (TRAIN_NUMBER_AREA_HEIGHT - BUTTON_HEIGHT) / 2;
+	const int TRAIN_NUMBER_DISPLAY_SPACING = 24;
 	const int TRAIN_NUMBER_DISPLAY_LEFT = TRAIN_NUMBER_BUTTON_LEFT + BUTTON_WIDTH + TRAIN_NUMBER_DISPLAY_SPACING;
-	const int TRAIN_NUMBER_DISPLAY_WIDTH = Constants.FONT_SIZE_1X * 8 + 10;
+	const int TRAIN_NUMBER_DISPLAY_WIDTH = 140;
+	#endregion
 
-	const int TRAIN_TYPE_TITLE_TOP = 240;
-	const int TRAIN_TYPE_TITLE_LEFT = 132;
-	const int TRAIN_TYPE_TITLE_HEIGHT = 38;
+	#region TrainType
+	const int TRAIN_TYPE_AREA_TOP = 234;
+	const int TRAIN_TYPE_AREA_LEFT = TRAIN_NUMBER_AREA_LEFT;
+
+	const int TRAIN_TYPE_TITLE_TOP = TRAIN_TYPE_AREA_TOP + 16;
+	const int TRAIN_TYPE_TITLE_LEFT = TRAIN_TYPE_BUTTON_LEFT + BUTTON_WIDTH;
+
 	const int TRAIN_TYPE_TITLE_SPACING = 16;
-	const int TRAIN_TYPE_BUTTON_LEFT = 32;
-	const int TRAIN_TYPE_BUTTON_TOP = TRAIN_TYPE_TITLE_TOP + TRAIN_TYPE_TITLE_HEIGHT + TRAIN_TYPE_TITLE_SPACING;
-	const int TRAIN_TYPE_BUTTON_WIDTH = BUTTON_WIDTH;
-	const int TRAIN_TYPE_BUTTON_HEIGHT = BUTTON_HEIGHT - 4;
-	const int TRAIN_TYPE_DISPLAY_LEFT = TRAIN_TYPE_BUTTON_LEFT + BUTTON_WIDTH + BUTTON_DISPLAY_PADDING;
-	const int TRAIN_TYPE_DISPLAY_WIDTH = 234;
 
-	const int DIRECTION_TITLE_LEFT = 540;
-	const int DIRECTION_TITLE_TOP = 32;
-	const int DIRECTION_TITLE_HEIGHT = 38;
-	const int DIRECTION_BUTTON_LEFT = 422;
-	const int DIRECTION_BUTTON_TOP = DIRECTION_TITLE_TOP + DIRECTION_TITLE_HEIGHT + 8;
-	const int DIRECTION_BUTTON_SPACING = 6;
-	const int DIRECTION_DISPLAY_LEFT = DIRECTION_BUTTON_LEFT + BUTTON_WIDTH + BUTTON_DISPLAY_PADDING;
-	const int DIRECTION_DISPLAY_WIDTH = 234;
+	const int TRAIN_TYPE_BUTTON_LEFT = TRAIN_TYPE_AREA_LEFT + Constants.FONT_SIZE_1X;
+	const int TRAIN_TYPE_BUTTON_TOP = TRAIN_TYPE_TITLE_TOP + TITLE_HEIGHT + TRAIN_TYPE_TITLE_SPACING;
+
+	const int TRAIN_TYPE_DISPLAY_LEFT = TRAIN_TYPE_BUTTON_LEFT + BUTTON_WIDTH + BUTTON_DISPLAY_PADDING;
+	#endregion
+
+	#region Direction
+	const int DIRECTION_AREA_TOP = 28;
+	const int DIRECTION_AREA_LEFT = 408;
+
+	const int DIRECTION_BUTTON_LEFT = DIRECTION_AREA_LEFT + 16;
+	const int DIRECTION_BUTTON_TOP = DIRECTION_TITLE_TOP + TITLE_HEIGHT + DIRECTION_DISPLAY_DISPLAY_SPACING;
+
+	const int DIRECTION_TITLE_LEFT = DIRECTION_BUTTON_LEFT + BUTTON_WIDTH + BUTTON_DISPLAY_PADDING;
+	const int DIRECTION_TITLE_TOP = DIRECTION_AREA_TOP + 12;
+
+	const int DIRECTION_DISPLAY_DISPLAY_SPACING = 5;
+
+	const int DIRECTION_DISPLAY_LEFT = DIRECTION_TITLE_LEFT;
+	#endregion
 
 	private WorkSettingContext Context;
 
@@ -79,18 +104,40 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		SetBottom(label3, LABEL_BOTTOM + Constants.FONT_SIZE_1X * 0);
 		Children.Add(label3);
 
+		AddSubmitButton();
 		AddTrainNumberArea();
 		AddTrainTypeArea();
 		AddDirectionArea();
 	}
 
+	void AddSubmitButton()
+	{
+		Button btn = ComponentFactory.GetBasicButton(
+			new(),
+			SUBMIT_BUTTON_WIDTH,
+			SUBMIT_BUTTON_HEIGHT,
+			ButtonBaseImage.SHADOW_WIDTH_EXTRA_SMALL
+		);
+		SetLeft(btn, SUBMIT_BUTTON_LEFT);
+		SetBottom(btn, SUBMIT_BUTTON_BOTTOM);
+		btn.Click += (s, e) => RootGrid?.SetPageType<DirectionSetting>(Context);
+		Children.Add(btn);
+
+		BitmapLabel label = ComponentFactory.Get1XLabel();
+		label.Text = "起　動";
+		btn.Content = label;
+	}
+
 	void AddTrainNumberArea()
 	{
 		Button btn = ComponentFactory.GetBasicButton(
-			new(TRAIN_NUMBER_BUTTON_LEFT, TRAIN_NUMBER_BUTTON_TOP, 0, 0),
-			TRAIN_NUMBER_BUTTON_WIDTH,
-			TRAIN_NUMBER_BUTTON_HEIGHT
+			new(),
+			BUTTON_WIDTH,
+			BUTTON_HEIGHT,
+			ButtonBaseImage.SHADOW_WIDTH_SMALL
 		);
+		SetLeft(btn, TRAIN_NUMBER_BUTTON_LEFT);
+		SetTop(btn, TRAIN_NUMBER_BUTTON_TOP);
 		btn.Click += (s, e) => RootGrid?.SetPageType<DirectionSettingNumber>(Context);
 		Children.Add(btn);
 
@@ -102,12 +149,12 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		{
 			Source = ButtonBaseImage.GetButtonImage(
 				TRAIN_NUMBER_DISPLAY_WIDTH,
-				TRAIN_NUMBER_BUTTON_HEIGHT,
-				false,
+				BUTTON_HEIGHT,
+				ButtonBaseImage.SHADOW_WIDTH_DEFAULT,
 				System.Drawing.Color.Black
 			),
 			Width = TRAIN_NUMBER_DISPLAY_WIDTH,
-			Height = TRAIN_NUMBER_BUTTON_HEIGHT,
+			Height = BUTTON_HEIGHT,
 		};
 		SetLeft(displayArea, TRAIN_NUMBER_DISPLAY_LEFT);
 		SetTop(displayArea, TRAIN_NUMBER_BUTTON_TOP);
@@ -116,7 +163,7 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		BitmapLabel label2 = ComponentFactory.Get1XLongLabel();
 		label2.Text = "1216F".ToWide();
 		label2.Padding = new(Constants.FONT_SIZE_1X, 0, Constants.FONT_SIZE_1X, 0);
-		label2.Height = TRAIN_NUMBER_BUTTON_HEIGHT - 10;
+		label2.Height = BUTTON_HEIGHT - 10;
 		label2.Width = TRAIN_NUMBER_DISPLAY_WIDTH - 10;
 		label2.HorizontalContentAlignment = HorizontalAlignment.Right;
 		label2.VerticalContentAlignment = VerticalAlignment.Center;
@@ -130,19 +177,22 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		BitmapLabel directionTitleLabel = ComponentFactory.Get1XLongLabel();
 		directionTitleLabel.Text = "種別表示器";
 		directionTitleLabel.Background = Brushes.Black;
-		directionTitleLabel.Width = Constants.FONT_SIZE_1X * 8;
-		directionTitleLabel.Height = TRAIN_TYPE_TITLE_HEIGHT;
+		directionTitleLabel.Width = TITLE_WIDTH;
+		directionTitleLabel.Height = TITLE_HEIGHT;
 		directionTitleLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
-		directionTitleLabel.Padding = new(0, 2, 0, 0);
+		directionTitleLabel.Padding = TITLE_PADDING;
 		SetLeft(directionTitleLabel, TRAIN_TYPE_TITLE_LEFT);
 		SetTop(directionTitleLabel, TRAIN_TYPE_TITLE_TOP);
 		Children.Add(directionTitleLabel);
 
 		Button btn = ComponentFactory.GetBasicButton(
-			new(TRAIN_TYPE_BUTTON_LEFT, TRAIN_TYPE_BUTTON_TOP, 0, 0),
-			TRAIN_TYPE_BUTTON_WIDTH,
-			TRAIN_TYPE_BUTTON_HEIGHT
+			new(0),
+			BUTTON_WIDTH,
+			BUTTON_HEIGHT,
+			ButtonBaseImage.SHADOW_WIDTH_SMALL
 			);
+		SetLeft(btn, TRAIN_TYPE_BUTTON_LEFT);
+		SetTop(btn, TRAIN_TYPE_BUTTON_TOP);
 		btn.Click += (s, e) => RootGrid?.SetPageType<DirectionSetting>(Context);
 		Children.Add(btn);
 
@@ -153,13 +203,13 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		Image displayArea = new()
 		{
 			Source = ButtonBaseImage.GetButtonImage(
-				TRAIN_TYPE_DISPLAY_WIDTH,
-				TRAIN_TYPE_BUTTON_HEIGHT,
-				false,
+				TYPE_DIRECTION_DISPLAY_WIDTH,
+				BUTTON_HEIGHT,
+				ButtonBaseImage.SHADOW_WIDTH_DEFAULT,
 				System.Drawing.Color.Black
 			),
-			Width = TRAIN_TYPE_DISPLAY_WIDTH,
-			Height = TRAIN_TYPE_BUTTON_HEIGHT,
+			Width = TYPE_DIRECTION_DISPLAY_WIDTH,
+			Height = BUTTON_HEIGHT,
 		};
 		SetLeft(displayArea, TRAIN_TYPE_DISPLAY_LEFT);
 		SetTop(displayArea, TRAIN_TYPE_BUTTON_TOP);
@@ -168,8 +218,8 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		BitmapLabel label2 = ComponentFactory.Get1XLongLabel();
 		label2.Text = "1.回 送".ToWide();
 		label2.Padding = new(Constants.FONT_SIZE_1X, 0, Constants.FONT_SIZE_1X, 0);
-		label2.Height = TRAIN_TYPE_BUTTON_HEIGHT - 10;
-		label2.Width = TRAIN_TYPE_DISPLAY_WIDTH - 10;
+		label2.Height = BUTTON_HEIGHT - 10;
+		label2.Width = TYPE_DIRECTION_DISPLAY_WIDTH - 10;
 		label2.HorizontalContentAlignment = HorizontalAlignment.Left;
 		label2.VerticalContentAlignment = VerticalAlignment.Center;
 		SetLeft(label2, TRAIN_TYPE_DISPLAY_LEFT + 5);
@@ -182,10 +232,10 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		BitmapLabel directionTitleLabel = ComponentFactory.Get1XLongLabel();
 		directionTitleLabel.Text = "行先表示器";
 		directionTitleLabel.Background = Brushes.Black;
-		directionTitleLabel.Width = Constants.FONT_SIZE_1X * 8;
-		directionTitleLabel.Height = 38;
+		directionTitleLabel.Width = TITLE_WIDTH;
+		directionTitleLabel.Height = TITLE_HEIGHT;
 		directionTitleLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
-		directionTitleLabel.Padding = new(0, 2, 0, 0);
+		directionTitleLabel.Padding = TITLE_PADDING;
 		SetLeft(directionTitleLabel, DIRECTION_TITLE_LEFT);
 		SetTop(directionTitleLabel, DIRECTION_TITLE_TOP);
 		Children.Add(directionTitleLabel);
@@ -193,13 +243,20 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 		AddDirectionRow(DIRECTION_BUTTON_TOP, 0);
 		for (int i = 0; i < 6; ++i)
 		{
-			int baseTop = DIRECTION_BUTTON_TOP + BUTTON_HEIGHT + DIRECTION_BUTTON_SPACING;
+			int baseTop = DIRECTION_BUTTON_TOP + BUTTON_HEIGHT + DIRECTION_DISPLAY_DISPLAY_SPACING;
 			AddDirectionRow(baseTop + BUTTON_HEIGHT * i, i + 1);
 		}
 
 		void AddDirectionRow(int top, int index)
 		{
-			Button btn = ComponentFactory.GetBasicButton(new(DIRECTION_BUTTON_LEFT, top, 0, 0), BUTTON_WIDTH, BUTTON_HEIGHT);
+			Button btn = ComponentFactory.GetBasicButton(
+				new(),
+				BUTTON_WIDTH,
+				BUTTON_HEIGHT,
+				ButtonBaseImage.SHADOW_WIDTH_SMALL
+			);
+			SetLeft(btn, DIRECTION_BUTTON_LEFT);
+			SetTop(btn, top);
 			btn.Click += (s, e) => RootGrid?.SetPageType<DirectionSetting>(index == 0 ? Context : Context with { Direction_EditingTarget = index - 1 });
 			Children.Add(btn);
 
@@ -209,8 +266,13 @@ public partial class DirectionMenu : NormalPageBase, IHeaderOverride, IFooterInf
 
 			Image displayArea = new()
 			{
-				Source = ButtonBaseImage.GetButtonImage(DIRECTION_DISPLAY_WIDTH, BUTTON_HEIGHT, false, System.Drawing.Color.Black),
-				Width = DIRECTION_DISPLAY_WIDTH,
+				Source = ButtonBaseImage.GetButtonImage(
+					TYPE_DIRECTION_DISPLAY_WIDTH,
+					BUTTON_HEIGHT,
+					ButtonBaseImage.SHADOW_WIDTH_DEFAULT,
+					System.Drawing.Color.Black
+				),
+				Width = TYPE_DIRECTION_DISPLAY_WIDTH,
 				Height = BUTTON_HEIGHT,
 			};
 			SetLeft(displayArea, DIRECTION_DISPLAY_LEFT);
