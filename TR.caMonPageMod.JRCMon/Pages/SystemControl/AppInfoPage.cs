@@ -74,7 +74,7 @@ public partial class AppInfoPage : Canvas, IFooterInfo
 			APP_VERSION_UPDATE_BUTTON_WIDTH,
 			APP_VERSION_UPDATE_BUTTON_HEIGHT,
 			AppVersionUpdateLabel,
-			isSmall: true
+			ButtonBaseImage.SHADOW_WIDTH_SMALL
 		);
 		Children.Add(AppVersionUpdateButton);
 

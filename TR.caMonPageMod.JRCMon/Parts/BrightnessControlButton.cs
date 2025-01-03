@@ -21,7 +21,7 @@ public class BrightnessControlButton : Button
 		Background = new ImageBrush(ButtonBaseImage.GetButtonImage(
 			WIDTH,
 			HEIGHT,
-			true,
+			ButtonBaseImage.SHADOW_WIDTH_SMALL,
 			ComponentFactory.WpfColorToDrawingColor(ComponentFactory.BASIC_BUTTON_COLOR)
 		))
 		{

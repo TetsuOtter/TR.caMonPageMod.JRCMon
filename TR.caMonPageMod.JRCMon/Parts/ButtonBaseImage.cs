@@ -9,23 +9,24 @@ namespace TR.caMonPageMod.JRCMon.Parts;
 
 public static class ButtonBaseImage
 {
-	const int SHADOW_WIDTH_SMALL = 2;
-	const int SHADOW_WIDTH_DEFAULT = 3;
+	public const int SHADOW_WIDTH_EXTRA_SMALL = 1;
+	public const int SHADOW_WIDTH_SMALL = 2;
+	public const int SHADOW_WIDTH_DEFAULT = 3;
 	const PixelFormat PIXEL_FORMAT = PixelFormat.Format32bppArgb;
 	const int BYTE_PER_PIXEL = 4;
 	static readonly byte[] BASE_COLOR_BYTES = BitConverter.GetBytes(ComponentFactory.WpfColorToDrawingColor(ComponentFactory.BASIC_BUTTON_COLOR).ToArgb());
 
-	record Info(int Width, int Height, Color color, bool isShadowColored);
+	record Info(int Width, int Height, int shadowWidth, Color color, bool isShadowColored);
 	static readonly Dictionary<Info, BitmapImage> cache = [];
-	public static BitmapImage GetButtonImage(int Width, int Height, bool isSmall, Color color, bool isShadowColored = false)
+	public static BitmapImage GetButtonImage(int Width, int Height, int shadowWidth, Color color, bool isShadowColored = false)
 	{
-		Info info = new(Width, Height, color, isShadowColored);
+		Info info = new(Width, Height, shadowWidth, color, isShadowColored);
 		if (cache.TryGetValue(info, out BitmapImage? img))
 			return img;
 
 		using var memory = new System.IO.MemoryStream();
 		Bitmap bmp = new(Width, Height);
-		setPixel(bmp, info, isSmall ? SHADOW_WIDTH_SMALL : SHADOW_WIDTH_DEFAULT, isShadowColored);
+		setPixel(bmp, info, shadowWidth, isShadowColored);
 
 		bmp.Save(memory, ImageFormat.Png);
 		memory.Position = 0;

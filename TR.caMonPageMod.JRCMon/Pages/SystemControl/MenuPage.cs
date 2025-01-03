@@ -48,7 +48,7 @@ public partial class MenuPage : Canvas, IHoldRootGridInstance
 			new(633, 464, 0, 0),
 			104,
 			38,
-			isSmall: true,
+			ButtonBaseImage.SHADOW_WIDTH_SMALL,
 			color: Colors.Yellow,
 			isShadowColored: true
 		);
