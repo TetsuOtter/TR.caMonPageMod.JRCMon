@@ -165,9 +165,10 @@ public static class ResourceManager
 		{
 			Source = src,
 			Stretch = Stretch.Fill,
-			Height = src.Height,
-			Width = src.Width,
+			Height = src.PixelHeight,
+			Width = src.PixelWidth,
 		};
+
 		return image;
 	}
 }
